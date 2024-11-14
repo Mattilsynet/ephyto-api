@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package no.mattilsynet.ephyto.api.imports.intendeduse.v1;
+
+option java_multiple_files = true;
+option java_package = "no.mattilsynet.ephyto.api.imports.intendeduse.v1";
+option java_outer_classname = "IntendedUseDtoOuterClass";
+
+import "google/protobuf/timestamp.proto";
+
+message IntendedUseDto {
+  string beskrivelseEn = 1;
+  string beskrivelseEs = 2;
+  string beskrivelseFr = 3;
+  google.protobuf.Timestamp receivedAt = 4;
+  string kode = 5;
+}

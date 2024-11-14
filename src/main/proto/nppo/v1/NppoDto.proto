@@ -1,0 +1,64 @@
+syntax = "proto3";
+
+package no.mattilsynet.ephyto.api.imports.nppo.v1;
+
+option java_multiple_files = true;
+option java_package = "no.mattilsynet.ephyto.api.imports.nppo.v1";
+option java_outer_classname = "NppoDtoOuterClass";
+
+import "google/protobuf/timestamp.proto";
+
+message NppoDto {
+  string country = 1;
+  string receive = 2;
+  string send = 3;
+  repeated AllowedDocumentDto allowedDocument = 4;
+  SigningCertificateDto signature = 5;
+  ArrayOfChannelRulesDto channelRules = 6;
+  google.protobuf.Timestamp receivedAt = 7;
+}
+
+message AllowedDocumentDto {
+  CertificateTypeDto certificateType = 1;
+  CertificateStatusDto certificateStatus = 2;
+  bool active = 3;
+}
+
+message CertificateTypeDto {
+  int32 number = 1;
+  string value = 2;
+}
+
+message CertificateStatusDto {
+  int32 number = 1;
+  string value = 2;
+}
+
+message SigningCertificateDto {
+  string dn = 1;
+  string certificate = 2;
+}
+
+message ArrayOfChannelRulesDto {
+  repeated ChannelRuleDto channelRule = 1;
+}
+
+message ChannelRuleDto {
+  int32 id = 1;
+  bool active = 2;
+  ChannelRuleType ruleType = 3;
+  int32 certificateType = 4;
+  int32 certificateStatus = 5;
+  string countryCode = 6;
+  ChannelDirection direction = 7;
+}
+
+enum ChannelRuleType {
+  FORWARD = 0;
+  DELEGATE = 1;
+}
+
+enum ChannelDirection {
+  OUT = 0;
+  INC = 1;
+}

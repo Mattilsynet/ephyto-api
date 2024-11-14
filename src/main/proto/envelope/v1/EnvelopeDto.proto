@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package no.mattilsynet.ephyto.api.imports.envelope.v1;
+
+option java_multiple_files = true;
+option java_package = "no.mattilsynet.ephyto.api.imports.envelope.v1";
+option java_outer_classname = "EnvelopeDtoOuterClass";
+
+import "google/protobuf/timestamp.proto";
+import "envelope_metadata/v1/EnvelopeMetadataDto.proto";
+
+// @See generated (after '% ./gradlew build'): '_int.ippc.ephyto.hub.Envelope'
+message EnvelopeDto {
+  envelope.v1.EnvelopeMetadataDto envelopeMetadata = 1;
+  string content = 2;
+}
+
+
+

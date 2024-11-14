@@ -1,0 +1,18 @@
+syntax = "proto3";
+
+package no.mattilsynet.ephyto.api.imports.envelope.v1;
+
+option java_multiple_files = true;
+option java_package = "no.mattilsynet.ephyto.api.imports.envelope.v1";
+option java_outer_classname = "EnvelopeFailedDtoOuterClass";
+
+import "blob_storage_metadata/v1/BlobStorageMetadata.proto";
+
+// @See generated (after running '% ./gradlew build'): '_int.ippc.ephyto.hub.EnvelopeFailed'
+message EnvelopeFailedDto {
+  string nppoCertificateNumber = 1;
+  string hubDeliveryNumber = 2;
+  string hubTrackingInfo = 3;
+  string hubDeliveryErrorMessage = 4;
+  storage.blobstoragemetadata.v1.BlobStorageMetadata blobStorageMetadata = 5;
+}

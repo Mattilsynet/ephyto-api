@@ -1,0 +1,29 @@
+spring:
+  cloud:
+    gcp:
+      secretmanager:
+        enabled: true
+      core:
+        enabled: true
+      sql:
+        enabled: false
+      storage:
+        enabled: true
+        project-id: digiplant-staging-969d
+
+storage:
+  bucket:
+    name: ephyto-import-envelopes-staging
+
+ephyto:
+  scheduler:
+    envelopes:
+      cron:
+        expression: '0 0/5 7-18 * * 1-5'
+        sleeptime: 0
+    kodeverk:
+      cron:
+        expression: '0 25 5 * * *'
+
+    enabled: true
+    zone: Europe/Oslo

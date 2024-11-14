@@ -1,0 +1,11 @@
+server:
+  forward-headers-strategy: framework
+  shutdown: graceful
+  port: ${PORT:8085}
+storage:
+  bucket:
+    name: ephyto-import-envelopes-dev
+
+ephyto:
+  scheduler:
+    enabled: false

@@ -1,0 +1,38 @@
+server:
+  forward-headers-strategy: framework
+  shutdown: graceful
+  port: ${PORT:8080}
+
+spring:
+  application:
+    name: "ephyto-api"
+
+  config:
+    import: "sm://"
+
+  cloud:
+    gcp:
+      secretmanager:
+        enabled: true
+      core:
+        enabled: true
+      sql:
+        enabled: false
+      storage:
+        enabled: true
+        project-id: digiplant-dev-a431
+
+  profiles:
+    active: local
+
+nats:
+  url: tls://connect.nats.mattilsynet.io:4222
+  creds: ${sm://nats-creds}
+
+springdoc:
+  swagger-ui:
+    path: '/api'
+
+ephyto:
+  scheduler:
+    enabled: false

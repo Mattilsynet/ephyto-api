@@ -1,0 +1,17 @@
+syntax = "proto3";
+
+package no.mattilsynet.ephyto.api.imports.meanoftransport.v1;
+
+option java_multiple_files = true;
+option java_package = "no.mattilsynet.ephyto.api.imports.meanoftransport.v1";
+option java_outer_classname = "MeanOfTransportDtoOuterClass";
+
+import "google/protobuf/timestamp.proto";
+
+message MeanOfTransportDto {
+  string lang = 1;
+  google.protobuf.Timestamp lastModified = 2;
+  int32 modeCode = 3;
+  string usedTransportMean = 4;
+  google.protobuf.Timestamp receivedAt = 5;
+}

@@ -1,0 +1,28 @@
+spring:
+  cloud:
+    gcp:
+      secretmanager:
+        enabled: true
+      core:
+        enabled: true
+      sql:
+        enabled: false
+      storage:
+        enabled: true
+        project-id: digiplant-dev-a431
+
+storage:
+  bucket:
+    name: ephyto-import-envelopes-dev
+
+ephyto:
+  scheduler:
+    envelopes:
+      cron:
+        expression: '0 5 7-17 * * 1-5'
+        sleeptime: 0
+    kodeverk:
+      cron:
+        expression: '0 5 4 * * 1-5'
+    enabled: true
+    zone: Europe/Oslo

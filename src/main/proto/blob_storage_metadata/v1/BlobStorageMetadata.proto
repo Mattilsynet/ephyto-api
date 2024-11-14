@@ -1,0 +1,31 @@
+syntax = "proto3";
+
+package no.mattilsynet.ephyto.api.imports.storage.blobstoragemetadata.v1;
+
+option java_multiple_files = true;
+option java_package = "no.mattilsynet.ephyto.api.storage.blobstoragemetadata.v1";
+option java_outer_classname = "BlobStorageMetadataOuterClass";
+
+// Agnostic storage provider
+message BlobStorageMetadata {
+    enum StorageProviderType {
+        UNKNOWN_PROVIDER = 0;
+        GCP = 1;
+    }
+
+    enum StorageProviderDatastoreType {
+        UNKNOWN_PROVIDER_DATASTORE = 0;
+        GCP_BUCKET = 1;
+    }
+
+    StorageProviderType storageProviderType = 1;
+    StorageProviderDatastoreType datastoreType = 2;
+
+    // Examples:
+    // GCP_BUCKET:          "ephyto-import-envelopes-dev"
+    string dataStorageName = 3;
+
+    // Examples:
+    // GCP_BUCKET =         "{uuid}"
+    string dataUrl = 4;
+}

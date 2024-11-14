@@ -1,0 +1,19 @@
+spring:
+  cloud:
+    gcp:
+      storage:
+        enabled: false
+      secretmanager:
+        enabled: false
+      core:
+        enabled: false
+      sql:
+        enabled: false
+  profiles:
+    active: test
+  application:
+    name: digiplant-api
+
+nats:
+  url: test
+  creds: test

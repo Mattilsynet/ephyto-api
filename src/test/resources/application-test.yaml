@@ -1,0 +1,16 @@
+
+
+spring:
+  cloud:
+    gcp:
+      storage:
+        enabled: false
+      secretmanager:
+        enabled: false
+      core:
+        enabled: false
+      sql:
+        enabled: false
+
+  main:
+    allow-bean-definition-overriding: true

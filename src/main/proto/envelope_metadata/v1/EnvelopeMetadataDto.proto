@@ -1,0 +1,19 @@
+syntax = "proto3";
+
+package no.mattilsynet.ephyto.api.imports.envelope.v1;
+
+option java_multiple_files = true;
+option java_package = "no.mattilsynet.ephyto.api.imports.envelope.v1";
+option java_outer_classname = "EnvelopeMetadataDtoOuterClass";
+
+import "google/protobuf/timestamp.proto";
+import "blob_storage_metadata/v1/BlobStorageMetadata.proto";
+import "envelope_header/v1/EnvelopeHeaderDto.proto";
+
+message EnvelopeMetadataDto {
+  envelope.v1.EnvelopeHeaderDto envelopeHeader = 1;
+  google.protobuf.Timestamp receivedAt = 2;
+  storage.blobstoragemetadata.v1.BlobStorageMetadata blobStorageMetadata = 3;
+}
+
+

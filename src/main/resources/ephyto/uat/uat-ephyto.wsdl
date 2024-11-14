@@ -1,0 +1,1667 @@
+<wsdl:definitions xmlns:xsd="http://www.w3.org/2001/XMLSchema" xmlns:wsdl="http://schemas.xmlsoap.org/wsdl/" xmlns:wsaw="http://www.w3.org/2006/05/addressing/wsdl" xmlns:wsam="http://www.w3.org/2007/05/addressing/metadata" xmlns:tns="http://ephyto.ippc.int/" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:ns1="http://schemas.xmlsoap.org/soap/http" name="DeliveryService" targetNamespace="http://ephyto.ippc.int/">
+    <wsdl:types>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:21" version="1.0">
+            <xs:element name="DateTimeString" type="xs:string"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21" xmlns:ns1="http://ephyto.ippc.int/" targetNamespace="urn:un:unece:uncefact:data:standard:SPSCertificate:17" version="1.0">
+            <xs:import namespace="http://ephyto.ippc.int/"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21"/>
+            <xs:element name="SPSCertificate" type="ns1:SPSCertificate"/>
+            <xs:element name="SPSConsignment" type="ns2:spsConsignment"/>
+            <xs:element name="SPSExchangedDocument" type="ns2:spsExchangedDocument"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:ns2="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21" xmlns:ns1="http://ephyto.ippc.int/" targetNamespace="urn:un:unece:uncefact:data:standard:SPSAcknowledgement:17" version="1.0">
+            <xs:import namespace="http://ephyto.ippc.int/"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21"/>
+            <xs:element name="SPSAcknowledgement" type="ns1:SPSAcknowledgement"/>
+            <xs:element name="SPSAcknowledgementDocument" type="ns2:spsAcknowledgementDocument"/>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21" xmlns:ns2="urn:un:unece:uncefact:data:Standard:QualifiedDataType:21" xmlns:ns1="http://ephyto.ippc.int/" targetNamespace="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21" version="1.0">
+            <xs:import namespace="http://ephyto.ippc.int/"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:Standard:QualifiedDataType:21"/>
+            <xs:element name="ActualDateTime" type="ns1:actualDateTime"/>
+            <xs:element name="AffixedSPSSeal" type="ns1:affixedSPSSeal"/>
+            <xs:element name="ApplicableSPSClassification" type="ns1:applicableSPSClassification"/>
+            <xs:element name="ApplicableSPSProcessCharacteristic" type="ns1:applicableSPSProcessCharacteristic"/>
+            <xs:element name="AttachmentBinaryObject" type="ns1:binaryObjectType"/>
+            <xs:element name="ClassCode" type="xs:string"/>
+            <xs:element name="ClassName" type="tns:textType"/>
+            <xs:element name="CompletionSPSPeriod" type="ns1:completionSPSPeriod"/>
+            <xs:element name="ConsigneeSPSParty" type="ns1:consigneeSPSParty"/>
+            <xs:element name="ConsignorSPSParty" type="ns1:consignorSPSParty"/>
+            <xs:element name="Content" type="tns:includedSPSNoteContent"/>
+            <xs:element name="Description" type="tns:textType"/>
+            <xs:element name="DurationMeasure" type="ns1:measureType"/>
+            <xs:element name="EndDateTime" type="ns1:endDateTime"/>
+            <xs:element name="HierarchicalLevelCode" type="xs:string"/>
+            <xs:element name="ID" nillable="true" type="xs:anyType"/>
+            <xs:element name="IncludedSPSClause" type="tns:includedSPSClause"/>
+            <xs:element name="IncludedSPSConsignmentItem" type="tns:IncludedSPSConsignmentItem"/>
+            <xs:element name="IncludedSPSNote" type="ns1:includedSPSNote"/>
+            <xs:element name="IncludedSPSTradeLineItem" type="tns:IncludedSPSTradeLineItem"/>
+            <xs:element name="Information" type="tns:textType"/>
+            <xs:element name="IssueDateTime" nillable="true" type="xs:anyType"/>
+            <xs:element name="IssueSPSLocation" type="ns1:issueSPSLocation"/>
+            <xs:element name="LineFive" type="xs:string"/>
+            <xs:element name="LineFour" type="xs:string"/>
+            <xs:element name="LineOne" type="xs:string"/>
+            <xs:element name="LineThree" type="xs:string"/>
+            <xs:element name="LineTwo" type="xs:string"/>
+            <xs:element name="MeasureType" type="ns1:measureType"/>
+            <xs:element name="Name" type="xs:string"/>
+            <xs:element name="OcurrenceSPSLocation" type="ns1:occurrenceSPSLocation"/>
+            <xs:element name="ProviderSPSParty" type="ns1:providerSPSParty"/>
+            <xs:element name="ReferenceSPSReferencedDocument" type="ns1:referenceSPSReferencedDocument"/>
+            <xs:element name="RelationshipTypeCode" type="xs:string"/>
+            <xs:element name="SPSIssuerSPSParty" type="ns1:spsIssuerSPSParty"/>
+            <xs:element name="SignatorySPSAuthentication" type="ns1:signatorySPSAuthentication"/>
+            <xs:element name="SpecifiedSPSAddress" type="ns1:specifiedSPSAddress"/>
+            <xs:element name="SpecifiedSPSPerson" type="ns1:specifiedSPSPerson"/>
+            <xs:element name="StartDateTime" type="ns1:startDateTime"/>
+            <xs:element name="Subject" type="xs:string"/>
+            <xs:element name="SubordinateSPSCountrySubDivision" type="ns1:subordinateSPSCountrySubDivision"/>
+            <xs:element name="SystemName" type="xs:string"/>
+            <xs:element name="TransitSPSCountry" type="ns1:transitSPSCountry"/>
+            <xs:element name="TypeCode" nillable="true" type="xs:anyType"/>
+            <xs:element name="UnloadingBaseportSPSLocation" type="ns1:unloadingBaseportSPSLocation"/>
+            <xs:element name="UsedSPSTransportMeans" type="ns1:usedSPSTransportMeans"/>
+            <xs:element name="UtilizedSPSTransportEquipment" type="ns1:utilizedSPSTransportEquipment"/>
+            <xs:element name="ValueMeasure" type="ns1:measureType"/>
+            <xs:complexType name="spsAcknowledgementDocument">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="tns:IssueDateTime"/>
+                    <xs:element form="qualified" name="StatusCode" type="xs:int"/>
+                    <xs:element form="qualified" minOccurs="0" name="ReasonInformation" type="tns:textType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ReferenceSPSReferencedDocument"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="textType">
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="languageID" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="spsExchangedDocument">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="Name" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="ID" type="xs:string"/>
+                    <xs:element form="qualified" name="TypeCode" type="xs:int"/>
+                    <xs:element form="qualified" name="StatusCode" type="xs:int"/>
+                    <xs:element minOccurs="0" ref="tns:IssueDateTime"/>
+                    <xs:element form="qualified" minOccurs="0" name="IssuerSPSParty" type="ns1:spsIssuerSPSParty"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:IncludedSPSNote"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ReferenceSPSReferencedDocument"/>
+                    <xs:element minOccurs="0" ref="tns:SignatorySPSAuthentication"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="includedSPSNoteContent">
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="languageID" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="includedSPSClause">
+                <xs:sequence>
+                    <xs:element form="qualified" name="ID" type="xs:int"/>
+                    <xs:element form="qualified" minOccurs="0" name="Content" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="spsConsignment">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="tns:ConsignorSPSParty"/>
+                    <xs:element minOccurs="0" ref="tns:ConsigneeSPSParty"/>
+                    <xs:element form="qualified" minOccurs="0" name="ExportSPSCountry" type="tns:exportSPSCountry"/>
+                    <xs:element form="qualified" minOccurs="0" name="ImportSPSCountry" type="tns:importSPSCountry"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:TransitSPSCountry"/>
+                    <xs:element minOccurs="0" ref="tns:UnloadingBaseportSPSLocation"/>
+                    <xs:element form="qualified" minOccurs="0" name="ExaminationSPSEvent" type="tns:examinationSPSEvent"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="MainCarriageSPSTransportMovement" type="tns:mainCarriageSPSTransportMovement"/>
+                    <xs:element minOccurs="0" ref="tns:UtilizedSPSTransportEquipment"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:IncludedSPSConsignmentItem"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="exportSPSCountry">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="ID" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="Name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="importSPSCountry">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="ID" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="Name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="examinationSPSEvent">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="OccurrenceSPSLocation" type="ns1:occurrenceSPSLocation"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="mainCarriageSPSTransportMovement">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="ID" type="xs:string"/>
+                    <xs:element form="qualified" name="ModeCode" type="xs:int"/>
+                    <xs:element minOccurs="0" ref="tns:UsedSPSTransportMeans"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="IncludedSPSConsignmentItem">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="NatureIdentificationSPSCargo" type="tns:spsCargoType"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:IncludedSPSTradeLineItem"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="spsCargoType">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="TypeCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="IncludedSPSTradeLineItem">
+                <xs:sequence>
+                    <xs:element form="qualified" name="SequenceNumeric" type="xs:int"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Description" type="tns:textType"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="CommonName" type="tns:textType"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="ScientificName" type="tns:textType"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="IntendedUse" type="tns:textType"/>
+                    <xs:element form="qualified" minOccurs="0" name="NetWeightMeasure" type="ns1:measureType"/>
+                    <xs:element form="qualified" minOccurs="0" name="GrossWeightMeasure" type="ns1:measureType"/>
+                    <xs:element form="qualified" minOccurs="0" name="NetVolumeMeasure" type="ns1:measureType"/>
+                    <xs:element form="qualified" minOccurs="0" name="GrossVolumeMeasure" type="ns1:measureType"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="AdditionalInformationSPSNote" type="tns:additionalInformationSPSNote"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ApplicableSPSClassification"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="PhysicalSPSPackage" type="tns:physicalSPSPackage"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="OriginSPSCountry" type="tns:originSPSCountry"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="AppliedSPSProcess" type="tns:appliedSPSProcess"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="additionalInformationSPSNote">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="Subject" type="xs:string"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Content" type="tns:textType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="physicalSPSPackage">
+                <xs:sequence>
+                    <xs:element form="qualified" name="LevelCode" type="xs:int"/>
+                    <xs:element form="qualified" minOccurs="0" name="TypeCode" type="xs:string"/>
+                    <xs:element form="qualified" name="ItemQuantity" type="xs:double"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="originSPSCountry">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="ID" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="Name" type="xs:string"/>
+                    <xs:element minOccurs="0" ref="tns:SubordinateSPSCountrySubDivision"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="appliedSPSProcess">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="TypeCode" type="xs:string"/>
+                    <xs:element minOccurs="0" ref="tns:CompletionSPSPeriod"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="tns:ApplicableSPSProcessCharacteristic"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="urn:un:unece:uncefact:data:Standard:QualifiedDataType:21" version="1.0">
+            <xs:simpleType name="dateMandatoryDateTimeType">
+                <xs:restriction base="xs:string"/>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ephyto.ippc.int/HUB.Entities" xmlns:ns4="urn:un:unece:uncefact:data:standard:SPSCertificate:17" xmlns:ns3="urn:un:unece:uncefact:data:standard:SPSAcknowledgement:17" xmlns:ns2="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21" xmlns:ns1="http://ephyto.ippc.int/" targetNamespace="http://ephyto.ippc.int/HUB.Entities" version="1.0">
+            <xs:import namespace="http://ephyto.ippc.int/"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:SPSAcknowledgement:17"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:SPSCertificate:17"/>
+            <xs:element name="ArrayOfEnvelope" type="tns:ArrayOfEnvelope"/>
+            <xs:element name="ArrayOfEnvelopeHeader" type="tns:ArrayOfEnvelopeHeader"/>
+            <xs:element name="Envelope" type="tns:Envelope"/>
+            <xs:element name="EnvelopeHeader" type="tns:EnvelopeHeader"/>
+            <xs:element name="HUBTrackingInfo" type="tns:HUBTrackingInfo"/>
+            <xs:complexType name="ArrayOfNppo">
+                <xs:sequence>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Nppo" nillable="true" type="tns:Nppo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Nppo">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="Country" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="Receive" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="Send" type="xs:string"/>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="AllowedDocument" type="ns1:allowedDocument"/>
+                    <xs:element form="qualified" minOccurs="0" name="Signature" type="ns1:signingCertificate"/>
+                    <xs:element form="qualified" minOccurs="0" name="ChannelRules" type="tns:ArrayOfChannelRules"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfChannelRules">
+                <xs:sequence>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="ChannelRule" nillable="true" type="ns1:channelRule"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfEnvelopeHeader">
+                <xs:sequence>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="EnvelopeHeader" nillable="true" type="tns:EnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="EnvelopeHeader">
+                <xs:sequence>
+                    <xs:element form="qualified" name="From" type="xs:string"/>
+                    <xs:element form="qualified" name="To" type="xs:string"/>
+                    <xs:element form="qualified" name="CertificateType" type="xs:int"/>
+                    <xs:element form="qualified" name="CertificateStatus" type="xs:int"/>
+                    <xs:element form="qualified" name="NPPOCertificateNumber" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="hubDeliveryNumber" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="HUBTrackingInfo" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="hubDeliveryErrorMessage" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="Forwardings" type="tns:ArrayOfEnvelopeForwarding"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfEnvelopeForwarding">
+                <xs:sequence>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="EnvelopeForwarding" nillable="true" type="tns:EnvelopeForwarding"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="EnvelopeForwarding">
+                <xs:sequence>
+                    <xs:element form="qualified" name="Code" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="HubDeliveryNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Envelope">
+                <xs:complexContent>
+                    <xs:extension base="tns:EnvelopeHeader">
+                        <xs:sequence>
+                            <xs:element form="qualified" minOccurs="0" name="Content" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="CountryResponseEnvelope">
+                <xs:complexContent>
+                    <xs:extension base="tns:EnvelopeHeader">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" ref="ns3:SPSAcknowledgement"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="ePhytoEnvelope">
+                <xs:complexContent>
+                    <xs:extension base="tns:EnvelopeHeader">
+                        <xs:sequence>
+                            <xs:element minOccurs="0" ref="ns4:SPSCertificate"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfEnvelope">
+                <xs:sequence>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Envelope" nillable="true" type="tns:Envelope"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ArrayOfChannels">
+                <xs:sequence>
+                    <xs:element form="qualified" maxOccurs="unbounded" minOccurs="0" name="Channel" nillable="true" type="tns:Channel"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="Channel">
+                <xs:sequence>
+                    <xs:element form="qualified" minOccurs="0" name="Code" type="xs:string"/>
+                    <xs:element form="qualified" minOccurs="0" name="Name" type="xs:string"/>
+                </xs:sequence>
+                <xs:attribute name="Receive" type="xs:boolean" use="required"/>
+                <xs:attribute name="Send" type="xs:boolean" use="required"/>
+            </xs:complexType>
+            <xs:simpleType name="HUBTrackingInfo">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="PendingDelivery"/>
+                    <xs:enumeration value="Delivered"/>
+                    <xs:enumeration value="FailedDelivery"/>
+                    <xs:enumeration value="EnvelopeNotExists"/>
+                    <xs:enumeration value="DeliveredWithWarnings"/>
+                    <xs:enumeration value="DeliveredNotReadable"/>
+                </xs:restriction>
+            </xs:simpleType>
+        </xs:schema>
+        <xs:schema xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:tns="http://ephyto.ippc.int/" xmlns:ns6="urn:un:unece:uncefact:data:standard:SPSCertificate:17" xmlns:ns5="urn:un:unece:uncefact:data:Standard:QualifiedDataType:21" xmlns:ns4="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:21" xmlns:ns3="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21" xmlns:ns2="urn:un:unece:uncefact:data:standard:SPSAcknowledgement:17" xmlns:ns1="http://ephyto.ippc.int/HUB.Entities" attributeFormDefault="unqualified" elementFormDefault="qualified" targetNamespace="http://ephyto.ippc.int/">
+            <xs:import namespace="http://ephyto.ippc.int/HUB.Entities"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:SPSAcknowledgement:17"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:ReusableAggregateBusinessInformationEntity:21"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:UnqualifiedDataType:21"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:Standard:QualifiedDataType:21"/>
+            <xs:import namespace="urn:un:unece:uncefact:data:standard:SPSCertificate:17"/>
+            <xs:element name="AcknowledgeEnvelopeReceipt" type="tns:AcknowledgeEnvelopeReceipt"/>
+            <xs:element name="AcknowledgeEnvelopeReceiptResponse" type="tns:AcknowledgeEnvelopeReceiptResponse"/>
+            <xs:element name="AcknowledgeFailedEnvelopeReceipt" type="tns:AcknowledgeFailedEnvelopeReceipt"/>
+            <xs:element name="AcknowledgeFailedEnvelopeReceiptResponse" type="tns:AcknowledgeFailedEnvelopeReceiptResponse"/>
+            <xs:element name="AdvancedAcknowledgeEnvelopeReceipt" type="tns:AdvancedAcknowledgeEnvelopeReceipt"/>
+            <xs:element name="AdvancedAcknowledgeEnvelopeReceiptResponse" type="tns:AdvancedAcknowledgeEnvelopeReceiptResponse"/>
+            <xs:element name="AllowedDocument" type="tns:allowedDocument"/>
+            <xs:element name="CertificateStatus" type="tns:certificateStatus"/>
+            <xs:element name="CertificateType" type="tns:certificateType"/>
+            <xs:element name="ChannelRule" type="tns:channelRule"/>
+            <xs:element name="DeliverCountryResponseEnvelope" type="tns:DeliverCountryResponseEnvelope"/>
+            <xs:element name="DeliverCountryResponseEnvelopeResponse" type="tns:DeliverCountryResponseEnvelopeResponse"/>
+            <xs:element name="DeliverEnvelope" type="tns:DeliverEnvelope"/>
+            <xs:element name="DeliverEnvelopeResponse" type="tns:DeliverEnvelopeResponse"/>
+            <xs:element name="DeliverPhytoEnvelope" type="tns:DeliverPhytoEnvelope"/>
+            <xs:element name="DeliverPhytoEnvelopeResponse" type="tns:DeliverPhytoEnvelopeResponse"/>
+            <xs:element name="GetActiveNppos" type="tns:GetActiveNppos"/>
+            <xs:element name="GetActiveNpposResponse" type="tns:GetActiveNpposResponse"/>
+            <xs:element name="GetAdditionalDeclarations" type="tns:GetAdditionalDeclarations"/>
+            <xs:element name="GetAdditionalDeclarationsResponse" type="tns:GetAdditionalDeclarationsResponse"/>
+            <xs:element name="GetAvailableChannels" type="tns:GetAvailableChannels"/>
+            <xs:element name="GetAvailableChannelsResponse" type="tns:GetAvailableChannelsResponse"/>
+            <xs:element name="GetConditions" type="tns:GetConditions"/>
+            <xs:element name="GetConditionsResponse" type="tns:GetConditionsResponse"/>
+            <xs:element name="GetEnvelopeTrackingInfo" type="tns:GetEnvelopeTrackingInfo"/>
+            <xs:element name="GetEnvelopeTrackingInfoResponse" type="tns:GetEnvelopeTrackingInfoResponse"/>
+            <xs:element name="GetImportEnvelopeHeaders" type="tns:GetImportEnvelopeHeaders"/>
+            <xs:element name="GetImportEnvelopeHeadersResponse" type="tns:GetImportEnvelopeHeadersResponse"/>
+            <xs:element name="GetIntendedUses" type="tns:GetIntendedUses"/>
+            <xs:element name="GetIntendedUsesResponse" type="tns:GetIntendedUsesResponse"/>
+            <xs:element name="GetMeanOfTransports" type="tns:GetMeanOfTransports"/>
+            <xs:element name="GetMeanOfTransportsResponse" type="tns:GetMeanOfTransportsResponse"/>
+            <xs:element name="GetPackageTypes" type="tns:GetPackageTypes"/>
+            <xs:element name="GetPackageTypesResponse" type="tns:GetPackageTypesResponse"/>
+            <xs:element name="GetPesticides" type="tns:GetPesticides"/>
+            <xs:element name="GetPesticidesResponse" type="tns:GetPesticidesResponse"/>
+            <xs:element name="GetProductDescriptions" type="tns:GetProductDescriptions"/>
+            <xs:element name="GetProductDescriptionsResponse" type="tns:GetProductDescriptionsResponse"/>
+            <xs:element name="GetProfile" type="tns:GetProfile"/>
+            <xs:element name="GetProfileResponse" type="tns:GetProfileResponse"/>
+            <xs:element name="GetStatements" type="tns:GetStatements"/>
+            <xs:element name="GetStatementsResponse" type="tns:GetStatementsResponse"/>
+            <xs:element name="GetTreatmentTypes" type="tns:GetTreatmentTypes"/>
+            <xs:element name="GetTreatmentTypesResponse" type="tns:GetTreatmentTypesResponse"/>
+            <xs:element name="GetUnderDeliveryEnvelope" type="tns:GetUnderDeliveryEnvelope"/>
+            <xs:element name="GetUnderDeliveryEnvelopeResponse" type="tns:GetUnderDeliveryEnvelopeResponse"/>
+            <xs:element name="GetUnitMeasures" type="tns:GetUnitMeasures"/>
+            <xs:element name="GetUnitMeasuresResponse" type="tns:GetUnitMeasuresResponse"/>
+            <xs:element name="PULLImportEnvelope" type="tns:PULLImportEnvelope"/>
+            <xs:element name="PULLImportEnvelopeResponse" type="tns:PULLImportEnvelopeResponse"/>
+            <xs:element name="PULLSingleImportEnvelope" type="tns:PULLSingleImportEnvelope"/>
+            <xs:element name="PULLSingleImportEnvelopeResponse" type="tns:PULLSingleImportEnvelopeResponse"/>
+            <xs:element name="SetTrackingInfoUpdate" type="tns:SetTrackingInfoUpdate"/>
+            <xs:element name="SetTrackingInfoUpdateResponse" type="tns:SetTrackingInfoUpdateResponse"/>
+            <xs:element name="Signature" type="tns:signingCertificate"/>
+            <xs:element name="ValidateAndDeliverEnvelope" type="tns:ValidateAndDeliverEnvelope"/>
+            <xs:element name="ValidateAndDeliverEnvelopeResponse" type="tns:ValidateAndDeliverEnvelopeResponse"/>
+            <xs:element name="ValidatePhytoXML" type="tns:ValidatePhytoXML"/>
+            <xs:element name="ValidatePhytoXMLResponse" type="tns:ValidatePhytoXMLResponse"/>
+            <xs:element name="channel" type="ns1:Channel"/>
+            <xs:element name="countryResponseEnvelope" type="ns1:CountryResponseEnvelope"/>
+            <xs:element name="ePhytoEnvelope" type="ns1:ePhytoEnvelope"/>
+            <xs:element name="envelope" type="ns1:Envelope"/>
+            <xs:element name="envelopeForwarding" type="ns1:EnvelopeForwarding"/>
+            <xs:element name="envelopeHeader" type="ns1:EnvelopeHeader"/>
+            <xs:element name="nppo" type="ns1:Nppo"/>
+            <xs:complexType name="GetAdditionalDeclarations">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetAdditionalDeclarationsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="AdditionalDeclaration" type="tns:additionalDeclaration"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="additionalDeclaration">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="additionalCode" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lang" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="optionalText" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="text" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetTreatmentTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetTreatmentTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="TreatmentType" type="tns:treatmentType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="treatmentType">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="description" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lang" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                    <xs:element form="unqualified" name="level" type="xs:int"/>
+                    <xs:element form="unqualified" minOccurs="0" name="parentCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetActiveNppos">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetActiveNpposResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="GetActiveNpposResult" type="ns1:ArrayOfNppo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="allowedDocument">
+                <xs:complexContent>
+                    <xs:extension base="tns:baseEntity">
+                        <xs:sequence>
+                            <xs:element form="unqualified" minOccurs="0" name="certificateType" type="tns:certificateType"/>
+                            <xs:element form="unqualified" minOccurs="0" name="certificateStatus" type="tns:certificateStatus"/>
+                        </xs:sequence>
+                        <xs:attribute name="active" type="xs:boolean" use="required"/>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="baseEntity">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="certificateType">
+                <xs:sequence/>
+                <xs:attribute name="number" type="xs:int" use="required"/>
+                <xs:attribute name="value" type="xs:string"/>
+            </xs:complexType>
+            <xs:complexType name="certificateStatus">
+                <xs:sequence/>
+                <xs:attribute name="number" type="xs:int" use="required"/>
+                <xs:attribute name="value" type="xs:string"/>
+            </xs:complexType>
+            <xs:complexType name="signingCertificate">
+                <xs:complexContent>
+                    <xs:extension base="tns:baseEntity">
+                        <xs:sequence>
+                            <xs:element form="unqualified" minOccurs="0" name="dn" type="xs:string"/>
+                            <xs:element form="unqualified" minOccurs="0" name="certificate" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="channelRule">
+                <xs:complexContent>
+                    <xs:extension base="tns:baseEntity">
+                        <xs:sequence/>
+                        <xs:attribute name="id" type="xs:int" use="required"/>
+                        <xs:attribute name="active" type="xs:boolean" use="required"/>
+                        <xs:attribute name="ruleType" type="tns:channelRuleType"/>
+                        <xs:attribute name="certificateType" type="xs:int" use="required"/>
+                        <xs:attribute name="certificateStatus" type="xs:int" use="required"/>
+                        <xs:attribute name="countryCode" type="xs:string"/>
+                        <xs:attribute name="direction" type="tns:channelDirection"/>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="AcknowledgeFailedEnvelopeReceipt">
+                <xs:sequence>
+                    <xs:element name="hubTrackingNumber" type="xs:string"/>
+                    <xs:element name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AcknowledgeFailedEnvelopeReceiptResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetImportEnvelopeHeaders">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="countryCode" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetImportEnvelopeHeadersResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="GetImportEnvelopeHeadersResult" type="ns1:ArrayOfEnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SetTrackingInfoUpdate">
+                <xs:sequence>
+                    <xs:element name="header" type="ns1:EnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SetTrackingInfoUpdateResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="PULLSingleImportEnvelope">
+                <xs:sequence>
+                    <xs:element name="hubTrackingNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="PULLSingleImportEnvelopeResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="PULLSingleImportEnvelopeResult" type="ns1:Envelope"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetIntendedUses">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetIntendedUsesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="IntendedUse" type="tns:intendedUse"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="intendedUse">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lang" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetPesticides">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetPesticidesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Pesticide" type="tns:pesticide"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="pesticide">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="description" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ValidateAndDeliverEnvelope">
+                <xs:sequence>
+                    <xs:element ref="tns:envelope"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ValidateAndDeliverEnvelopeResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="ValidateAndDeliverEnvelopeResult" type="ns1:EnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DeliverCountryResponseEnvelope">
+                <xs:sequence>
+                    <xs:element name="CountryResponseEnvelope" type="ns1:CountryResponseEnvelope"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SPSAcknowledgement">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns2:SPSAcknowledgementDocument"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="issueDateTime">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns4:DateTimeString"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="referenceSPSReferencedDocument">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:IssueDateTime"/>
+                    <xs:element ref="ns3:TypeCode"/>
+                    <xs:element minOccurs="0" ref="ns3:RelationshipTypeCode"/>
+                    <xs:element minOccurs="0" ref="ns3:ID"/>
+                    <xs:element minOccurs="0" ref="ns3:AttachmentBinaryObject"/>
+                    <xs:element minOccurs="0" ref="ns3:Information"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="idType">
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="schemeName" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="binaryObjectType">
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="filename" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="DeliverCountryResponseEnvelopeResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="DeliverCountryResponseEnvelopeResult" type="ns1:EnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetEnvelopeTrackingInfo">
+                <xs:sequence>
+                    <xs:element name="hubTrackingNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetEnvelopeTrackingInfoResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="GetEnvelopeTrackingInfoResult" type="ns1:EnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DeliverPhytoEnvelope">
+                <xs:sequence>
+                    <xs:element ref="tns:ePhytoEnvelope"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="SPSCertificate">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns6:SPSExchangedDocument"/>
+                    <xs:element minOccurs="0" ref="ns6:SPSConsignment"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="spsIssuerSPSParty">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="includedSPSNote">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Subject"/>
+                    <xs:element minOccurs="0" ref="ns3:Content"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="signatorySPSAuthentication">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:ActualDateTime"/>
+                    <xs:element minOccurs="0" ref="ns3:IssueSPSLocation"/>
+                    <xs:element minOccurs="0" ref="ns3:ProviderSPSParty"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:IncludedSPSClause"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="actualDateTime">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns4:DateTimeString"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="issueSPSLocation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="providerSPSParty">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                    <xs:element minOccurs="0" ref="ns3:SpecifiedSPSPerson"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="specifiedSPSPerson">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="consignorSPSParty">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:TypeCode"/>
+                    <xs:element minOccurs="0" ref="ns3:SpecifiedSPSAddress"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="codeType">
+                <xs:simpleContent>
+                    <xs:extension base="xs:string">
+                        <xs:attribute name="listName" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="specifiedSPSAddress">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:LineOne"/>
+                    <xs:element minOccurs="0" ref="ns3:LineTwo"/>
+                    <xs:element minOccurs="0" ref="ns3:LineThree"/>
+                    <xs:element minOccurs="0" ref="ns3:LineFour"/>
+                    <xs:element minOccurs="0" ref="ns3:LineFive"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="consigneeSPSParty">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:TypeCode"/>
+                    <xs:element minOccurs="0" ref="ns3:SpecifiedSPSAddress"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="transitSPSCountry">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:ID"/>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="unloadingBaseportSPSLocation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:ID"/>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="occurrenceSPSLocation">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="usedSPSTransportMeans">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="utilizedSPSTransportEquipment">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="ID" type="xs:string"/>
+                    <xs:element minOccurs="0" ref="ns3:AffixedSPSSeal"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="affixedSPSSeal">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="ID" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="measureType">
+                <xs:simpleContent>
+                    <xs:extension base="xs:double">
+                        <xs:attribute name="unitCode" type="xs:string"/>
+                    </xs:extension>
+                </xs:simpleContent>
+            </xs:complexType>
+            <xs:complexType name="applicableSPSClassification">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:SystemName"/>
+                    <xs:element minOccurs="0" ref="ns3:ClassCode"/>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:ClassName"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="subordinateSPSCountrySubDivision">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:Name"/>
+                    <xs:element minOccurs="0" ref="ns3:HierarchicalLevelCode"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="completionSPSPeriod">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns3:StartDateTime"/>
+                    <xs:element minOccurs="0" ref="ns3:EndDateTime"/>
+                    <xs:element minOccurs="0" ref="ns3:DurationMeasure"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="startDateTime">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns4:DateTimeString"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="endDateTime">
+                <xs:sequence>
+                    <xs:element minOccurs="0" ref="ns4:DateTimeString"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="applicableSPSProcessCharacteristic">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" ref="ns3:Description"/>
+                    <xs:element minOccurs="0" ref="ns3:ValueMeasure"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DeliverPhytoEnvelopeResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="DeliverPhytoEnvelopeResult" type="ns1:EnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetProfile">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetProfileResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="GetProfileResult" type="ns1:Nppo"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetProductDescriptions">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetProductDescriptionsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="ProductDescription" type="tns:productDescription"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="productDescription">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lang" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DeliverEnvelope">
+                <xs:sequence>
+                    <xs:element name="env" type="ns1:Envelope"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="DeliverEnvelopeResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="DeliverEnvelopeResult" type="ns1:EnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetUnitMeasures">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetUnitMeasuresResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="UnitMeasure" type="tns:unitMeasure"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="unitMeasure">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="name" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="symbol" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="type" type="tns:unitMeasureType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetMeanOfTransports">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetMeanOfTransportsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="MeanOfTransport" type="tns:meanOfTransport"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="meanOfTransport">
+                <xs:complexContent>
+                    <xs:extension base="tns:baseEntity">
+                        <xs:sequence>
+                            <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                            <xs:element form="unqualified" minOccurs="0" name="lang" type="xs:string"/>
+                            <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                            <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                            <xs:element form="unqualified" minOccurs="0" name="modeCode" type="xs:int"/>
+                            <xs:element form="unqualified" minOccurs="0" name="usedTransportMean" type="xs:string"/>
+                        </xs:sequence>
+                    </xs:extension>
+                </xs:complexContent>
+            </xs:complexType>
+            <xs:complexType name="GetStatements">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetStatementsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Statement" type="tns:statement"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="statement">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" name="docTypeOnly" type="xs:int"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lang" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="text" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="PULLImportEnvelope">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="PULLImportEnvelopeResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="PULLImportEnvelopesResult" type="ns1:ArrayOfEnvelope"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetUnderDeliveryEnvelope">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetUnderDeliveryEnvelopeResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="GetUnderDeliveryEnvelopeResult" type="ns1:ArrayOfEnvelopeHeader"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetConditions">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetConditionsResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="Condition" type="tns:condition"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="condition">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lang" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="name" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetAvailableChannels">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetAvailableChannelsResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="GetAvailableChannelsResult" type="ns1:ArrayOfChannels"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ValidatePhytoXML">
+                <xs:sequence>
+                    <xs:element name="ePhytoXML" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="ValidatePhytoXMLResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="ValidationResult" type="tns:validationResult"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="validationResult">
+                <xs:sequence>
+                    <xs:element form="unqualified" minOccurs="0" name="area" type="tns:validationArea"/>
+                    <xs:element form="unqualified" minOccurs="0" name="field" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="level" type="tns:validationLevel"/>
+                    <xs:element form="unqualified" minOccurs="0" name="msg" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="GetPackageTypes">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="GetPackageTypesResponse">
+                <xs:sequence>
+                    <xs:element maxOccurs="unbounded" minOccurs="0" name="PackageType" type="tns:packageType"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="packageType">
+                <xs:sequence>
+                    <xs:element form="unqualified" name="active" type="xs:boolean"/>
+                    <xs:element form="unqualified" minOccurs="0" name="code" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="description" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lang" type="xs:string"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModified" type="xs:dateTime"/>
+                    <xs:element form="unqualified" minOccurs="0" name="lastModifiedBy" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AcknowledgeEnvelopeReceipt">
+                <xs:sequence>
+                    <xs:element name="hubTrackingNumber" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AcknowledgeEnvelopeReceiptResponse">
+                <xs:sequence/>
+            </xs:complexType>
+            <xs:complexType name="AdvancedAcknowledgeEnvelopeReceipt">
+                <xs:sequence>
+                    <xs:element name="hubTrackingNumber" type="xs:string"/>
+                    <xs:element name="warningMessage" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:complexType name="AdvancedAcknowledgeEnvelopeReceiptResponse">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="return" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+            <xs:simpleType name="channelRuleType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="FORWARD"/>
+                    <xs:enumeration value="DELEGATE"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="channelDirection">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="OUT"/>
+                    <xs:enumeration value="INC"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="unitMeasureType">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="WEIGHT"/>
+                    <xs:enumeration value="VOLUME"/>
+                    <xs:enumeration value="DURATION"/>
+                    <xs:enumeration value="TEMPERATURE"/>
+                    <xs:enumeration value="CONCENTRATION"/>
+                    <xs:enumeration value="AREA"/>
+                    <xs:enumeration value="DISTANCE"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="validationArea">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="MandatoryElements"/>
+                    <xs:enumeration value="Mapping"/>
+                    <xs:enumeration value="Schema"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:simpleType name="validationLevel">
+                <xs:restriction base="xs:string">
+                    <xs:enumeration value="SEVERE"/>
+                    <xs:enumeration value="WARNING"/>
+                    <xs:enumeration value="INFO"/>
+                </xs:restriction>
+            </xs:simpleType>
+            <xs:element name="HubWebException" type="tns:HubWebException"/>
+            <xs:complexType name="HubWebException">
+                <xs:sequence>
+                    <xs:element minOccurs="0" name="message" type="xs:string"/>
+                </xs:sequence>
+            </xs:complexType>
+        </xs:schema>
+    </wsdl:types>
+    <wsdl:message name="AcknowledgeFailedEnvelopeReceiptResponse">
+        <wsdl:part element="tns:AcknowledgeFailedEnvelopeReceiptResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PULLSingleImportEnvelopeResponse">
+        <wsdl:part element="tns:PULLSingleImportEnvelopeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetAdditionalDeclarations">
+        <wsdl:part element="tns:GetAdditionalDeclarations" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetTreatmentTypes">
+        <wsdl:part element="tns:GetTreatmentTypes" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetActiveNppos">
+        <wsdl:part element="tns:GetActiveNppos" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetPesticidesResponse">
+        <wsdl:part element="tns:GetPesticidesResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AcknowledgeFailedEnvelopeReceipt">
+        <wsdl:part element="tns:AcknowledgeFailedEnvelopeReceipt" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetImportEnvelopeHeaders">
+        <wsdl:part element="tns:GetImportEnvelopeHeaders" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="SetTrackingInfoUpdate">
+        <wsdl:part element="tns:SetTrackingInfoUpdate" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PULLImportEnvelopeResponse">
+        <wsdl:part element="tns:PULLImportEnvelopeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetIntendedUses">
+        <wsdl:part element="tns:GetIntendedUses" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetPesticides">
+        <wsdl:part element="tns:GetPesticides" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeliverCountryResponseEnvelopeResponse">
+        <wsdl:part element="tns:DeliverCountryResponseEnvelopeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeliverCountryResponseEnvelope">
+        <wsdl:part element="tns:DeliverCountryResponseEnvelope" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeliverPhytoEnvelope">
+        <wsdl:part element="tns:DeliverPhytoEnvelope" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetProductDescriptionsResponse">
+        <wsdl:part element="tns:GetProductDescriptionsResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeliverEnvelope">
+        <wsdl:part element="tns:DeliverEnvelope" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetUnitMeasures">
+        <wsdl:part element="tns:GetUnitMeasures" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeliverPhytoEnvelopeResponse">
+        <wsdl:part element="tns:DeliverPhytoEnvelopeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PULLImportEnvelope">
+        <wsdl:part element="tns:PULLImportEnvelope" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetUnderDeliveryEnvelope">
+        <wsdl:part element="tns:GetUnderDeliveryEnvelope" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetConditions">
+        <wsdl:part element="tns:GetConditions" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetTreatmentTypesResponse">
+        <wsdl:part element="tns:GetTreatmentTypesResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ValidateAndDeliverEnvelopeResponse">
+        <wsdl:part element="tns:ValidateAndDeliverEnvelopeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="SetTrackingInfoUpdateResponse">
+        <wsdl:part element="tns:SetTrackingInfoUpdateResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetAdditionalDeclarationsResponse">
+        <wsdl:part element="tns:GetAdditionalDeclarationsResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetUnderDeliveryEnvelopeResponse">
+        <wsdl:part element="tns:GetUnderDeliveryEnvelopeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetMeanOfTransportsResponse">
+        <wsdl:part element="tns:GetMeanOfTransportsResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AdvancedAcknowledgeEnvelopeReceipt">
+        <wsdl:part element="tns:AdvancedAcknowledgeEnvelopeReceipt" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="HubWebException">
+        <wsdl:part element="tns:HubWebException" name="HubWebException"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ValidatePhytoXMLResponse">
+        <wsdl:part element="tns:ValidatePhytoXMLResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetActiveNpposResponse">
+        <wsdl:part element="tns:GetActiveNpposResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetEnvelopeTrackingInfoResponse">
+        <wsdl:part element="tns:GetEnvelopeTrackingInfoResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetUnitMeasuresResponse">
+        <wsdl:part element="tns:GetUnitMeasuresResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="PULLSingleImportEnvelope">
+        <wsdl:part element="tns:PULLSingleImportEnvelope" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ValidateAndDeliverEnvelope">
+        <wsdl:part element="tns:ValidateAndDeliverEnvelope" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetConditionsResponse">
+        <wsdl:part element="tns:GetConditionsResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetEnvelopeTrackingInfo">
+        <wsdl:part element="tns:GetEnvelopeTrackingInfo" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AcknowledgeEnvelopeReceiptResponse">
+        <wsdl:part element="tns:AcknowledgeEnvelopeReceiptResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetProfile">
+        <wsdl:part element="tns:GetProfile" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetProductDescriptions">
+        <wsdl:part element="tns:GetProductDescriptions" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetPackageTypesResponse">
+        <wsdl:part element="tns:GetPackageTypesResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetMeanOfTransports">
+        <wsdl:part element="tns:GetMeanOfTransports" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="DeliverEnvelopeResponse">
+        <wsdl:part element="tns:DeliverEnvelopeResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetStatements">
+        <wsdl:part element="tns:GetStatements" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetStatementsResponse">
+        <wsdl:part element="tns:GetStatementsResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AdvancedAcknowledgeEnvelopeReceiptResponse">
+        <wsdl:part element="tns:AdvancedAcknowledgeEnvelopeReceiptResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetAvailableChannelsResponse">
+        <wsdl:part element="tns:GetAvailableChannelsResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetImportEnvelopeHeadersResponse">
+        <wsdl:part element="tns:GetImportEnvelopeHeadersResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetAvailableChannels">
+        <wsdl:part element="tns:GetAvailableChannels" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetIntendedUsesResponse">
+        <wsdl:part element="tns:GetIntendedUsesResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetProfileResponse">
+        <wsdl:part element="tns:GetProfileResponse" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="ValidatePhytoXML">
+        <wsdl:part element="tns:ValidatePhytoXML" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="GetPackageTypes">
+        <wsdl:part element="tns:GetPackageTypes" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:message name="AcknowledgeEnvelopeReceipt">
+        <wsdl:part element="tns:AcknowledgeEnvelopeReceipt" name="parameters"> </wsdl:part>
+    </wsdl:message>
+    <wsdl:portType name="IDeliveryService">
+        <wsdl:operation name="GetAdditionalDeclarations">
+            <wsdl:input message="tns:GetAdditionalDeclarations" name="GetAdditionalDeclarations" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetAdditionalDeclarations" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetAdditionalDeclarations"> </wsdl:input>
+            <wsdl:output message="tns:GetAdditionalDeclarationsResponse" name="GetAdditionalDeclarationsResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetAdditionalDeclarationsResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetAdditionalDeclarationsResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetAdditionalDeclarations/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetTreatmentTypes">
+            <wsdl:input message="tns:GetTreatmentTypes" name="GetTreatmentTypes" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetTreatmentTypes" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetTreatmentTypes"> </wsdl:input>
+            <wsdl:output message="tns:GetTreatmentTypesResponse" name="GetTreatmentTypesResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetTreatmentTypesResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetTreatmentTypesResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetTreatmentTypes/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetActiveNppos">
+            <wsdl:input message="tns:GetActiveNppos" name="GetActiveNppos" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetActiveNppos" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetActiveNppos"> </wsdl:input>
+            <wsdl:output message="tns:GetActiveNpposResponse" name="GetActiveNpposResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetActiveNpposResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetActiveNpposResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetActiveNppos/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="AcknowledgeFailedEnvelopeReceipt">
+            <wsdl:input message="tns:AcknowledgeFailedEnvelopeReceipt" name="AcknowledgeFailedEnvelopeReceipt" wsam:Action="http://ephyto.ippc.int/IDeliveryService/NegativeAcknowledgeEnvelopeReceipt" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/NegativeAcknowledgeEnvelopeReceipt"> </wsdl:input>
+            <wsdl:output message="tns:AcknowledgeFailedEnvelopeReceiptResponse" name="AcknowledgeFailedEnvelopeReceiptResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/AcknowledgeFailedEnvelopeReceiptResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/AcknowledgeFailedEnvelopeReceiptResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/AcknowledgeFailedEnvelopeReceipt/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetImportEnvelopeHeaders">
+            <wsdl:input message="tns:GetImportEnvelopeHeaders" name="GetImportEnvelopeHeaders" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetImportEnvelopeHeaders" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetImportEnvelopeHeaders"> </wsdl:input>
+            <wsdl:output message="tns:GetImportEnvelopeHeadersResponse" name="GetImportEnvelopeHeadersResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetImportEnvelopeHeadersResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetImportEnvelopeHeadersResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetImportEnvelopeHeaders/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="SetTrackingInfoUpdate">
+            <wsdl:input message="tns:SetTrackingInfoUpdate" name="SetTrackingInfoUpdate" wsam:Action="http://ephyto.ippc.int/IDeliveryService/SetTrackingInfoUpdate" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/SetTrackingInfoUpdate"> </wsdl:input>
+            <wsdl:output message="tns:SetTrackingInfoUpdateResponse" name="SetTrackingInfoUpdateResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/SetTrackingInfoUpdateResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/SetTrackingInfoUpdateResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/SetTrackingInfoUpdate/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="PULLSingleImportEnvelope">
+            <wsdl:input message="tns:PULLSingleImportEnvelope" name="PULLSingleImportEnvelope" wsam:Action="http://ephyto.ippc.int/IDeliveryService/PULLSingleImportEnvelope" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/PULLSingleImportEnvelope"> </wsdl:input>
+            <wsdl:output message="tns:PULLSingleImportEnvelopeResponse" name="PULLSingleImportEnvelopeResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/PULLSingleImportEnvelopeResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/PULLSingleImportEnvelopeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/PULLSingleImportEnvelope/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetIntendedUses">
+            <wsdl:input message="tns:GetIntendedUses" name="GetIntendedUses" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetIntendedUses" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetIntendedUses"> </wsdl:input>
+            <wsdl:output message="tns:GetIntendedUsesResponse" name="GetIntendedUsesResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetIntendedUsesResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetIntendedUsesResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetIntendedUses/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetPesticides">
+            <wsdl:input message="tns:GetPesticides" name="GetPesticides" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetPesticides" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetPesticides"> </wsdl:input>
+            <wsdl:output message="tns:GetPesticidesResponse" name="GetPesticidesResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetPesticidesResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetPesticidesResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetPesticides/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ValidateAndDeliverEnvelope">
+            <wsdl:input message="tns:ValidateAndDeliverEnvelope" name="ValidateAndDeliverEnvelope" wsam:Action="http://ephyto.ippc.int/IDeliveryService/ValidateAndDeliverEnvelope" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/ValidateAndDeliverEnvelope"> </wsdl:input>
+            <wsdl:output message="tns:ValidateAndDeliverEnvelopeResponse" name="ValidateAndDeliverEnvelopeResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/ValidateAndDeliverEnvelopeResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/ValidateAndDeliverEnvelopeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/ValidateAndDeliverEnvelope/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeliverCountryResponseEnvelope">
+            <wsdl:input message="tns:DeliverCountryResponseEnvelope" name="DeliverCountryResponseEnvelope" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverCountryResponseEnvelope" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/DeliverCountryResponseEnvelope"> </wsdl:input>
+            <wsdl:output message="tns:DeliverCountryResponseEnvelopeResponse" name="DeliverCountryResponseEnvelopeResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverCountryResponseEnvelopeResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/DeliverCountryResponseEnvelopeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverCountryResponseEnvelope/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetEnvelopeTrackingInfo">
+            <wsdl:input message="tns:GetEnvelopeTrackingInfo" name="GetEnvelopeTrackingInfo" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetEnvelopeTrackingInfo" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetEnvelopeTrackingInfo"> </wsdl:input>
+            <wsdl:output message="tns:GetEnvelopeTrackingInfoResponse" name="GetEnvelopeTrackingInfoResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetEnvelopeTrackingInfoResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetEnvelopeTrackingInfoResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetEnvelopeTrackingInfo/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeliverPhytoEnvelope">
+            <wsdl:input message="tns:DeliverPhytoEnvelope" name="DeliverPhytoEnvelope" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverPhytoEnvelope" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/DeliverPhytoEnvelope"> </wsdl:input>
+            <wsdl:output message="tns:DeliverPhytoEnvelopeResponse" name="DeliverPhytoEnvelopeResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverPhytoEnvelopeResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/DeliverPhytoEnvelopeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverPhytoEnvelope/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetProfile">
+            <wsdl:input message="tns:GetProfile" name="GetProfile" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetProfile" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetProfile"> </wsdl:input>
+            <wsdl:output message="tns:GetProfileResponse" name="GetProfileResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetProfileResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetProfileResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetProfile/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetProductDescriptions">
+            <wsdl:input message="tns:GetProductDescriptions" name="GetProductDescriptions" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetProductDescriptions" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetProductDescriptions"> </wsdl:input>
+            <wsdl:output message="tns:GetProductDescriptionsResponse" name="GetProductDescriptionsResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetProductDescriptionsResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetProductDescriptionsResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetProductDescriptions/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeliverEnvelope">
+            <wsdl:input message="tns:DeliverEnvelope" name="DeliverEnvelope" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverEnvelope" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/DeliverEnvelope"> </wsdl:input>
+            <wsdl:output message="tns:DeliverEnvelopeResponse" name="DeliverEnvelopeResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverEnvelopeResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/DeliverEnvelopeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/DeliverEnvelope/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnitMeasures">
+            <wsdl:input message="tns:GetUnitMeasures" name="GetUnitMeasures" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetUnitMeasures" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetUnitMeasures"> </wsdl:input>
+            <wsdl:output message="tns:GetUnitMeasuresResponse" name="GetUnitMeasuresResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetUnitMeasuresResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetUnitMeasuresResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetUnitMeasures/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetMeanOfTransports">
+            <wsdl:input message="tns:GetMeanOfTransports" name="GetMeanOfTransports" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetMeanOfTransports" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetMeanOfTransports"> </wsdl:input>
+            <wsdl:output message="tns:GetMeanOfTransportsResponse" name="GetMeanOfTransportsResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetMeanOfTransportsResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetMeanOfTransportsResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetMeanOfTransports/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetStatements">
+            <wsdl:input message="tns:GetStatements" name="GetStatements" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetStatements" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetStatements"> </wsdl:input>
+            <wsdl:output message="tns:GetStatementsResponse" name="GetStatementsResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetStatementsResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetStatementsResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetStatements/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="PULLImportEnvelope">
+            <wsdl:input message="tns:PULLImportEnvelope" name="PULLImportEnvelope" wsam:Action="http://ephyto.ippc.int/IDeliveryService/PULLImportEnvelope" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/PULLImportEnvelope"> </wsdl:input>
+            <wsdl:output message="tns:PULLImportEnvelopeResponse" name="PULLImportEnvelopeResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/PULLImportEnvelopeResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/PULLImportEnvelopeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/PULLImportEnvelope/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnderDeliveryEnvelope">
+            <wsdl:input message="tns:GetUnderDeliveryEnvelope" name="GetUnderDeliveryEnvelope" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetUnderDeliveryEnvelope" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetUnderDeliveryEnvelope"> </wsdl:input>
+            <wsdl:output message="tns:GetUnderDeliveryEnvelopeResponse" name="GetUnderDeliveryEnvelopeResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetUnderDeliveryEnvelopeResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetUnderDeliveryEnvelopeResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetUnderDeliveryEnvelope/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetConditions">
+            <wsdl:input message="tns:GetConditions" name="GetConditions" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetConditions" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetConditions"> </wsdl:input>
+            <wsdl:output message="tns:GetConditionsResponse" name="GetConditionsResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetConditionsResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetConditionsResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetConditions/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAvailableChannels">
+            <wsdl:input message="tns:GetAvailableChannels" name="GetAvailableChannels" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetAvailableChannels" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetAvailableChannels"> </wsdl:input>
+            <wsdl:output message="tns:GetAvailableChannelsResponse" name="GetAvailableChannelsResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetAvailableChannelsResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetAvailableChannelsResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetAvailableChannels/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ValidatePhytoXML">
+            <wsdl:input message="tns:ValidatePhytoXML" name="ValidatePhytoXML" wsam:Action="http://ephyto.ippc.int/IDeliveryService/ValidatePhytoXML" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/ValidatePhytoXML"> </wsdl:input>
+            <wsdl:output message="tns:ValidatePhytoXMLResponse" name="ValidatePhytoXMLResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/ValidatePhytoXMLResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/ValidatePhytoXMLResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/ValidatePhytoXML/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetPackageTypes">
+            <wsdl:input message="tns:GetPackageTypes" name="GetPackageTypes" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetPackageTypes" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetPackageTypes"> </wsdl:input>
+            <wsdl:output message="tns:GetPackageTypesResponse" name="GetPackageTypesResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetPackageTypesResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/GetPackageTypesResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/GetPackageTypes/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="AcknowledgeEnvelopeReceipt">
+            <wsdl:input message="tns:AcknowledgeEnvelopeReceipt" name="AcknowledgeEnvelopeReceipt" wsam:Action="http://ephyto.ippc.int/IDeliveryService/AcknowledgeEnvelopeReceipt" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/AcknowledgeEnvelopeReceipt"> </wsdl:input>
+            <wsdl:output message="tns:AcknowledgeEnvelopeReceiptResponse" name="AcknowledgeEnvelopeReceiptResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/AcknowledgeEnvelopeReceiptResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/AcknowledgeEnvelopeReceiptResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/AcknowledgeEnvelopeReceipt/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="AdvancedAcknowledgeEnvelopeReceipt">
+            <wsdl:input message="tns:AdvancedAcknowledgeEnvelopeReceipt" name="AdvancedAcknowledgeEnvelopeReceipt" wsam:Action="http://ephyto.ippc.int/IDeliveryService/NegativeAcknowledgeEnvelopeReceipt" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/NegativeAcknowledgeEnvelopeReceipt"> </wsdl:input>
+            <wsdl:output message="tns:AdvancedAcknowledgeEnvelopeReceiptResponse" name="AdvancedAcknowledgeEnvelopeReceiptResponse" wsam:Action="http://ephyto.ippc.int/IDeliveryService/AdvancedAcknowledgeEnvelopeReceiptResponse" wsaw:Action="http://ephyto.ippc.int/IDeliveryService/AdvancedAcknowledgeEnvelopeReceiptResponse"> </wsdl:output>
+            <wsdl:fault message="tns:HubWebException" name="HubWebException" wsam:Action="http://ephyto.ippc.int/IDeliveryService/AdvancedAcknowledgeEnvelopeReceipt/Fault/HubWebException"> </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:portType>
+    <wsdl:binding name="DeliveryServiceSoapBinding" type="tns:IDeliveryService">
+        <soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+        <wsdl:operation name="GetTreatmentTypes">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetTreatmentTypes" style="document"/>
+            <wsdl:input name="GetTreatmentTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetTreatmentTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAdditionalDeclarations">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetAdditionalDeclarations" style="document"/>
+            <wsdl:input name="GetAdditionalDeclarations">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetAdditionalDeclarationsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetActiveNppos">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetActiveNppos" style="document"/>
+            <wsdl:input name="GetActiveNppos">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetActiveNpposResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="AcknowledgeFailedEnvelopeReceipt">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/AcknowledgeFailedEnvelopeReceipt" style="document"/>
+            <wsdl:input name="AcknowledgeFailedEnvelopeReceipt">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="AcknowledgeFailedEnvelopeReceiptResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetImportEnvelopeHeaders">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetImportEnvelopeHeaders" style="document"/>
+            <wsdl:input name="GetImportEnvelopeHeaders">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetImportEnvelopeHeadersResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="SetTrackingInfoUpdate">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/SetTrackingInfoUpdate" style="document"/>
+            <wsdl:input name="SetTrackingInfoUpdate">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="SetTrackingInfoUpdateResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="PULLSingleImportEnvelope">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/PULLSingleImportEnvelope" style="document"/>
+            <wsdl:input name="PULLSingleImportEnvelope">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="PULLSingleImportEnvelopeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetIntendedUses">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetIntendedUses" style="document"/>
+            <wsdl:input name="GetIntendedUses">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetIntendedUsesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetPesticides">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetPesticides" style="document"/>
+            <wsdl:input name="GetPesticides">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetPesticidesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ValidateAndDeliverEnvelope">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/ValidateAndDeliverEnvelope" style="document"/>
+            <wsdl:input name="ValidateAndDeliverEnvelope">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ValidateAndDeliverEnvelopeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeliverCountryResponseEnvelope">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/DeliverCountryResponseEnvelope" style="document"/>
+            <wsdl:input name="DeliverCountryResponseEnvelope">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="DeliverCountryResponseEnvelopeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetEnvelopeTrackingInfo">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetEnvelopeTrackingInfo" style="document"/>
+            <wsdl:input name="GetEnvelopeTrackingInfo">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetEnvelopeTrackingInfoResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeliverPhytoEnvelope">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/DeliverPhytoEnvelope" style="document"/>
+            <wsdl:input name="DeliverPhytoEnvelope">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="DeliverPhytoEnvelopeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetProfile">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetProfile" style="document"/>
+            <wsdl:input name="GetProfile">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetProfileResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetProductDescriptions">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetProductDescriptions" style="document"/>
+            <wsdl:input name="GetProductDescriptions">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetProductDescriptionsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="DeliverEnvelope">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/DeliverEnvelope" style="document"/>
+            <wsdl:input name="DeliverEnvelope">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="DeliverEnvelopeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnitMeasures">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetUnitMeasures" style="document"/>
+            <wsdl:input name="GetUnitMeasures">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetUnitMeasuresResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetMeanOfTransports">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetMeanOfTransports" style="document"/>
+            <wsdl:input name="GetMeanOfTransports">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetMeanOfTransportsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetStatements">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetStatements" style="document"/>
+            <wsdl:input name="GetStatements">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetStatementsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="PULLImportEnvelope">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/PULLImportEnvelope" style="document"/>
+            <wsdl:input name="PULLImportEnvelope">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="PULLImportEnvelopeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetUnderDeliveryEnvelope">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetUnderDeliveryEnvelope" style="document"/>
+            <wsdl:input name="GetUnderDeliveryEnvelope">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetUnderDeliveryEnvelopeResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetConditions">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetConditions" style="document"/>
+            <wsdl:input name="GetConditions">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetConditionsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetAvailableChannels">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetAvailableChannels" style="document"/>
+            <wsdl:input name="GetAvailableChannels">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetAvailableChannelsResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="ValidatePhytoXML">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/ValidatePhytoXML" style="document"/>
+            <wsdl:input name="ValidatePhytoXML">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="ValidatePhytoXMLResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="GetPackageTypes">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/GetPackageTypes" style="document"/>
+            <wsdl:input name="GetPackageTypes">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="GetPackageTypesResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="AcknowledgeEnvelopeReceipt">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/AcknowledgeEnvelopeReceipt" style="document"/>
+            <wsdl:input name="AcknowledgeEnvelopeReceipt">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="AcknowledgeEnvelopeReceiptResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+        <wsdl:operation name="AdvancedAcknowledgeEnvelopeReceipt">
+            <soap:operation soapAction="http://ephyto.ippc.int/IDeliveryService/NegativeAcknowledgeEnvelopeReceipt" style="document"/>
+            <wsdl:input name="AdvancedAcknowledgeEnvelopeReceipt">
+                <soap:body use="literal"/>
+            </wsdl:input>
+            <wsdl:output name="AdvancedAcknowledgeEnvelopeReceiptResponse">
+                <soap:body use="literal"/>
+            </wsdl:output>
+            <wsdl:fault name="HubWebException">
+                <soap:fault name="HubWebException" use="literal"/>
+            </wsdl:fault>
+        </wsdl:operation>
+    </wsdl:binding>
+    <wsdl:service name="DeliveryService">
+        <wsdl:port binding="tns:DeliveryServiceSoapBinding" name="IDeliveryServiceImplPort">
+            <soap:address location="https://uat-hub.ephytoexchange.org/hub/DeliveryService"/>
+        </wsdl:port>
+    </wsdl:service>
+</wsdl:definitions>
