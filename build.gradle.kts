@@ -6,7 +6,7 @@ plugins {
 	kotlin("plugin.spring") version "2.0.21"
 
 	// Statisk kodeanalyse
-	id("org.sonarqube") version "6.0.0.5145"
+	id("org.sonarqube") version "6.0.1.5171"
 	id("jacoco")
 	id("io.gitlab.arturbosch.detekt").version("1.23.5")
 
