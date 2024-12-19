@@ -57,7 +57,7 @@ dependencies {
 	implementation("io.nats:jnats")
 
 	// protobuf
-	implementation(platform("com.google.protobuf:protobuf-bom:4.29.1"))
+	implementation(platform("com.google.protobuf:protobuf-bom:4.29.2"))
 	implementation("com.google.protobuf:protobuf-java")
 
 	// gcp
