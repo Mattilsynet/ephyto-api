@@ -15,6 +15,7 @@ import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
 import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
@@ -23,10 +24,10 @@ class EnvelopeServiceTest {
 
     private lateinit var envelopeService: EnvelopeService
 
-    @MockBean
+    @MockitoBean
     private lateinit var gcpStorageService: GcpStorageService
 
-    @MockBean
+    @MockitoBean
     private lateinit var natsService: NatsService
 
     @BeforeEach

@@ -28,8 +28,8 @@ import org.mockito.kotlin.doThrow
 import org.mockito.kotlin.never
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
@@ -38,19 +38,19 @@ internal class EphytoServiceTest {
 
     private lateinit var ephytoService: EphytoService
 
-    @MockBean
+    @MockitoBean
     lateinit var envelopeService: EnvelopeService
 
-    @MockBean
+    @MockitoBean
     lateinit var ephytoClient: EphytoClient
 
-    @MockBean
+    @MockitoBean
     lateinit var ephytoKodeverkClient: EphytoKodeverkClient
 
-    @MockBean
+    @MockitoBean
     lateinit var natsService: NatsService
 
-    @MockBean
+    @MockitoBean
     lateinit var ephytoValideringService: EphytoValideringService
 
     private val xmlSertifikatContent = object {}.javaClass.classLoader

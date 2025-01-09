@@ -14,12 +14,12 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.doReturn
-import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 import java.util.Base64
 
 class EphytoEnvelopeValidatorTest {
 
-    @MockBean
+    @MockitoBean
     private lateinit var ephytoClient: EphytoClientAcknowledge
 
     private lateinit var ephytoEnvelopeValidator: EphytoEnvelopeValidator

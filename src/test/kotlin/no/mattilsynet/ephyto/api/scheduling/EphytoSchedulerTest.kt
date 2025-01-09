@@ -7,18 +7,18 @@ import org.junit.jupiter.api.Test
 import org.mockito.Mockito
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 
 @ActiveProfiles("test")
 internal class EphytoSchedulerTest {
 
     private lateinit var ephytoScheduler: EphytoScheduler
 
-    @MockBean
+    @MockitoBean
     private val ephytoKodeverkService: EphytoKodeverkService = mock()
 
-    @MockBean
+    @MockitoBean
     private val ephytoService: EphytoService = mock()
 
 

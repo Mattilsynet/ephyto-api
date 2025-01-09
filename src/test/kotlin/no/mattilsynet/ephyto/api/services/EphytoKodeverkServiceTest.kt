@@ -6,16 +6,16 @@ import org.mockito.Mockito
 import org.mockito.kotlin.any
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.verify
-import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 
 internal class EphytoKodeverkServiceTest {
 
     private lateinit var ephytoKodeverkService: EphytoKodeverkService
 
-    @MockBean
+    @MockitoBean
     private val ephytoService = mock<EphytoService>()
 
-    @MockBean
+    @MockitoBean
     private val natsKodeverkService = mock<NatsKodeverkService>()
 
     @BeforeEach
@@ -24,7 +24,7 @@ internal class EphytoKodeverkServiceTest {
     }
 
     @Test
-        fun `pushTreatmentsTilNats kaller videre til ephytoService og natsService`() {
+    fun `pushTreatmentsTilNats kaller videre til ephytoService og natsService`() {
         // When:
         ephytoKodeverkService.pushTreatmentsTilNats()
 
@@ -34,7 +34,7 @@ internal class EphytoKodeverkServiceTest {
     }
 
     @Test
-        fun `pushIndendedUseTilNats kaller videre til ephytoService og natsService`() {
+    fun `pushIndendedUseTilNats kaller videre til ephytoService og natsService`() {
         // When:
         ephytoKodeverkService.pushIndendedUseTilNats()
 
