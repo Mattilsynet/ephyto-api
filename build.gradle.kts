@@ -43,9 +43,9 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
 	// mattilsynet
-	implementation(platform("no.mattilsynet.fisk.libs:spring-nats-bom:2024.09.25-09.52-153a1c2aa108"))
-	implementation("no.mattilsynet.fisk.libs:spring-nats")
-	implementation("no.mattilsynet.fisk.libs:reactive-nats")
+	implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.01.08-15.08-f18f927d07eb"))
+	implementation("no.mattilsynet.fisk.libs:nats")
+	implementation("no.mattilsynet.fisk.libs:virtual-nats")
 
 	// spring boot
 	implementation("org.springframework.boot:spring-boot-starter-webflux")
