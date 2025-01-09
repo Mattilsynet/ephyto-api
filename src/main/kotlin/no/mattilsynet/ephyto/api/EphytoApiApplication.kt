@@ -1,6 +1,6 @@
 package no.mattilsynet.ephyto.api
 
-import no.mattilsynet.fisk.libs.springnats.spring.SpringNatsConfiguration
+import no.mattilsynet.fisk.libs.spring.virtualnats.SpringVirtualNatsStarter
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -12,11 +12,11 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @ConfigurationPropertiesScan
 @EnableConfigurationProperties
 @EnableScheduling
-@Import(SpringNatsConfiguration::class)
+@Import(SpringVirtualNatsStarter::class)
 class EphytoApiApplication
 
 @Suppress("SpreadOperator")
 fun main(args: Array<String>) {
-	EphytoKeystorePropertySetter().setSystemJavaKeystore()
-	runApplication<EphytoApiApplication>(*args)
+    EphytoKeystorePropertySetter().setSystemJavaKeystore()
+    runApplication<EphytoApiApplication>(*args)
 }

@@ -1,7 +1,6 @@
 package no.mattilsynet.ephyto.api.services
 
 import com.google.cloud.secretmanager.v1.SecretManagerServiceClient
-import io.nats.client.KeyValueOptions
 import no.mattilsynet.ephyto.api.imports.intendeduse.v1.IntendedUseDto
 import no.mattilsynet.ephyto.api.imports.meanoftransport.v1.MeanOfTransportDto
 import no.mattilsynet.ephyto.api.imports.nppo.v1.NppoDto
@@ -12,8 +11,8 @@ import no.mattilsynet.ephyto.api.mocks.ephyto.MeanOfTransportMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.NppoMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.StatementMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.TreatmentTypeMocker
-import no.mattilsynet.fisk.libs.reactivenats.ReactiveNats
-import no.mattilsynet.fisk.libs.springnatstest.spring.SpringNatsTestConfiguration
+import no.mattilsynet.fisk.libs.springtest.SpringVirtualNatsTestStarter
+import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
@@ -34,13 +33,13 @@ import org.springframework.test.context.junit.jupiter.SpringExtension
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
 @ActiveProfiles("test")
-@Import(SpringNatsTestConfiguration::class)
+@Import(SpringVirtualNatsTestStarter::class)
 class NatsKodeverkServiceTest {
 
     private lateinit var natsKodeverkService: NatsKodeverkService
 
     @Autowired
-    private lateinit var reactiveNats: ReactiveNats
+    private lateinit var reactiveNats: VirtualNats
 
     @BeforeEach
     fun setUp() {
@@ -160,17 +159,9 @@ class NatsKodeverkServiceTest {
     private fun getFraNats(
         bucket: String,
         key: String,
-    ) =
-        reactiveNats.keyValue(
-            bucket,
-            KeyValueOptions.builder().build()
-        ).get(key = key)
-            .mapNotNull { eppokode ->
-                runCatching {
-                    eppokode.getValue()
-                }.getOrNull()
-            }
-            .toFuture()
-            .get()
+    ) = reactiveNats.keyValue(bucket)
+        .get(key = key)?.let { eppokode ->
+            runCatching { eppokode.getValue() }.getOrNull()
+        }
 
 }

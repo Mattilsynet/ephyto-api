@@ -43,9 +43,10 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.fisk.libs:spring-nats-bom:2024.09.25-09.52-153a1c2aa108"))
-    implementation("no.mattilsynet.fisk.libs:spring-nats")
-    implementation("no.mattilsynet.fisk.libs:reactive-nats")
+    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.01.09-10.36-3e0b9ca37059"))
+    implementation("no.mattilsynet.fisk.libs:nats")
+    implementation("no.mattilsynet.fisk.libs:spring")
+    implementation("no.mattilsynet.fisk.libs:virtual-nats")
 
     // spring boot
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -88,7 +89,7 @@ dependencies {
     testImplementation("org.springframework.boot:spring-boot-starter-test")
     testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
 
-    testImplementation("no.mattilsynet.fisk.libs:spring-nats-test")
+    testImplementation("no.mattilsynet.fisk.libs:spring-test")
 }
 
 sonar {

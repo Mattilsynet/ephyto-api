@@ -4,17 +4,19 @@ import com.google.cloud.secretmanager.v1.SecretManagerServiceClient
 import io.nats.client.JetStreamSubscription
 import no.mattilsynet.ephyto.api.mocks.dtos.EnvelopeFailedDtoMocker
 import no.mattilsynet.ephyto.api.mocks.dtos.EnvelopeMetadataDtoMocker
-import no.mattilsynet.fisk.libs.reactivenats.ReactiveJetStream
-import no.mattilsynet.fisk.libs.reactivenats.ReactiveNats
+import no.mattilsynet.fisk.libs.virtualnats.VirtualJetStream
+import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.any
+import org.mockito.kotlin.anyOrNull
+import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.doReturn
+import org.mockito.kotlin.mock
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Profile
 import org.springframework.test.context.junit.jupiter.SpringExtension
-import reactor.core.publisher.Mono
 
 @ExtendWith(SpringExtension::class)
 @Profile("test")
@@ -23,24 +25,22 @@ class NatsServiceTest {
 
     private lateinit var natsService: NatsService
 
-    @MockBean
-    private lateinit var reactiveNats: ReactiveNats
+    private val nats: VirtualNats = mock()
 
-    @MockBean
-    private lateinit var reactiveJetStream: ReactiveJetStream
+    private val jetStream: VirtualJetStream = mock()
 
     @BeforeEach
     fun setUp() {
-        natsService = NatsService(reactiveNats)
+        doReturn(jetStream).`when`(nats).jetStream(anyOrNull())
+        natsService = NatsService(nats)
     }
 
     @Test
     fun `publishImportEnvelope kjoerer uten problemer med en envelope`() {
         // Given:
         val envelopeMetadataDto = EnvelopeMetadataDtoMocker.createEnvelopeMetadataDtoMock()
-        doReturn(reactiveJetStream).`when`(reactiveNats).jetStream()
-        doReturn(Mono.empty<JetStreamSubscription>()).`when`(reactiveJetStream).subscribe(any(), any(), any(), any())
-        doReturn(Mono.empty<JetStreamSubscription>()).`when`(reactiveJetStream).publish(any(), any())
+        doNothing().`when`(jetStream).subscribe(any(), any(), any())
+        doReturn(null).`when`(jetStream).publish(any(), any())
 
         // When & Then:
         natsService.publishImportEnvelopeMetadata(envelopeMetadataDto)
@@ -50,9 +50,8 @@ class NatsServiceTest {
     fun `publishImportEnvelopeFailed kjoerer uten problemer med en envelope`() {
         // Given:
         val envelopeFailedDtoMock = EnvelopeFailedDtoMocker.createEnvelopeFailedDtoMock()
-        doReturn(reactiveJetStream).`when`(reactiveNats).jetStream()
-        doReturn(Mono.empty<JetStreamSubscription>()).`when`(reactiveJetStream).subscribe(any(), any(), any(), any())
-        doReturn(Mono.empty<JetStreamSubscription>()).`when`(reactiveJetStream).publish(any(), any())
+        doNothing().`when`(jetStream).subscribe(any(), any(), any())
+        doReturn(null).`when`(jetStream).publish(any(), any())
 
         // When & Then:
         natsService.publishImportEnvelopeFailed(envelopeFailedDtoMock)

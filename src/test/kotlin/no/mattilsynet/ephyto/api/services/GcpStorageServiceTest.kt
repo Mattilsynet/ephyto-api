@@ -17,6 +17,7 @@ import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
 import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.io.InputStream
 
@@ -27,13 +28,13 @@ class GcpStorageServiceTest {
 
     private lateinit var gcpStorageService: GcpStorageService
 
-    @MockBean
+    @MockitoBean
     private lateinit var storage: Storage
 
-    @MockBean
+    @MockitoBean
     private lateinit var bucket: Bucket
 
-    @MockBean
+    @MockitoBean
     private lateinit var blob: Blob
 
     private val bucketName = "bucketName"

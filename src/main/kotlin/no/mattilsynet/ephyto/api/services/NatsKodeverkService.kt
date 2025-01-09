@@ -5,7 +5,6 @@ import _int.ippc.ephyto.MeanOfTransport
 import _int.ippc.ephyto.Statement
 import _int.ippc.ephyto.TreatmentType
 import _int.ippc.ephyto.hub.Nppo
-import io.nats.client.KeyValueOptions
 import no.mattilsynet.ephyto.api.extensions.toTimestamp
 import no.mattilsynet.ephyto.api.imports.intendeduse.v1.IntendedUseDto
 import no.mattilsynet.ephyto.api.imports.meanoftransport.v1.MeanOfTransportDto
@@ -20,47 +19,44 @@ import no.mattilsynet.ephyto.api.imports.nppo.v1.NppoDto
 import no.mattilsynet.ephyto.api.imports.nppo.v1.SigningCertificateDto
 import no.mattilsynet.ephyto.api.imports.statement.v1.StatementDto
 import no.mattilsynet.ephyto.api.imports.treatmenttype.v1.TreatmentTypeDto
-import no.mattilsynet.fisk.libs.reactivenats.ReactiveNats
+import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
 import org.springframework.stereotype.Service
 import org.threeten.bp.Instant
 
 @Service
 @Suppress("MagicNumber")
-class NatsKodeverkService(
-    private val reactiveNats: ReactiveNats,
-) {
+class NatsKodeverkService(private val nats: VirtualNats) {
 
     private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
 
     fun putNppos(nppos: List<Nppo>) {
+
         runCatching {
             nppos.forEach { nppo ->
-                reactiveNats.keyValue(
-                    "ephyto_import_active_nppos_v1",
-                    KeyValueOptions.builder().build()
+                nats.keyValue(
+                    "ephyto_import_active_nppos_v1"
                 ).put(
                     key = nppo.country,
                     value = nppoToProto(nppo).toByteArray(),
-                ).subscribe()
+                )
             }
         }.onFailure {
-            logger.warn("putNppos feilet med meldingen ${ it.message }", it)
+            logger.warn("putNppos feilet med meldingen ${it.message}", it)
         }
     }
 
     fun putStatements(statements: List<Statement>) {
         runCatching {
             statements.forEach { statement ->
-                reactiveNats.keyValue(
-                    "ephyto_import_statements_v1",
-                    KeyValueOptions.builder().build()
+                nats.keyValue(
+                    "ephyto_import_statements_v1"
                 ).put(
                     key = "${statement.code}/${statement.lang}",
                     value = statementToProto(statement).toByteArray(),
-                ).subscribe()
+                )
             }
         }.onFailure {
-            logger.warn("putStatements feilet med meldingen ${ it.message }", it)
+            logger.warn("putStatements feilet med meldingen ${it.message}", it)
         }
     }
 
@@ -86,45 +82,43 @@ class NatsKodeverkService(
                 .filter { it.lang == "en" || it.lang == "es" || it.lang == "fr" }
                 .groupBy { it.code }
                 .map { intendedUse ->
-                    reactiveNats.keyValue(
-                        "ephyto_import_intended_use_v1",
-                        KeyValueOptions.builder().build()
+                    nats.keyValue(
+                        "ephyto_import_intended_use_v1"
                     ).put(
                         key = intendedUse.key,
                         value = intendedUseToProto(
                             intendedUseKode = intendedUse.key,
                             intendedUseBeskrivelser = intendedUse.value,
                         ).toByteArray(),
-                    ).subscribe()
+                    )
                 }
         }.onFailure {
-            logger.warn("putIntendedUse feilet med meldingen ${ it.message }", it)
+            logger.warn("putIntendedUse feilet med meldingen ${it.message}", it)
         }
     }
 
     private fun intendedUseToProto(intendedUseKode: String, intendedUseBeskrivelser: List<IntendedUse>)
-    : IntendedUseDto =
-            IntendedUseDto.newBuilder()
-                .setBeskrivelseEn(intendedUseBeskrivelser.first { it.lang == "en" }.name)
-                .setBeskrivelseEs(intendedUseBeskrivelser.first { it.lang == "es" }.name)
-                .setBeskrivelseFr(intendedUseBeskrivelser.first { it.lang == "fr" }.name)
-                .setReceivedAt(Instant.now().toTimestamp())
-                .setKode(intendedUseKode)
-                .build()
+            : IntendedUseDto =
+        IntendedUseDto.newBuilder()
+            .setBeskrivelseEn(intendedUseBeskrivelser.first { it.lang == "en" }.name)
+            .setBeskrivelseEs(intendedUseBeskrivelser.first { it.lang == "es" }.name)
+            .setBeskrivelseFr(intendedUseBeskrivelser.first { it.lang == "fr" }.name)
+            .setReceivedAt(Instant.now().toTimestamp())
+            .setKode(intendedUseKode)
+            .build()
 
     fun putMeanOfTransports(meanOfTransports: List<MeanOfTransport>) {
         runCatching {
             meanOfTransports.forEach { meanOfTransport ->
-                reactiveNats.keyValue(
-                    "ephyto_import_transport_methods_v1",
-                    KeyValueOptions.builder().build()
+                nats.keyValue(
+                    "ephyto_import_transport_methods_v1"
                 ).put(
                     key = "${meanOfTransport.modeCode}/${meanOfTransport.lang}",
                     value = meanOfTransportToProto(meanOfTransport).toByteArray(),
-                ).subscribe()
+                )
             }
         }.onFailure {
-            logger.warn("putMeanOfTransports feilet med meldingen ${ it.message }", it)
+            logger.warn("putMeanOfTransports feilet med meldingen ${it.message}", it)
         }
     }
 
@@ -146,16 +140,15 @@ class NatsKodeverkService(
     fun putTreatmentTypes(treatmentTypes: List<TreatmentType>) {
         runCatching {
             treatmentTypes.forEach { treatmentType ->
-                reactiveNats.keyValue(
-                    "ephyto_import_treatment_types_v1",
-                    KeyValueOptions.builder().build()
+                nats.keyValue(
+                    "ephyto_import_treatment_types_v1"
                 ).put(
                     key = "${treatmentType.code}/${treatmentType.lang}",
                     value = treatmentTypeToProto(treatmentType).toByteArray(),
-                ).subscribe()
+                )
             }
         }.onFailure {
-            logger.warn("putTreatmentTypes feilet med meldingen ${ it.message }", it)
+            logger.warn("putTreatmentTypes feilet med meldingen ${it.message}", it)
         }
     }
 
