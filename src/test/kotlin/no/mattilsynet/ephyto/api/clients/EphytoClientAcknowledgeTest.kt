@@ -34,7 +34,6 @@ import org.mockito.kotlin.given
 import org.mockito.kotlin.mock
 import org.mockito.kotlin.never
 import org.mockito.kotlin.verify
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 

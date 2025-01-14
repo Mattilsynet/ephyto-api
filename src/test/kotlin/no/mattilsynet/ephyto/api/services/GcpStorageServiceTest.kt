@@ -15,16 +15,15 @@ import org.mockito.Mockito.anyString
 import org.mockito.Mockito.mock
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.ActiveProfiles
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 import java.io.InputStream
 
 @ExtendWith(SpringExtension::class)
-@MockBean(SecretManagerServiceClient::class)
 @ActiveProfiles("test")
-class GcpStorageServiceTest {
+@Suppress("UnusedPrivateProperty")
+internal class GcpStorageServiceTest {
 
     private lateinit var gcpStorageService: GcpStorageService
 
@@ -36,6 +35,9 @@ class GcpStorageServiceTest {
 
     @MockitoBean
     private lateinit var blob: Blob
+
+    @MockitoBean
+    private lateinit var secretManagerServiceClient: SecretManagerServiceClient
 
     private val bucketName = "bucketName"
 

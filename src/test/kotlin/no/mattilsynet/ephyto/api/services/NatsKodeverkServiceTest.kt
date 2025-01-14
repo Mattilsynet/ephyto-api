@@ -20,26 +20,31 @@ import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.springframework.beans.factory.annotation.Autowired
 import org.springframework.boot.test.context.SpringBootTest
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.context.annotation.Import
 import org.springframework.test.context.ActiveProfiles
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
-@MockBean(
-    EnvelopeService::class,
-    GcpStorageService::class,
-    SecretManagerServiceClient::class,
-)
 @ExtendWith(SpringExtension::class)
 @SpringBootTest
 @ActiveProfiles("test")
 @Import(SpringVirtualNatsTestStarter::class)
-class NatsKodeverkServiceTest {
+@Suppress("UnusedPrivateProperty")
+internal class NatsKodeverkServiceTest {
 
     private lateinit var natsKodeverkService: NatsKodeverkService
 
     @Autowired
     private lateinit var reactiveNats: VirtualNats
+
+    @MockitoBean
+    private lateinit var secretManagerServiceClient: SecretManagerServiceClient
+
+    @MockitoBean
+    private lateinit var gcpStorageService: GcpStorageService
+
+    @MockitoBean
+    private lateinit var envelopeService: EnvelopeService
 
     @BeforeEach
     fun setUp() {
