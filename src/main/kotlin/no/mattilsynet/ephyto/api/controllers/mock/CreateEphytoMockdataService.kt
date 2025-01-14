@@ -85,7 +85,6 @@ class CreateEphytoMockdataService(
             )
         }.getOrNull()
 
-    // TO BE CONTINUED: Denne burde bli refaktorert og benyttet for å sende testdata til seg selv.
     @Suppress("MagicNumber")
     fun createEnvelope(erstatterSertifikatNummer: String?, status: Int?, type: Int?): Envelope {
         val hubEphytoObjectFactory = EphytoObjectFactory()
@@ -229,6 +228,15 @@ class CreateEphytoMockdataService(
                             includedSPSNote.subject = "SPSFL"
                         }
                     )
+                    spsExchangedDocument.includedSPSNote.add(
+                        ephytoObjectFactory.createIncludedSPSNote().also { includedSPSNote ->
+                            includedSPSNote.content = IncludedSPSNoteContent().also { includedSPSNoteContent ->
+                                includedSPSNoteContent.languageID = null
+                                includedSPSNoteContent.value = "kjennetegn"
+                            }
+                            includedSPSNote.subject = "DMCL"
+                        }
+                    )
                     erstattSertifikat(
                         ephytoObjectFactory = ephytoObjectFactory,
                         erstatterSertifikatNummer = erstatterSertifikatNummer,
@@ -360,6 +368,7 @@ class CreateEphytoMockdataService(
                                     additionalInformationSPSNote.subject = "Subject"
                                 }
                         )
+                        addKjennetegn(includedSPSTradeLineItem)
                         includedSPSTradeLineItem.applicableSPSClassification.add(
                             ApplicableSPSClassification().also { applicableSPSClassification ->
                                 applicableSPSClassification.classCode = "123"
@@ -511,6 +520,30 @@ class CreateEphytoMockdataService(
         }
 
     @Suppress("MagicNumber")
+    private fun addKjennetegn(includedSPSTradeLineItem: IncludedSPSTradeLineItem) {
+        repeat((1..nextInt(0, 5)).count()) {
+            includedSPSTradeLineItem.additionalInformationSPSNote.add(
+                reusableObjectFactory.createAdditionalInformationSPSNote()
+                    .also { additionalInformationSPSNote ->
+                        additionalInformationSPSNote.content.add(
+                            reusableObjectFactory.createTextType().also { textType ->
+                                textType.languageID = "EN"
+                                textType.value = "Kjennetegn1-$it ${nextInt()}"
+                            }
+                        )
+                        additionalInformationSPSNote.content.add(
+                            reusableObjectFactory.createTextType().also { textType ->
+                                textType.languageID = "EN"
+                                textType.value = "Kjennetegn2-$it ${nextInt()}"
+                            }
+                        )
+                        additionalInformationSPSNote.subject = "DMTLIL"
+                    }
+            )
+        }
+    }
+
+    @Suppress("MagicNumber")
     private fun createOpprinnelsesland(includedSPSTradeLineItem: IncludedSPSTradeLineItem) {
         repeat((1..nextInt(1, 3)).count()) {
             includedSPSTradeLineItem.originSPSCountry.add(
@@ -631,6 +664,7 @@ class CreateEphytoMockdataService(
         )
 
         val botaniskNavn = listOf(
+            "Acer macrophyllum",
             "Araujia odorata",
             "Cassava Flour",
             "Cichorium intybus",

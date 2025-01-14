@@ -14,13 +14,12 @@ import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.times
 import org.mockito.kotlin.verify
-import org.springframework.boot.test.mock.mockito.MockBean
 import org.springframework.test.context.bean.override.mockito.MockitoBean
 import org.springframework.test.context.junit.jupiter.SpringExtension
 
 @ExtendWith(SpringExtension::class)
-@MockBean(SecretManagerServiceClient::class)
-class EnvelopeServiceTest {
+@Suppress("UnusedPrivateProperty")
+internal class EnvelopeServiceTest {
 
     private lateinit var envelopeService: EnvelopeService
 
@@ -29,6 +28,9 @@ class EnvelopeServiceTest {
 
     @MockitoBean
     private lateinit var natsService: NatsService
+
+    @MockitoBean
+    private lateinit var secretManagerServiceClient: SecretManagerServiceClient
 
     @BeforeEach
     fun setUp() {

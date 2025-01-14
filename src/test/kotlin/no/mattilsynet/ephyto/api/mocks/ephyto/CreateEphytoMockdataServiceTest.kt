@@ -5,11 +5,11 @@ import no.mattilsynet.ephyto.api.controllers.mock.CreateEphytoMockdataService
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.mockito.kotlin.mock
-import org.springframework.boot.test.mock.mockito.MockBean
+import org.springframework.test.context.bean.override.mockito.MockitoBean
 
 internal class CreateEphytoMockdataServiceTest {
 
-    @MockBean
+    @MockitoBean
     val ephytoDeliveryService = mock<EphytoDeliveryService>()
 
     private lateinit var createEphytoMockdataService: CreateEphytoMockdataService
