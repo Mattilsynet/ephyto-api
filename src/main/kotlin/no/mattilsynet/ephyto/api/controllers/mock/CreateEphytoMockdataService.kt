@@ -41,7 +41,6 @@ import un.unece.uncefact.data.standard.reusableaggregatebusinessinformationentit
 import un.unece.uncefact.data.standard.reusableaggregatebusinessinformationentity._21.TextType
 import java.io.StringWriter
 import java.time.LocalDateTime
-import kotlin.random.Random
 import kotlin.random.Random.Default.nextBoolean
 import kotlin.random.Random.Default.nextInt
 import _int.ippc.ephyto.hub.ObjectFactory as EphytoObjectFactory
@@ -529,13 +528,13 @@ class CreateEphytoMockdataService(
                         additionalInformationSPSNote.content.add(
                             reusableObjectFactory.createTextType().also { textType ->
                                 textType.languageID = "EN"
-                                textType.value = "Kjennetegn1-$it ${Random(123).nextInt()}"
+                                textType.value = "Kjennetegn1-$it ${nextInt()}"
                             }
                         )
                         additionalInformationSPSNote.content.add(
                             reusableObjectFactory.createTextType().also { textType ->
                                 textType.languageID = "EN"
-                                textType.value = "Kjennetegn2-$it ${Random(123).nextInt()}"
+                                textType.value = "Kjennetegn2-$it ${nextInt()}"
                             }
                         )
                         additionalInformationSPSNote.subject = "DMTLIL"
