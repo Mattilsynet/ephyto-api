@@ -4,8 +4,15 @@
 # https://docs.github.com/github/administering-a-repository/configuration-options-for-dependency-updates
 
 version: 2
+registries:
+  github-fisk-lib:
+    type: maven-repository
+    url: https://maven.pkg.github.com/Mattilsynet/fisk/
+    username: token
+    password: ${{secrets.READ_SOURCE_AND_PACKAGES}}
 updates:
   - package-ecosystem: "gradle" # See documentation for possible values
     directory: "/" # Location of package manifests
+    registries: "*" # Check for updates in all registries
     schedule:
       interval: "daily"
