@@ -9,7 +9,7 @@ registries:
     type: maven-repository
     url: https://maven.pkg.github.com/Mattilsynet/fisk/
     username: token
-    password: ${{secrets.READ_SOURCE_AND_PACKAGES}}
+    password: ${{secrets.DEPENDABOT_READ_ACTOR_PAT}}
 updates:
   - package-ecosystem: "gradle" # See documentation for possible values
     directory: "/" # Location of package manifests
