@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "3.4.1"
+    id("org.springframework.boot") version "3.4.2"
     id("io.spring.dependency-management") version "1.1.7"
 
     kotlin("jvm") version "2.1.0"
@@ -63,7 +63,7 @@ dependencies {
 
     // gcp
     implementation(platform("org.springframework.cloud:spring-cloud-dependencies:2024.0.0"))
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:5.9.0"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:5.10.0"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
     implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
 
