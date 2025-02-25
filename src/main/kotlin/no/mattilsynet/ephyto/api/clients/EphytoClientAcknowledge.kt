@@ -25,7 +25,7 @@ class EphytoClientAcknowledge : EphytoClient() {
             logger.error("Sender failed acknowledgment for hubLeveringNummer $hubLeveringNummer")
 
         }.onFailure {
-            logger.warn("Kunne ikke bekrefte feilet mottak av sertifikat med hubLeveringNummer $hubLeveringNummer, " +
+            logger.error("Kunne ikke bekrefte feilet mottak av sertifikat med hubLeveringNummer $hubLeveringNummer, " +
                     "Exception: ${it.message}", it)
         }.isSuccess
 }

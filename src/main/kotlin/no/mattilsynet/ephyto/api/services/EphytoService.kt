@@ -40,14 +40,14 @@ class EphytoService(
                 if (envelope != null) {
                     envelopeService.haandterNyEnvelope(envelope, valideringsresultat.hubTrackingInfo)
                 } else {
-                    logger.warn("Kunne ikke hente envelope med hubLeveringNummer ${envelopeHeader.hubDeliveryNumber}")
+                    logger.error("Kunne ikke hente envelope med hubLeveringNummer ${envelopeHeader.hubDeliveryNumber}")
                 }
 
                 ephytoClient.acknowledgeEnvelope(valideringsresultat)
             }
         }.onFailure {
             logger
-                .warn("Håndtering av envelope med hubLeveringNummer ${envelopeHeader.hubDeliveryNumber} feilet," +
+                .error("Håndtering av envelope med hubLeveringNummer ${envelopeHeader.hubDeliveryNumber} feilet," +
                         " ${ it.message }", it)
         }
     }
