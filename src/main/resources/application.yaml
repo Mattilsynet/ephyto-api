@@ -8,7 +8,7 @@ spring:
     name: "ephyto-api"
 
   config:
-    import: "sm://"
+    import: "sm@"
 
   cloud:
     gcp:
@@ -27,7 +27,7 @@ spring:
 
 nats:
   url: tls://connect.nats.mattilsynet.io:4222
-  creds: ${sm\://nats-creds}
+  creds: ${sm@nats-creds}
 
 springdoc:
   swagger-ui:
