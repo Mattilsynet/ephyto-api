@@ -63,7 +63,7 @@ dependencies {
 
     // gcp
     implementation(platform("org.springframework.cloud:spring-cloud-dependencies:2024.0.0"))
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:6.0.0"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:6.0.1"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
     implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
 
