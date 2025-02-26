@@ -11,12 +11,12 @@ import org.springframework.context.annotation.Profile
 class EphytoClientConfig {
 
     @Bean
-    @Profile("prod", "dev")
+    @Profile("prod", "dev", "local")
     fun ephytoClientAcknowledge() = EphytoClientAcknowledge()
 
     @Bean
     @Primary
-    @Profile("local", "test", "staging")
+    @Profile("test", "staging")
     fun ephytoClientLogAcknowledge() = EphytoClientLogAcknowledge()
 
 }
