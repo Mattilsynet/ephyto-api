@@ -8,11 +8,12 @@ object ValideringsresultatMocker {
 
     fun createValideringsresultatMock(
         envelopeMock: Envelope? = null,
+        errorMessage: String = "",
         hubTrackingInfo: HUBTrackingInfo = HUBTrackingInfo.DELIVERED,
         validatedOk: Boolean = true,
     ) = Valideringsresultat(
         envelope = envelopeMock,
-        errorMessage = "",
+        errorMessage = errorMessage,
         hubLeveringNummer = envelopeMock?.hubDeliveryNumber ?: "hubDeliveryNumber",
         hubTrackingInfo = hubTrackingInfo,
         validatedOk = validatedOk,

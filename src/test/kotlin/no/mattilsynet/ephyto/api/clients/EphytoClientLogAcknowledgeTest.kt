@@ -1,6 +1,7 @@
 package no.mattilsynet.ephyto.api.clients
 
 import _int.ippc.ephyto.IDeliveryService
+import no.mattilsynet.ephyto.api.mocks.domain.ValideringsresultatMocker.createValideringsresultatMock
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
@@ -37,7 +38,7 @@ internal class EphytoClientLogAcknowledgeTest {
         doNothing().`when`(iDeliveryService).acknowledgeEnvelopeReceipt(any())
 
         // When:
-        val ackErSendt = ephytoClient.acknowledgeSuccessfulEnvelope("hubLeveringNummer")
+        val ackErSendt = ephytoClient.acknowledgeSuccessfulEnvelope(createValideringsresultatMock())
 
         // Then:
         assertEquals(true, ackErSendt)
@@ -50,7 +51,7 @@ internal class EphytoClientLogAcknowledgeTest {
         doReturn("").`when`(iDeliveryService).acknowledgeFailedEnvelopeReceipt(anyString(), anyString())
 
         // When:
-        val ackErSendt = ephytoClient.acknowledgeFailedEnvelope("hubLeveringNummer", "error")
+        val ackErSendt = ephytoClient.acknowledgeFailedEnvelope(createValideringsresultatMock())
 
         // Then:
         assertEquals(true, ackErSendt)

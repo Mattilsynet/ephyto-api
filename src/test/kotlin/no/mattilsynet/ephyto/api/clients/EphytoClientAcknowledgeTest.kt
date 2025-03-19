@@ -71,6 +71,24 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
+    fun `acknowledgeEnvelope sender med feilmelding naar denne ikke er tom`() {
+        // Given:
+        val valideringsresultatMock = createValideringsresultatMock(
+            errorMessage = "Sender med feilmelding",
+            validatedOk = true,
+        )
+
+        // When:
+        ephytoClient.acknowledgeEnvelope(valideringsresultatMock)
+
+        // Then:
+        verify(iDeliveryService).advancedAcknowledgeEnvelopeReceipt(
+            valideringsresultatMock.hubLeveringNummer,
+            valideringsresultatMock.errorMessage
+        )
+    }
+
+    @Test
     fun `acknowledgeEnvelope acknowledger failed naar validatedOk er false`() {
         // Given:
         val valideringsresultatMock = createValideringsresultatMock(validatedOk = false)
@@ -115,7 +133,9 @@ internal class EphytoClientAcknowledgeTest {
         doNothing().`when`(iDeliveryService).acknowledgeEnvelopeReceipt(any())
 
         // When:
-        val ackErSendt = ephytoClient.acknowledgeSuccessfulEnvelope("hubLeveringNummer")
+        val ackErSendt = ephytoClient.acknowledgeSuccessfulEnvelope(
+            createValideringsresultatMock(),
+        )
 
         // Then:
         assertEquals(true, ackErSendt)
@@ -129,7 +149,7 @@ internal class EphytoClientAcknowledgeTest {
             .`when`(iDeliveryService).acknowledgeEnvelopeReceipt(anyString())
 
         // When:
-        val ackErSendt = ephytoClient.acknowledgeSuccessfulEnvelope("hubLeveringNummer")
+        val ackErSendt = ephytoClient.acknowledgeSuccessfulEnvelope(createValideringsresultatMock())
 
         // Then:
         assertEquals(false, ackErSendt)
@@ -141,7 +161,7 @@ internal class EphytoClientAcknowledgeTest {
         doReturn("").`when`(iDeliveryService).acknowledgeFailedEnvelopeReceipt(anyString(), anyString())
 
         // When:
-        val ackErSendt = ephytoClient.acknowledgeFailedEnvelope("hubLeveringNummer", "error")
+        val ackErSendt = ephytoClient.acknowledgeFailedEnvelope(createValideringsresultatMock())
 
         // Then:
         assertEquals(true, ackErSendt)
@@ -155,11 +175,12 @@ internal class EphytoClientAcknowledgeTest {
             .`when`(iDeliveryService).acknowledgeFailedEnvelopeReceipt(anyString(), anyString())
 
         // When:
-        val ackErSendt = ephytoClient.acknowledgeFailedEnvelope("hubLeveringNummer", "error")
+        val ackErSendt = ephytoClient.acknowledgeFailedEnvelope(createValideringsresultatMock())
 
         // Then:
         assertEquals(false, ackErSendt)
     }
+
     @Test
     fun `test ephytoClient returnerer null dersom det blir kastet en exception`() {
         // Given:
@@ -400,11 +421,13 @@ internal class EphytoClientAcknowledgeTest {
     fun `getActiveNppos returnerer rett`() {
         // Given:
         val nppoList = ArrayOfNppo()
-        nppoList.nppo.addAll(listOf(
-            mock<Nppo>(),
-            mock<Nppo>(),
-            NppoMocker.createNppoMockMedLandkode("NO"),
-        ))
+        nppoList.nppo.addAll(
+            listOf(
+                mock<Nppo>(),
+                mock<Nppo>(),
+                NppoMocker.createNppoMockMedLandkode("NO"),
+            )
+        )
 
         doReturn(nppoList).`when`(iDeliveryService).activeNppos
 
