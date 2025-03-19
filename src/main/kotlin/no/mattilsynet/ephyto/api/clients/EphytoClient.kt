@@ -17,16 +17,14 @@ abstract class EphytoClient {
 
     protected val logger: Logger = LoggerFactory.getLogger(javaClass)
 
-    abstract fun acknowledgeSuccessfulEnvelope(hubLeveringNummer: String): Boolean
+    abstract fun acknowledgeSuccessfulEnvelope(valideringsresultat: Valideringsresultat): Boolean
 
-    abstract fun acknowledgeFailedEnvelope(hubLeveringNummer: String, errorMessage: String): Boolean
+    abstract fun acknowledgeFailedEnvelope(valideringsresultat: Valideringsresultat): Boolean
 
     fun acknowledgeEnvelope(valideringsresultat: Valideringsresultat) {
-        with(valideringsresultat) {
-            when(validatedOk) {
-                true -> acknowledgeSuccessfulEnvelope(hubLeveringNummer)
-                else -> acknowledgeFailedEnvelope(hubLeveringNummer, errorMessage!!)
-            }
+        when (valideringsresultat.validatedOk) {
+            true -> acknowledgeSuccessfulEnvelope(valideringsresultat)
+            else -> acknowledgeFailedEnvelope(valideringsresultat)
         }
     }
 

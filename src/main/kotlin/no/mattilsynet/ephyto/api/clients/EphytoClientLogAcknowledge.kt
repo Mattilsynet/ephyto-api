@@ -1,14 +1,18 @@
 package no.mattilsynet.ephyto.api.clients
 
+import no.mattilsynet.ephyto.api.domain.Valideringsresultat
+
 class EphytoClientLogAcknowledge : EphytoClient() {
 
-    override fun acknowledgeSuccessfulEnvelope(hubLeveringNummer: String): Boolean {
-        logger.info("Kun logging av successful acknowledgment for hubLeveringNummer $hubLeveringNummer")
+    override fun acknowledgeSuccessfulEnvelope(valideringsresultat: Valideringsresultat): Boolean {
+        logger.info("Kun logging av successful acknowledgment for hubLeveringNummer " +
+                valideringsresultat.hubLeveringNummer)
         return true
     }
 
-    override fun acknowledgeFailedEnvelope(hubLeveringNummer: String, errorMessage: String): Boolean {
-        logger.info("Kun logging av feilet acknowledgment for hubLeveringNummer $hubLeveringNummer")
+    override fun acknowledgeFailedEnvelope(valideringsresultat: Valideringsresultat): Boolean {
+        logger.info("Kun logging av feilet acknowledgment for hubLeveringNummer" +
+                valideringsresultat.hubLeveringNummer)
         return true
     }
 
