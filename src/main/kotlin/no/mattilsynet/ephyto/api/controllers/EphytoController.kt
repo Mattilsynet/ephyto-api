@@ -23,7 +23,7 @@ class EphytoController(
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    // TOD O: For testing
+    // Henter sertifikater i uat-miljøet. Skal bare kalles i test eller local
     @Profile("test", "local")
     @PostMapping("/sertifikater")
     fun ephyto(): ResponseEntity<Unit> =
@@ -36,6 +36,7 @@ class EphytoController(
             throw it
         }.getOrDefault(ResponseEntity.noContent().build())
 
+    // Oppretter sertifikater i uat-miljøet. Skal bare kalles i test eller local
     @Profile("test", "local")
     @PostMapping("/send/envelope")
     fun sendEphytoEnvelope(

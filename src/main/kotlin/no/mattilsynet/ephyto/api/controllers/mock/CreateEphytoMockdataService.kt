@@ -89,7 +89,8 @@ class CreateEphytoMockdataService(
     fun createEnvelope(erstatterSertifikatNummer: String?, status: Int?, type: Int?): Envelope {
         val hubEphytoObjectFactory = EphytoObjectFactory()
 
-        val sertifikatType = type ?: nextInt(5).let { if (it > 1) 851 else 657 }
+        val sertifikatType = createSertifikatType(type)
+
         val from = Pair("NO", "Norge")
         val to = Pair("NO", "Norge")
         val nppoCertificateNumber = "TEST-${from.first}.${to.first}.${nextInt(99999)}"
@@ -122,7 +123,12 @@ class CreateEphytoMockdataService(
         return envelope
     }
 
-    // TO BE CONTINUED: Denne burde bli refaktorert og benyttet for å sende testdata til seg selv.
+    @Suppress("MagicNumber")
+    private fun createSertifikatType(type: Int?) = type ?: when (nextInt(15) > 1) {
+        true -> 851
+        else -> 657
+    }
+
     @Suppress("LongMethod", "CyclomaticComplexMethod", "MagicNumber")
     private fun createSPSCertificate(
         erstatterSertifikatNummer: String?,
@@ -132,8 +138,6 @@ class CreateEphytoMockdataService(
         to: Pair<String, String>,
     ): JAXBElement<SPSCertificate>? {
         val ephytoObjectFactory = ObjectFactory()
-        val plantenavn = getRandomScientificName()
-        val opprinnelsesland = getRandomLand()
 
         val spsCertificateObjectFactory = SpsCertificateObjectFactory()
         val offsetDateTime = LocalDateTime.now().toString()
@@ -146,8 +150,6 @@ class CreateEphytoMockdataService(
                             createMottaker(
                                 consigneeSPSParty = consigneeSPSParty,
                                 ephytoObjectFactory = ephytoObjectFactory,
-                                opprinnelsesland = opprinnelsesland,
-                                plantenavn = plantenavn,
                             )
                         }
                     spsConsignment.consignorSPSParty =
@@ -155,8 +157,6 @@ class CreateEphytoMockdataService(
                             createAvsender(
                                 consignorSPSParty = consignorSPSParty,
                                 ephytoObjectFactory = ephytoObjectFactory,
-                                opprinnelsesland = opprinnelsesland,
-                                plantenavn = plantenavn,
                             )
                         }
                     spsConsignment.examinationSPSEvent =
@@ -197,12 +197,18 @@ class CreateEphytoMockdataService(
                                     }
                             }
                     )
-                    spsConsignment.transitSPSCountry.add(
-                        TransitSPSCountry().also { transitSPSCountry ->
-                            transitSPSCountry.id = from.first
-                            transitSPSCountry.name = from.second
-                        }
-                    )
+
+                    takeIf { nextInt(8) > 1 }?.let {
+                        spsConsignment.transitSPSCountry.add(
+                            TransitSPSCountry().also { transitSPSCountry ->
+                                getRandomLand().let { land ->
+                                    transitSPSCountry.id = land.first
+                                    transitSPSCountry.name = land.second
+                                }
+                            }
+                        )
+                    }
+
                     spsConsignment.unloadingBaseportSPSLocation =
                         UnloadingBaseportSPSLocation().also { unloadingBaseportSPSLocation ->
                             unloadingBaseportSPSLocation.id = "USSEA"
@@ -232,6 +238,15 @@ class CreateEphytoMockdataService(
                         ephytoObjectFactory.createIncludedSPSNote().also { includedSPSNote ->
                             includedSPSNote.content = IncludedSPSNoteContent().also { includedSPSNoteContent ->
                                 includedSPSNoteContent.languageID = null
+                                includedSPSNoteContent.value = "Phyllocnistiscitrella is absent in Argentina"
+                            }
+                            includedSPSNote.subject = "ADEDL"
+                        }
+                    )
+                    spsExchangedDocument.includedSPSNote.add(
+                        ephytoObjectFactory.createIncludedSPSNote().also { includedSPSNote ->
+                            includedSPSNote.content = IncludedSPSNoteContent().also { includedSPSNoteContent ->
+                                includedSPSNoteContent.languageID = null
                                 includedSPSNoteContent.value = "kjennetegn"
                             }
                             includedSPSNote.subject = "DMCL"
@@ -247,23 +262,12 @@ class CreateEphytoMockdataService(
                         it.name = "Mattilsynet"
                     }
                     spsExchangedDocument.name = null
-                    spsExchangedDocument.referenceSPSReferencedDocument.add(
-                        ReferenceSPSReferencedDocument().also { referenceSPSReferencedDocument ->
-                            referenceSPSReferencedDocument.attachmentBinaryObject =
-                                BinaryObjectType().also { binaryObjectType ->
-                                    binaryObjectType.filename = "letter.pdf"
-                                    binaryObjectType.value = "fileContent"
-                                }
-                            referenceSPSReferencedDocument.id = nppoCertificateNumber
-                            referenceSPSReferencedDocument.information = TextType().also {
-                                it.languageID = "EN"
-                                it.value = "Letter of Authority"
-                            }
-                            referenceSPSReferencedDocument.issueDateTime = offsetDateTime
-                            referenceSPSReferencedDocument.relationshipTypeCode = "ZZZ"
-                            referenceSPSReferencedDocument.typeCode = "ZZZ"
-                        }
-                    )
+
+                    when {
+                        sertifikatType == 657 ->
+                            createVedlegg(spsExchangedDocument, nppoCertificateNumber, offsetDateTime)
+
+                    }
                     spsExchangedDocument.signatorySPSAuthentication =
                         SignatorySPSAuthentication().also { signatorySPSAuthentication ->
                             signatorySPSAuthentication.actualDateTime = reusableObjectFactory.createActualDateTime(
@@ -292,35 +296,50 @@ class CreateEphytoMockdataService(
         )
     }
 
+    private fun createVedlegg(
+        spsExchangedDocument: SpsExchangedDocument,
+        nppoCertificateNumber: String,
+        offsetDateTime: String
+    ) {
+        spsExchangedDocument.referenceSPSReferencedDocument.add(
+            ReferenceSPSReferencedDocument().also { referenceSPSReferencedDocument ->
+                referenceSPSReferencedDocument.attachmentBinaryObject =
+                    BinaryObjectType().also { binaryObjectType ->
+                        binaryObjectType.filename = "letter.pdf"
+                        binaryObjectType.value = "fileContent"
+                    }
+                referenceSPSReferencedDocument.id = nppoCertificateNumber
+                referenceSPSReferencedDocument.information = TextType().also {
+                    it.languageID = "EN"
+                    it.value = "Letter of Authority"
+                }
+                referenceSPSReferencedDocument.issueDateTime = offsetDateTime
+                referenceSPSReferencedDocument.relationshipTypeCode = "ZZZ"
+                referenceSPSReferencedDocument.typeCode = "ZZZ"
+            }
+        )
+    }
+
     private fun createAvsender(
         consignorSPSParty: ConsignorSPSParty,
         ephytoObjectFactory: ObjectFactory,
-        opprinnelsesland: Pair<String, String>,
-        plantenavn: String,
     ) {
-        val avsender = avsendere[nextInt(avsendere.size)]
-        val avsendernavn = "${avsender.second} $plantenavn ${opprinnelsesland.first}"
-        consignorSPSParty.name = avsendernavn
+        consignorSPSParty.name = avsendere[nextInt(avsendere.size)]
         consignorSPSParty.specifiedSPSAddress =
-            createSPSAddress(
-                adressat = avsendernavn,
+            createSPSAddressAvsender(
                 ephytoObjectFactory = ephytoObjectFactory,
             )
-        consignorSPSParty.typeCode.addAll(listOf(avsender.first))
     }
 
     private fun createMottaker(
         consigneeSPSParty: ConsigneeSPSParty,
         ephytoObjectFactory: ObjectFactory,
-        opprinnelsesland: Pair<String, String>,
-        plantenavn: String,
     ) {
         val mottaker = mottakere[nextInt(mottakere.size)]
-        val mottakernavn = "${mottaker.second} $plantenavn ${opprinnelsesland.first}"
+        val mottakernavn = mottaker.second
         consigneeSPSParty.name = mottakernavn
         consigneeSPSParty.specifiedSPSAddress =
-            createSPSAddress(
-                adressat = mottakernavn,
+            createSPSAddressMottaker(
                 ephytoObjectFactory = ephytoObjectFactory,
             )
         consigneeSPSParty.typeCode.addAll(listOf(mottaker.first))
@@ -496,6 +515,7 @@ class CreateEphytoMockdataService(
                         includedSPSTradeLineItem.netVolumeMeasure = getMeasureType(unitKode = "MTR")
                         includedSPSTradeLineItem.netWeightMeasure = getMeasureType(unitKode = "KGM")
                         createOpprinnelsesland(includedSPSTradeLineItem)
+                        createTilleggserklaering(includedSPSTradeLineItem)
                         includedSPSTradeLineItem.physicalSPSPackage.add(
                             reusableObjectFactory.createPhysicalSPSPackage()
                                 .also { physicalSPSPackage ->
@@ -589,6 +609,20 @@ class CreateEphytoMockdataService(
         )
     }
 
+    @Suppress("MagicNumber")
+    private fun createTilleggserklaering(includedSPSTradeLineItem: IncludedSPSTradeLineItem) {
+        repeat((1..nextInt(1, 3)).count()) {
+            getTilleggserklaeringVarelinje().let { tilleggserklaeringVarelinje ->
+                includedSPSTradeLineItem.additionalInformationSPSNote.add(
+                    createAdditionalSPSNote(
+                        subject = tilleggserklaeringVarelinje,
+                        value = "Tilleggserklæring $tilleggserklaeringVarelinje",
+                    )
+                )
+            }
+        }
+    }
+
     private fun createAdditionalSPSNote(subject: String, value: String) =
         reusableObjectFactory.createAdditionalInformationSPSNote()
             .also { additionalInformationSPSNote ->
@@ -624,20 +658,29 @@ class CreateEphytoMockdataService(
                 }
         }
 
-    private fun createSPSAddress(
-        adressat: String,
+    private fun createSPSAddressMottaker(
         ephytoObjectFactory: ObjectFactory,
     ) =
         ephytoObjectFactory.createSpecifiedSPSAddress().also { specifiedSPSAddress ->
-            specifiedSPSAddress.lineOne = "$adressat adresselinje 1"
-            specifiedSPSAddress.lineTwo = "$adressat adresselinje 2"
-            specifiedSPSAddress.lineThree = "$adressat adresselinje 3"
-            specifiedSPSAddress.lineFour = "$adressat adresselinje 4"
-            specifiedSPSAddress.lineFive = "$adressat adresselinje 5"
+            specifiedSPSAddress.lineOne = "Roseveien 15"
+            specifiedSPSAddress.lineTwo = "5555 Rosendal"
+            specifiedSPSAddress.lineThree = "Norge"
+        }
+
+    private fun createSPSAddressAvsender(
+        ephytoObjectFactory: ObjectFactory,
+    ) =
+        ephytoObjectFactory.createSpecifiedSPSAddress().also { specifiedSPSAddress ->
+            specifiedSPSAddress.lineOne = "Plantegata 1"
+            specifiedSPSAddress.lineTwo = "15015 Paris"
+            specifiedSPSAddress.lineTwo = getRandomLand().second
         }
 
     private fun getRandomScientificName() = botaniskNavn[nextInt(botaniskNavn.size)]
     private fun getRandomLand() = land[nextInt(land.size)]
+
+    private fun getTilleggserklaeringVarelinje() =
+        tilleggserklaeringerVarelinje[nextInt(tilleggserklaeringerVarelinje.size)]
 
     private fun getRandomIndendedUse() = indendedUse[nextInt(indendedUse.size)]
 
@@ -666,17 +709,10 @@ class CreateEphytoMockdataService(
         val botaniskNavn = listOf(
             "Acer macrophyllum",
             "Araujia odorata",
-            "Cassava Flour",
             "Cichorium intybus",
-            "FRESH FRUITS",
             "Fragaria x ananassa",
-            "Maize Flour",
             "Malus domestica",
-            "Malus hybrids",
-            "Millet Flour",
-            "Monstera sp. 123",
             "Solanum lycopersicum",
-            "Soya Flour",
         )
 
         val indendedUse = listOf(
@@ -701,16 +737,26 @@ class CreateEphytoMockdataService(
         )
 
         val mottakere = listOf(
-            Pair("313200884", "Mottaker 313200884"),
-            Pair("215297802", "Mottaker 215297802"),
-            Pair("310968463", "Mottaker 310968463 "),
-            Pair("314737547", "Mottaker 314737547"),
+            Pair("313200884", "MOTIVERT USNOBBET TIGER AS"),
+            Pair("215297802", "MOTIVERT USNOBBET TIGER AS"),
+            Pair("310968463", "SKÅNSOM DIREKTE KROKODLE"),
+            Pair("310968463", "SKÅNSOM DIREKTE KROKODILLE"),
+            Pair("314737547", "SKÅNSOM DIREKTE KROKODILLE"),
+            Pair("313155528", "UFØLSOM NESTE TIGER"),
+            Pair("313155528", "UFØLSOM NESTE TIGER AS"),
+            Pair("315682789", "UFØLSOM NESTE TIGER"),
         )
 
         val avsendere = listOf(
-            Pair("945603292", "Avsender 1"),
-            Pair("977617758", "Avsender 2"),
-            Pair("986208426", "Avsender 3"),
+            "Fantastisk blomsterprodusent",
+            "Planteeksperten eksport",
+            "Eksportgruppen planteland",
+        )
+
+        val tilleggserklaeringerVarelinje = listOf(
+            "ADAOTLIL",
+            "ADIPTLIL",
+            "ADTLIL",
         )
     }
 
