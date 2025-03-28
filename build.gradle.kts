@@ -151,6 +151,6 @@ wsdl2java {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.30.1"
+        artifact = "com.google.protobuf:protoc:4.30.2"
     }
 }
