@@ -32,11 +32,15 @@ Du må legge Mattilsynet-IssuingCA2.cer inn i cacerts. Dette gjør du på Mac ve
 Skriv disse kommandoene i terminalen (`changeit` er passord):
 - Stå der du vil ha `nppo.keystore` og kjør følgende kommando i terminalen: 
 
-```keytool -genkey -alias nppo1 -keyalg RSA -keysize 2048 -keystore nppo.keystore -validity 3650 -keypass changeit -storepass changeit```
+```
+keytool -genkey -alias nppo1 -keyalg RSA -keysize 2048 -keystore nppo.keystore -validity 3650 -keypass changeit -storepass changeit 
+```
 
 - Stå der `nppo.keystore` ble lagt, og gjør følgende kommando i terminalen: 
 
-```keytool -export -keystore nppo.keystore -alias nppo1 -file nppo.cer -keypass changeit -storepass changeit```
+```
+keytool -export -keystore nppo.keystore -alias nppo1 -file nppo.cer -keypass changeit -storepass changeit
+```
 
 ## Referer til keystore i .zshrc
 Legg inn de følgende linjene i `.zshrc`
