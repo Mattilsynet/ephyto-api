@@ -24,9 +24,12 @@ Du må legge Mattilsynet-IssuingCA2.cer inn i cacerts. Dette gjør du på Mac ve
 4. Lagre sertifikatet
 5. Naviger til mappen du lagret sertifikatet i med terminalen
 6. Deretter kjør følgende kommando for å legge sertifikatet inn i java sin truststore 
-  - HUSK: Bytt ut `<<<DITT PASSORD>>>` med et passord du lager selv
 
-```"$JAVA_HOME"/bin/keytool -import -alias Mattilsynet-IssuingCA2 -file "Mattilsynet-IssuingCA2.cer" -keystore "$JAVA_HOME"/lib/security/cacerts -storepass <<<DITT PASSORD>>>```
+HUSK: Bytt ut `<<<DITT PASSORD>>>` med et passord du lager selv, og legger i en password manager eller skriver ned. Dette trenger du senere.
+
+```
+"$JAVA_HOME"/bin/keytool -import -alias Mattilsynet-IssuingCA2 -file "Mattilsynet-IssuingCA2.cer" -keystore "$JAVA_HOME"/lib/security/cacerts -storepass <<<DITT PASSORD>>>
+```
 
 ## Opprett keystore 
 Skriv disse kommandoene i terminalen (`changeit` er passord):
