@@ -3,6 +3,7 @@ package no.mattilsynet.ephyto.api.services
 import _int.ippc.ephyto.hub.Envelope
 import _int.ippc.ephyto.hub.HUBTrackingInfo
 import com.google.protobuf.Timestamp
+import no.mattilsynet.ephyto.api.domain.Valideringsresultat
 import no.mattilsynet.ephyto.api.imports.envelope.v1.ArrayOfEnvelopeForwardings
 import no.mattilsynet.ephyto.api.imports.envelope.v1.EnvelopeDto
 import no.mattilsynet.ephyto.api.imports.envelope.v1.EnvelopeFailedDto
@@ -26,34 +27,40 @@ class EnvelopeService(
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
-    fun haandterNyEnvelope(envelope: Envelope, hubTrackingInfo: HUBTrackingInfo) {
+    fun haandterNyEnvelope(envelope: Envelope, valideringsresultat: Valideringsresultat): Valideringsresultat
+    {
         lagEnvelopeDto(
             blobStorageMetadata = lagBlobStorageMetadata(envelope.nppoCertificateNumber),
             envelope = envelope,
-            hubTrackingInfo = hubTrackingInfo,
+            hubTrackingInfo = valideringsresultat.hubTrackingInfo,
         ).also { envelopeDto ->
-            gcpStorageService.lastOppEn(
+            val blob = gcpStorageService.lastOppEn(
                 bucketName = envelopeDto.envelopeMetadata.blobStorageMetadata.dataStorageName,
                 contentBytes = envelopeDto.toByteArray(),
                 dataUrl = envelopeDto.envelopeMetadata.blobStorageMetadata.dataUrl,
                 hubLeveringNummer = envelopeDto.envelopeMetadata.envelopeHeader.hubDeliveryNumber,
             )
-            natsService.publishImportEnvelopeMetadata(envelopeDto.envelopeMetadata)
 
             when {
-                (hubTrackingInfo != HUBTrackingInfo.DELIVERED &&
-                hubTrackingInfo != HUBTrackingInfo.DELIVERED_WITH_WARNINGS)-> {
+                // Skal ikke sende tilbakemelding når det var problemer med lagring i gcp
+                blob == null -> valideringsresultat.also { it.validatedOk = null }
+
+                (valideringsresultat.hubTrackingInfo != HUBTrackingInfo.DELIVERED &&
+                valideringsresultat.hubTrackingInfo != HUBTrackingInfo.DELIVERED_WITH_WARNINGS)-> {
                     natsService.publishImportEnvelopeFailed(
                         lagEnvelopeFailedDto(
                             blobStorageMetadata = envelopeDto.envelopeMetadata.blobStorageMetadata,
                             envelope = envelope,
-                            hubTrackingInfo = hubTrackingInfo,
+                            hubTrackingInfo = valideringsresultat.hubTrackingInfo,
                         )
                     )
                 }
+
+                else -> natsService.publishImportEnvelopeMetadata(envelopeDto.envelopeMetadata)
             }
 
             logger.info("Envelope ${envelope.hubDeliveryNumber} er ferdig håndtert.")
+            return valideringsresultat
         }
     }
 

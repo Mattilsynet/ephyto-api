@@ -3,12 +3,14 @@ package no.mattilsynet.ephyto.api.services
 import _int.ippc.ephyto.hub.HUBTrackingInfo
 import com.google.cloud.secretmanager.v1.SecretManagerServiceClient
 import no.mattilsynet.ephyto.api.imports.envelope.v1.EnvelopeMetadataDto
+import no.mattilsynet.ephyto.api.mocks.domain.ValideringsresultatMocker.createValideringsresultatMock
 import no.mattilsynet.ephyto.api.mocks.ephyto.EnvelopeMocker.createEnvelopeMock
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.Mockito.doReturn
+import org.mockito.Mockito.mock
 import org.mockito.kotlin.any
 import org.mockito.kotlin.argumentCaptor
 import org.mockito.kotlin.doNothing
@@ -40,19 +42,23 @@ internal class EnvelopeServiceTest {
             natsService = natsService,
             profile = "test",
         )
+
+        doReturn(mock()).`when`(gcpStorageService).lastOppEn(any(), any(), any(), any())
     }
 
     @Test
     fun `haandterNyEnvelope kjoerer uten problemer`() {
         // Given:
         val envelopeMock = createEnvelopeMock(content = "")
-        doReturn(null).`when`(gcpStorageService).lastOppEn(any(), any(), any(), any())
         doNothing().`when`(natsService).publishImportEnvelopeMetadata(any())
 
         val envelopeMetadataDtoArgumentCaptor = argumentCaptor<EnvelopeMetadataDto>()
 
         // When:
-        envelopeService.haandterNyEnvelope(envelope = envelopeMock, hubTrackingInfo = HUBTrackingInfo.DELIVERED)
+        envelopeService.haandterNyEnvelope(
+            envelope = envelopeMock,
+            valideringsresultat = createValideringsresultatMock(validatedOk = true),
+        )
 
         // Then:
         verify(gcpStorageService, times(1)).lastOppEn(any(), any(), any(), any())
@@ -60,7 +66,7 @@ internal class EnvelopeServiceTest {
         verify(natsService, times(1))
             .publishImportEnvelopeMetadata(envelopeMetadataDtoArgumentCaptor.capture())
         envelopeMetadataDtoArgumentCaptor.allValues.first()
-            .let {  envelopeMetadataDto ->
+            .let { envelopeMetadataDto ->
                 assertTrue(envelopeMetadataDto.blobStorageMetadata.dataUrl.contains(envelopeMock.nppoCertificateNumber))
             }
     }
@@ -71,7 +77,10 @@ internal class EnvelopeServiceTest {
         val envelopeMock = createEnvelopeMock(content = "")
 
         // When:
-        envelopeService.haandterNyEnvelope(envelope = envelopeMock, hubTrackingInfo = HUBTrackingInfo.DELIVERED)
+        envelopeService.haandterNyEnvelope(
+            envelope = envelopeMock,
+            valideringsresultat = createValideringsresultatMock(validatedOk = true),
+        )
 
         // Then:
         verify(natsService, times(1)).publishImportEnvelopeMetadata(any())
@@ -85,7 +94,13 @@ internal class EnvelopeServiceTest {
 
         // When:
         envelopeService
-            .haandterNyEnvelope(envelope = envelopeMock, hubTrackingInfo = HUBTrackingInfo.DELIVERED_WITH_WARNINGS)
+            .haandterNyEnvelope(
+                envelope = envelopeMock,
+                valideringsresultat = createValideringsresultatMock(
+                    hubTrackingInfo = HUBTrackingInfo.DELIVERED_WITH_WARNINGS,
+                    validatedOk = true,
+                    ),
+            )
 
         // Then:
         verify(natsService, times(1)).publishImportEnvelopeMetadata(any())
@@ -98,10 +113,15 @@ internal class EnvelopeServiceTest {
         val envelopeMock = createEnvelopeMock(content = "")
 
         // When:
-        envelopeService.haandterNyEnvelope(envelope = envelopeMock, hubTrackingInfo = HUBTrackingInfo.FAILED_DELIVERY)
+        envelopeService.haandterNyEnvelope(
+            envelope = envelopeMock,
+            valideringsresultat = createValideringsresultatMock(
+                hubTrackingInfo = HUBTrackingInfo.FAILED_DELIVERY,
+                validatedOk = false,
+                ),
+        )
 
         // Then:
-        verify(natsService, times(1)).publishImportEnvelopeMetadata(any())
         verify(natsService, times(1)).publishImportEnvelopeFailed(any())
     }
 

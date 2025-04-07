@@ -60,7 +60,7 @@ internal class EphytoValideringServiceTest {
             assertEquals("Could not read the envelope from the hub", errorMessage)
             assertEquals("hubDeliveryNumber", hubLeveringNummer)
             assertEquals(HUBTrackingInfo.ENVELOPE_NOT_EXISTS, hubTrackingInfo)
-            assertFalse(validatedOk)
+            assertFalse(validatedOk == true)
         }
     }
 
@@ -82,7 +82,7 @@ internal class EphytoValideringServiceTest {
             assertEquals("The content of the envelope from the hub is empty", errorMessage)
             assertEquals(envelopeMock.hubDeliveryNumber, hubLeveringNummer)
             assertEquals(HUBTrackingInfo.DELIVERED_NOT_READABLE, hubTrackingInfo)
-            assertFalse(validatedOk)
+            assertFalse(validatedOk == true)
         }
     }
 }

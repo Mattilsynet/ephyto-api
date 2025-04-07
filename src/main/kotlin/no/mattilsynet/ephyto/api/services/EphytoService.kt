@@ -35,10 +35,10 @@ class EphytoService(
     fun hentOgHaandterNyEnvelope(envelopeHeader: EnvelopeHeader) {
         runCatching {
             ephytoClient.getSingleImportEnvelopeOrNull(envelopeHeader.hubDeliveryNumber).also { envelope ->
-                val valideringsresultat = ephytoValideringService
+                var valideringsresultat = ephytoValideringService
                     .getValidationResultForEnvelope(envelope, envelopeHeader.hubDeliveryNumber)
                 if (envelope != null) {
-                    envelopeService.haandterNyEnvelope(envelope, valideringsresultat.hubTrackingInfo)
+                    valideringsresultat = envelopeService.haandterNyEnvelope(envelope, valideringsresultat)
                 } else {
                     logger.error("Kunne ikke hente envelope med hubLeveringNummer ${envelopeHeader.hubDeliveryNumber}")
                 }

@@ -1,6 +1,5 @@
 package no.mattilsynet.ephyto.api.services
 
-import com.google.cloud.storage.Blob
 import com.google.cloud.storage.Bucket
 import com.google.cloud.storage.Storage
 import com.google.cloud.storage.StorageException
@@ -27,7 +26,7 @@ class GcpStorageService(
         contentBytes: ByteArray,
         dataUrl: String,
         hubLeveringNummer: String,
-    ): Blob? =
+    ) =
         getBucket(bucketName)?.let { bucket ->
             try {
                 bucket.create(
@@ -41,8 +40,8 @@ class GcpStorageService(
                 }
             } catch (e: StorageException) {
                 logger.error("Filen for $hubLeveringNummer kunne ikke skrives til bucket: $bucketName. " +
-                        "Exception: ${e.message}")
-                null
+                        "dataUrl: $dataUrl, lengde på contentBytes: ${contentBytes.size}" +
+                        "Exception: ${e.message}", e)
             }
         }
     

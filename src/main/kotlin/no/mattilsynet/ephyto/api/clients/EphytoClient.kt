@@ -24,10 +24,10 @@ abstract class EphytoClient {
     fun acknowledgeEnvelope(valideringsresultat: Valideringsresultat) {
         when (valideringsresultat.validatedOk) {
             true -> acknowledgeSuccessfulEnvelope(valideringsresultat)
-            else -> acknowledgeFailedEnvelope(valideringsresultat)
+            false -> acknowledgeFailedEnvelope(valideringsresultat)
+            else -> Unit
         }
     }
-
 
     fun getImportEnvelopeHeaders(): List<EnvelopeHeader>? =
         runCatching {
