@@ -50,7 +50,7 @@ class EphytoEnvelopeValidatorTest {
         with(valideringsresultat) {
             assertEquals(mockEnvelope, envelope)
             assertEquals(null, errorMessage)
-            assertTrue(validatedOk)
+            assertTrue(validatedOk == true)
             assertEquals(mockEnvelope.hubDeliveryNumber, hubLeveringNummer)
             assertEquals(HUBTrackingInfo.DELIVERED, hubTrackingInfo)
         }
@@ -73,7 +73,7 @@ class EphytoEnvelopeValidatorTest {
         with(valideringsresultat) {
             assertEquals(mockEnvelope, envelope)
             assertEquals(null, errorMessage)
-            assertTrue(validatedOk)
+            assertTrue(validatedOk == true)
             assertEquals(mockEnvelope.hubDeliveryNumber, hubLeveringNummer)
             assertEquals(HUBTrackingInfo.DELIVERED, hubTrackingInfo)
         }
@@ -92,7 +92,7 @@ class EphytoEnvelopeValidatorTest {
         with(valideringsresultat) {
             assertEquals(mockEnvelope, envelope)
             assertEquals("The XML content in the envelope is not readable", errorMessage)
-            assertFalse(validatedOk)
+            assertFalse(validatedOk == true)
             assertEquals(mockEnvelope.hubDeliveryNumber, hubLeveringNummer)
             assertEquals(HUBTrackingInfo.DELIVERED_NOT_READABLE, hubTrackingInfo)
         }
@@ -119,7 +119,7 @@ class EphytoEnvelopeValidatorTest {
         with(valideringsresultat) {
             assertEquals(mockEnvelope, envelope)
             assertTrue(valideringsresultat.errorMessage!!.contains("SEVERE"))
-            assertTrue(validatedOk)
+            assertTrue(validatedOk == true)
             assertEquals(mockEnvelope.hubDeliveryNumber, hubLeveringNummer)
             assertEquals(HUBTrackingInfo.DELIVERED_WITH_WARNINGS, hubTrackingInfo)
         }

@@ -8,5 +8,5 @@ data class Valideringsresultat(
     val errorMessage: String?,
     val hubLeveringNummer: String,
     val hubTrackingInfo: HUBTrackingInfo,
-    val validatedOk: Boolean,
+    var validatedOk: Boolean?,
 )
