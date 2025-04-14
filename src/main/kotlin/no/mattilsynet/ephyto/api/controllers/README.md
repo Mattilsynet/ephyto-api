@@ -1,6 +1,3 @@
-
-"$JAVA_HOME/bin/keytool" -import -alias Mattilsynet-IssuingCA2 -file "Mattilsynet-IssuingCA2.cer" -keystore "$JAVA_HOME/lib/security/cacerts" -storepass changeit
-
 # Generering av testdata for ephyto-api
 
 Testdata skal bare brukes lokalt eller mot uat-miljøet. Det lages testsertifikater med dummyinnhold og litt tilfeldige data.
@@ -12,7 +9,7 @@ Først og fremst må du ha installert JAVA 21, og sette opp en JAVA_HOME variabe
 - Last ned JAVA fra feks. her: https://www.oracle.com/java/technologies/javase/jdk21-archive-downloads.html
 - Finn pathen til javas path ved å kjøre
     - ```/usr/libexec/java_home -V```
-- Gå inn i vim for å legge til JAVA_HOME variabelen. 
+- Gå inn i `.zshrc` for å legge til JAVA_HOME variabelen. 
   - ```vi ~/.zshrc```
   - ```i``` for å legge til
   - Legg inn ```echo "export JAVA_HOME=<PATH_TO_JAVA>"```
@@ -25,16 +22,46 @@ Du må legge Mattilsynet-IssuingCA2.cer inn i cacerts. Dette gjør du på Mac ve
 2. Finn “Mattilsynet-IssuingCA2”
 3. Velg “export…”
 4. Lagre sertifikatet
-Deretter kjør følgende kommando for å legge sertifikatet inn i java sin truststore(Bytt ut changeit med et passord du lager):
+5. Naviger til mappen du lagret sertifikatet i med terminalen
+6. Deretter kjør følgende kommando for å legge sertifikatet inn i java sin truststore 
 
-```"$JAVA_HOME"/bin/keytool -import -alias Mattilsynet-IssuingCA2 -file "Mattilsynet-IssuingCA2.cer" -keystore "$JAVA_HOME"/lib/security/cacerts -storepass changeit```
+HUSK: Bytt ut `<<<DITT PASSORD>>>` med et passord du lager selv, og legger i en password manager eller skriver ned. Dette trenger du senere.
+
+```
+"$JAVA_HOME"/bin/keytool -import -alias Mattilsynet-IssuingCA2 -file "Mattilsynet-IssuingCA2.cer" -keystore "$JAVA_HOME"/lib/security/cacerts -storepass <<<DITT PASSORD>>>
+```
 
 ## Opprett keystore 
-Skriv disse kommandoene i terminalen(changeit er passord):
-- Stå der Mattilsynet-RootCA ligger```"$JAVA_HOME"/bin/keytool.exe -import -alias Mattilsynet-RootCA -file C:/Users/$USER/Downloads/Mattilsynet-RootCA.cer -keystore```
-- ```"$JAVA_HOME"/security -storepass changeit```
-- Stå der du vil ha nppo.keystore ```keytool -genkey -alias nppo1 -keyalg RSA -keysize 2048 -keystore nppo.keystore -validity 3650 -keypass changeit -storepass changeit```
-- Stå der nppo.keystore er ```keytool -export -keystore nppo.keystore -alias nppo1 -file nppo.cer -keypass changeit -storepass changeit```. nppo.cer som blir generert skal legges i ephyto-hubben. 
+Skriv disse kommandoene i terminalen (`changeit` er passord):
+- Stå der du vil ha `nppo.keystore` og kjør følgende kommando i terminalen: 
+
+```
+keytool -genkey -alias nppo1 -keyalg RSA -keysize 2048 -keystore nppo.keystore -validity 3650 -keypass changeit -storepass changeit 
+```
+
+- Stå der `nppo.keystore` ble lagt, og gjør følgende kommando i terminalen: 
+
+```
+keytool -export -keystore nppo.keystore -alias nppo1 -file nppo.cer -keypass changeit -storepass changeit
+```
+
+## Referer til keystore i .zshrc
+Legg inn de følgende linjene i `.zshrc`
+
+```
+export EPHYTO_KEYSTORE_PATH=/Path/til/keystore/nppo.keystore
+export EPHYTO_KEYSTORE_PASSWORD=<< Ditt passord til keystore >>
+``` 
+
+## Opplasting av sertifikat til ephyto-hubben
+- Fiks profil på hub.ephytoexchange.org
+  - Se tabben "Guide to joining" på denne siden: https://hub.ephytoexchange.org/landing/hub/index.html
+  - For å aktivere kontoene kan det hende en eksisterende bruker er nødt til å sette profilen som "active" under "Users" i AdminConsole
+- Logg inn i AdminConsole her: https://uat-hub.ephytoexchange.org/AdminConsole/
+- Trykk på "Configuration" på venstre side
+- Trykk på "Certificates" oppe til høyre
+- Trykk på "Add" oppe til høyre
+- Last opp `nppo.cer` og gi en passende beskrivelse, F.eks. "Ola sitt sertifikat"
 
 ## Generere testdata og sende til hub'en
 
