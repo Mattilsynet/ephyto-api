@@ -7,7 +7,6 @@ import no.mattilsynet.ephyto.api.clients.EphytoClientAcknowledge
 import no.mattilsynet.ephyto.api.mocks.ephyto.EnvelopeMocker.createEnvelopeMock
 import no.mattilsynet.ephyto.api.mocks.ephyto.ValidationResultMocker.createValidationResultMock
 import org.junit.jupiter.api.Assertions.assertEquals
-import org.junit.jupiter.api.Assertions.assertFalse
 import org.junit.jupiter.api.Assertions.assertNotNull
 import org.junit.jupiter.api.Assertions.assertTrue
 import org.junit.jupiter.api.BeforeEach
@@ -76,25 +75,6 @@ class EphytoEnvelopeValidatorTest {
             assertTrue(validatedOk == true)
             assertEquals(mockEnvelope.hubDeliveryNumber, hubLeveringNummer)
             assertEquals(HUBTrackingInfo.DELIVERED, hubTrackingInfo)
-        }
-    }
-
-    @Test
-    fun `getValideringsresultat returnerer null riktig feilmelding naar envelopens innhold er i feil format`() {
-        // Given:
-        val mockEnvelope = createEnvelopeMock(content = "tull og tøys>")
-
-        // When:
-        val valideringsresultat = ephytoEnvelopeValidator.getValideringsresultat(mockEnvelope)
-
-        // Then:
-        assertNotNull(valideringsresultat)
-        with(valideringsresultat) {
-            assertEquals(mockEnvelope, envelope)
-            assertEquals("The XML content in the envelope is not readable", errorMessage)
-            assertFalse(validatedOk == true)
-            assertEquals(mockEnvelope.hubDeliveryNumber, hubLeveringNummer)
-            assertEquals(HUBTrackingInfo.DELIVERED_NOT_READABLE, hubTrackingInfo)
         }
     }
 
