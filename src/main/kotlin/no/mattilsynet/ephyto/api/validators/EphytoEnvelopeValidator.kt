@@ -9,9 +9,7 @@ import no.mattilsynet.ephyto.api.domain.Valideringsresultat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Component
-import java.nio.charset.StandardCharsets
 import java.util.Base64
-import javax.xml.parsers.DocumentBuilderFactory
 
 @Component
 class EphytoEnvelopeValidator(
@@ -38,21 +36,12 @@ class EphytoEnvelopeValidator(
                     )
                 }
 
-            if (validerEnvelopeContentLesbarhet(dekodetInnhold)) {
-                return Valideringsresultat(
-                    envelope = envelope,
-                    errorMessage = null,
-                    hubLeveringNummer = envelope.hubDeliveryNumber,
-                    hubTrackingInfo = HUBTrackingInfo.DELIVERED,
-                    validatedOk = true,
-                )
-            }
             return Valideringsresultat(
                 envelope = envelope,
-                errorMessage = "The XML content in the envelope is not readable",
+                errorMessage = null,
                 hubLeveringNummer = envelope.hubDeliveryNumber,
-                hubTrackingInfo = HUBTrackingInfo.DELIVERED_NOT_READABLE,
-                validatedOk = false,
+                hubTrackingInfo = HUBTrackingInfo.DELIVERED,
+                validatedOk = true,
             )
         }
 
@@ -69,19 +58,6 @@ class EphytoEnvelopeValidator(
         }.takeIf { alvorligeValideringsfeil ->
             alvorligeValideringsfeil.isNotEmpty()
         }?.toFeilmelding()
-
-    private fun validerEnvelopeContentLesbarhet(content: String): Boolean =
-        runCatching {
-            DocumentBuilderFactory
-                .newInstance()
-                .newDocumentBuilder()
-                .parse(
-                    content.byteInputStream(StandardCharsets.UTF_8)
-                )
-        }.onFailure { exception ->
-            logger.warn("XML-dokumentet er ikke leselig, Feilmelding: ${exception.message}", exception)
-        }.isSuccess
-
 }
 
 fun List<ValidationResult>.toFeilmelding(): String =
