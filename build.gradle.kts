@@ -28,6 +28,8 @@ repositories {
     }
 }
 
+val mockitoAgent = configurations.create("mockitoAgent")
+
 java {
     sourceCompatibility = JavaVersion.VERSION_21
 }
@@ -86,7 +88,8 @@ dependencies {
 
     // testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:5.4.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.0.0")
+    mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
 
     testImplementation("no.mattilsynet.fisk.libs:spring-test")
 }
@@ -116,9 +119,7 @@ tasks {
     }
 
     test {
-        // Fjerner warning fra Mockito/Surefire plugin
-        // @See: https://github.com/mockito/mockito/issues/3037
-        jvmArgs("-XX:+EnableDynamicAgentLoading")
+        jvmArgs("-javaagent:${mockitoAgent.asPath}")
         finalizedBy(jacocoTestReport)
     }
 
@@ -132,7 +133,9 @@ tasks {
 
     kotlin {
         compilerOptions.jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
-        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
+        // -Xannotation-default-target=param-property fjerner advarsel om annoteringer. Kan muligens fjernes fra Kotlin
+        // versjon 2.3
+        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict", "-Xannotation-default-target=param-property")
     }
 }
 
