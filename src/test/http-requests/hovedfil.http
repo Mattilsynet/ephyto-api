@@ -1,0 +1,10 @@
+###
+# @name Post sertifikater
+POST http://localhost:8085/ephyto/v1/send/envelope?antall=2
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent sertifikater
+POST http://localhost:8085/ephyto/v1/sertifikater
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
