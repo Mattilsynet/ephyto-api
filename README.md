@@ -40,3 +40,8 @@ For å kjøre applikasjonen lokalt, sjekk at ```spring.profiles.active``` er sat
 ### Gradle setup
 
 Lag en personal access token (PAT) i GitHub developer settings med scope `read:packages` og legg den til i environment variabelen `READ_SOURCE_AND_PACKAGES`. Tokenet må være autorisert til å lese pakker fra `Mattilsynet`-organisasjonen.
+
+## Kjøre rest-kall fra Intellij i stedet for Postman
+
+Du kan finne dokumentasjon for
+dette [her](https://github.com/Mattilsynet/ephyto-api/tree/master/src/test/http-requests/README.md)
