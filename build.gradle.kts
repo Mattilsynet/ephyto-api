@@ -76,8 +76,8 @@ dependencies {
         exclude(group = "com.sun.xml.bind")
     }
     implementation("com.sun.xml.bind:jaxb-impl:4.0.5")
-    implementation("org.glassfish.jaxb:jaxb-core:4.0.5")
-    implementation("org.glassfish.jaxb:jaxb-runtime:4.0.5")
+    implementation("org.glassfish.jaxb:jaxb-core:4.0.6")
+    implementation("org.glassfish.jaxb:jaxb-runtime:4.0.6")
 
     // jetbrains
     implementation("org.jetbrains.kotlin:kotlin-reflect")
