@@ -1,6 +1,7 @@
 package no.mattilsynet.ephyto.api
 
 import no.mattilsynet.fisk.libs.spring.virtualnats.SpringVirtualNatsStarter
+import no.mattilsynet.fisk.libs.spring.virtualnats.wrapper.LoggerVirtualNatsWrapper
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties
@@ -12,7 +13,10 @@ import org.springframework.scheduling.annotation.EnableScheduling
 @ConfigurationPropertiesScan
 @EnableConfigurationProperties
 @EnableScheduling
-@Import(SpringVirtualNatsStarter::class)
+@Import(
+    LoggerVirtualNatsWrapper::class,
+    SpringVirtualNatsStarter::class,
+)
 class EphytoApiApplication
 
 @Suppress("SpreadOperator")
