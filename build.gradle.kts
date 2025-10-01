@@ -64,7 +64,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.3.1"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.3.2"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
     implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
 
