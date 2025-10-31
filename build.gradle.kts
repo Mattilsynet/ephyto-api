@@ -45,8 +45,7 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.10.23-13.24-1c2f64bc1d33"))
-    implementation("no.mattilsynet.fisk.libs:nats")
+    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.10.30-13.00-d417f1486272"))
     implementation("no.mattilsynet.fisk.libs:spring")
     implementation("no.mattilsynet.fisk.libs:virtual-nats")
 
