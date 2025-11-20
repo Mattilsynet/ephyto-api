@@ -6,7 +6,7 @@ plugins {
     kotlin("plugin.spring") version "2.2.21"
 
     // Statisk kodeanalyse
-    id("org.sonarqube") version "7.0.0.6105"
+    id("org.sonarqube") version "7.0.1.6134"
     id("jacoco")
     id("io.gitlab.arturbosch.detekt").version("1.23.8")
 
@@ -45,8 +45,7 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.10.23-13.24-1c2f64bc1d33"))
-    implementation("no.mattilsynet.fisk.libs:nats")
+    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.11.05-13.52-5e60ef2023f9"))
     implementation("no.mattilsynet.fisk.libs:spring")
     implementation("no.mattilsynet.fisk.libs:virtual-nats")
 
@@ -54,7 +53,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
     // swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.13")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:2.8.14")
 
     // nats
     implementation("io.nats:jnats")
@@ -64,7 +63,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.4.0"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:7.4.1"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
     implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
 
