@@ -1,7 +1,7 @@
 package no.mattilsynet.ephyto.api.services
 
 import com.google.cloud.secretmanager.v1.SecretManagerServiceClient
-import no.mattilsynet.ephyto.api.imports.intendeduse.v1.IntendedUseDto
+import no.mattilsynet.ephyto.api.imports.kodeverk.v1.KodeverkDto
 import no.mattilsynet.ephyto.api.imports.meanoftransport.v1.MeanOfTransportDto
 import no.mattilsynet.ephyto.api.imports.nppo.v1.NppoDto
 import no.mattilsynet.ephyto.api.imports.statement.v1.StatementDto
@@ -113,7 +113,7 @@ internal class NatsKodeverkServiceTest {
 
         // Then:
         with(
-            IntendedUseDto.parseFrom(
+            KodeverkDto.parseFrom(
                 getFraNats(bucket = "ephyto_import_intended_use_v1", key = "code")
             )
         ) {

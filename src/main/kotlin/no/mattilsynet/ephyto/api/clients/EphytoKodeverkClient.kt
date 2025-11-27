@@ -1,9 +1,12 @@
 package no.mattilsynet.ephyto.api.clients
 
+import _int.ippc.ephyto.Condition
 import _int.ippc.ephyto.IntendedUse
 import _int.ippc.ephyto.MeanOfTransport
+import _int.ippc.ephyto.ProductDescription
 import _int.ippc.ephyto.Statement
 import _int.ippc.ephyto.TreatmentType
+import _int.ippc.ephyto.UnitMeasure
 import _int.ippc.ephyto.hub.ArrayOfNppo
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
@@ -32,6 +35,33 @@ class EphytoKodeverkClient {
             ephytoDeliveryService.getClientConnection().intendedUses
         }.getOrElse {
             logger.warn("Kunne ikke hente tilsiktet bruk fra ephyto. Exception: ${it.message}",
+                it)
+            emptyList()
+        }
+
+    fun getUnitMeasures(): List<UnitMeasure> =
+        runCatching {
+            ephytoDeliveryService.getClientConnection().unitMeasures
+        }.getOrElse {
+            logger.warn("Kunne ikke hente enheter fra ephyto. Exception: ${it.message}",
+                it)
+            emptyList()
+        }
+
+    fun getConditions(): List<Condition> =
+        runCatching {
+            ephytoDeliveryService.getClientConnection().conditions
+        }.getOrElse {
+            logger.warn("Kunne ikke hente tilstand fra ephyto. Exception: ${it.message}",
+                it)
+            emptyList()
+        }
+
+    fun getProductDescriptions(): List<ProductDescription> =
+        runCatching {
+            ephytoDeliveryService.getClientConnection().productDescriptions
+        }.getOrElse {
+            logger.warn("Kunne ikke hente plantedel fra ephyto. Exception: ${it.message}",
                 it)
             emptyList()
         }
