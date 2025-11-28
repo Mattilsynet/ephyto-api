@@ -44,6 +44,36 @@ internal class EphytoKodeverkServiceTest {
     }
 
     @Test
+    fun `pushConditionTilNats kaller videre til ephytoService og natsService`() {
+        // When:
+        ephytoKodeverkService.pushConditionTilNats()
+
+        // Then:
+        verify(ephytoService, Mockito.times(1)).hentCondition()
+        verify(natsKodeverkService, Mockito.times(1)).putCondition(any())
+    }
+
+    @Test
+    fun `pushProductDescriptionTilNats kaller videre til ephytoService og natsService`() {
+        // When:
+        ephytoKodeverkService.pushProductDescriptionTilNats()
+
+        // Then:
+        verify(ephytoService, Mockito.times(1)).hentProductDescription()
+        verify(natsKodeverkService, Mockito.times(1)).putProductDescription(any())
+    }
+
+    @Test
+    fun `pushUnitMeasure kaller videre til ephytoService og natsService`() {
+        // When:
+        ephytoKodeverkService.pushUnitMeasureTilNats()
+
+        // Then:
+        verify(ephytoService, Mockito.times(1)).hentUnitMeasure()
+        verify(natsKodeverkService, Mockito.times(1)).putUnitMeasure(any())
+    }
+
+    @Test
     fun `pushNpposTilNats kaller videre til ephytoService og natsService`() {
         // When:
         ephytoKodeverkService.pushNpposTilNats()

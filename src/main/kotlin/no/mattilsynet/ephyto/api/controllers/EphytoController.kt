@@ -106,6 +106,33 @@ class EphytoController(
         }
 
     @Profile("test", "local")
+    @PostMapping("/nats/push/condition")
+    fun pushConditionTilNats(): ResponseEntity<String> =
+        natsKodeverkService.putCondition(
+            ephytoService.hentCondition()
+        ).let {
+            ResponseEntity.noContent().build()
+        }
+
+    @Profile("test", "local")
+    @PostMapping("/nats/push/productdescription")
+    fun pushProductDescriptionTilNats(): ResponseEntity<String> =
+        natsKodeverkService.putProductDescription(
+            ephytoService.hentProductDescription()
+        ).let {
+            ResponseEntity.noContent().build()
+        }
+
+    @Profile("test", "local")
+    @PostMapping("/nats/push/unitmeasure")
+    fun pushUnitMeasureTilNats(): ResponseEntity<String> =
+        natsKodeverkService.putUnitMeasure(
+            ephytoService.hentUnitMeasure()
+        ).let {
+            ResponseEntity.noContent().build()
+        }
+
+    @Profile("test", "local")
     @PostMapping("/nats/push/meanoftransports")
     fun pushMeanOfTransportsTilNats(): ResponseEntity<String> =
         natsKodeverkService.putMeanOfTransports(

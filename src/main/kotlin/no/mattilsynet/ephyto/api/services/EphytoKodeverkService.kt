@@ -28,6 +28,21 @@ class EphytoKodeverkService(
             indendedUse = ephytoService.hentIndendedUse()
         )
 
+    fun pushUnitMeasureTilNats() =
+        natsKodeverkService.putUnitMeasure(
+            unitMeasure = ephytoService.hentUnitMeasure()
+        )
+
+    fun pushConditionTilNats() =
+        natsKodeverkService.putCondition(
+            condition = ephytoService.hentCondition()
+        )
+
+    fun pushProductDescriptionTilNats() =
+        natsKodeverkService.putProductDescription(
+            productDescription = ephytoService.hentProductDescription()
+        )
+
     fun pushTreatmentsTilNats() =
         natsKodeverkService.putTreatmentTypes(
             treatmentTypes = ephytoService.hentTreatmentTypes()

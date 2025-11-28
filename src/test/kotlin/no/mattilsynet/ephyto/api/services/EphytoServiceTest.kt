@@ -1,9 +1,12 @@
 package no.mattilsynet.ephyto.api.services
 
+import _int.ippc.ephyto.Condition
 import _int.ippc.ephyto.IntendedUse
 import _int.ippc.ephyto.MeanOfTransport
+import _int.ippc.ephyto.ProductDescription
 import _int.ippc.ephyto.Statement
 import _int.ippc.ephyto.TreatmentType
+import _int.ippc.ephyto.UnitMeasure
 import _int.ippc.ephyto.hub.ArrayOfNppo
 import _int.ippc.ephyto.hub.HUBTrackingInfo
 import _int.ippc.ephyto.hub.Nppo
@@ -338,6 +341,106 @@ internal class EphytoServiceTest {
         // Then:
         assertTrue(intendedUses.isNotEmpty())
         assertTrue(intendedUses.size == 3)
+    }
+
+    @Test
+    fun `getCondition returnerer liste dersom ephytoclient klarer aa hente conditions`() {
+        // Given:
+        doReturn(
+            listOf(
+                Condition().also { condition ->
+                    condition.isActive = true
+                    condition.code = "0001"
+                    condition.name = "rooted"
+                    condition.lang = "EN"
+                },
+                Condition().also { condition ->
+                    condition.isActive = true
+                    condition.code = "0002"
+                    condition.name = "unrooted"
+                    condition.lang = "EN"
+                },
+                Condition().also { condition ->
+                    condition.isActive = true
+                    condition.code = "0003"
+                    condition.name = "bare-rooted"
+                    condition.lang = "EN"
+                },
+            )
+        ).`when`(ephytoKodeverkClient).getCondition()
+
+
+        // When:
+        val conditions = ephytoService.hentCondition()
+
+        // Then:
+        assertTrue(conditions.isNotEmpty())
+        assertTrue(conditions.size == 3)
+    }
+    @Test
+    fun `getProductDescription returnerer liste dersom ephytoclient klarer aa hente productDescriptions`() {
+        // Given:
+        doReturn(
+            listOf(
+                ProductDescription().also { productDescription ->
+                    productDescription.isActive = true
+                    productDescription.code = "0001"
+                    productDescription.name = "seeds"
+                    productDescription.lang = "EN"
+                },
+                ProductDescription().also { productDescription ->
+                    productDescription.isActive = true
+                    productDescription.code = "0002"
+                    productDescription.name = "plants"
+                    productDescription.lang = "EN"
+                },
+                ProductDescription().also { productDescription ->
+                    productDescription.isActive = true
+                    productDescription.code = "0003"
+                    productDescription.name = "bulbs"
+                    productDescription.lang = "EN"
+                },
+            )
+        ).`when`(ephytoKodeverkClient).getProductDescription()
+
+
+        // When:
+        val productDescriptions = ephytoService.hentProductDescription()
+
+        // Then:
+        assertTrue(productDescriptions.isNotEmpty())
+        assertTrue(productDescriptions.size == 3)
+    }
+    @Test
+    fun `getUnitMeasure returnerer liste dersom ephytoclient klarer aa hente unitMeasures`() {
+        // Given:
+        doReturn(
+            listOf(
+                UnitMeasure().also { unitMeasure ->
+                    unitMeasure.isActive = true
+                    unitMeasure.code = "KGM"
+                    unitMeasure.name = "kilogram"
+                },
+                UnitMeasure().also { unitMeasure ->
+                    unitMeasure.isActive = true
+                    unitMeasure.code = "MTR"
+                    unitMeasure.name = "metre"
+                },
+                UnitMeasure().also { unitMeasure ->
+                    unitMeasure.isActive = true
+                    unitMeasure.code = "MTQ"
+                    unitMeasure.name = "cubic metre"
+                },
+            )
+        ).`when`(ephytoKodeverkClient).getUnitMeasure()
+
+
+        // When:
+        val unitMeasures = ephytoService.hentUnitMeasure()
+
+        // Then:
+        assertTrue(unitMeasures.isNotEmpty())
+        assertTrue(unitMeasures.size == 3)
     }
 
     @Test
