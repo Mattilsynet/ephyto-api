@@ -122,7 +122,7 @@ class NatsKodeverkService(private val nats: VirtualNats) {
                     )
                 }
         }.onFailure {
-            logger.warn("putIntendedUse feilet med meldingen ${it.message}", it)
+            logger.warn("putCondition feilet med meldingen ${it.message}", it)
         }
     }
 
@@ -145,7 +145,7 @@ class NatsKodeverkService(private val nats: VirtualNats) {
                     )
                 }
         }.onFailure {
-            logger.warn("putIntendedUse feilet med meldingen ${it.message}", it)
+            logger.warn("putProductDescription feilet med meldingen ${it.message}", it)
         }
     }
 
@@ -164,7 +164,7 @@ class NatsKodeverkService(private val nats: VirtualNats) {
                     )
                 }
         }.onFailure {
-            logger.warn("putIntendedUse feilet med meldingen ${it.message}", it)
+            logger.warn("putUnitMeasure feilet med meldingen ${it.message}", it)
         }
     }
 
