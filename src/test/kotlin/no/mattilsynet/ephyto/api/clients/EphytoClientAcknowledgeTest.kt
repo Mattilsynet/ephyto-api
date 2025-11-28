@@ -1,11 +1,14 @@
 package no.mattilsynet.ephyto.api.clients
 
+import _int.ippc.ephyto.Condition
 import _int.ippc.ephyto.HubWebException_Exception
 import _int.ippc.ephyto.IDeliveryService
 import _int.ippc.ephyto.IntendedUse
 import _int.ippc.ephyto.MeanOfTransport
+import _int.ippc.ephyto.ProductDescription
 import _int.ippc.ephyto.Statement
 import _int.ippc.ephyto.TreatmentType
+import _int.ippc.ephyto.UnitMeasure
 import _int.ippc.ephyto.hub.ArrayOfEnvelopeHeader
 import _int.ippc.ephyto.hub.ArrayOfNppo
 import _int.ippc.ephyto.hub.Nppo
@@ -398,6 +401,105 @@ internal class EphytoClientAcknowledgeTest {
 
         // When:
         val resultat = ephytoKodeverkClient.getIndendedUse()
+
+        // Then:
+        assertTrue(resultat.isEmpty())
+    }
+
+    @Test
+    fun `test getCondition returnerer rett`() {
+        // Given:
+        doReturn(
+            listOf(
+                mock<Condition>(),
+                mock<Condition>(),
+                mock<Condition>(),
+            )
+        ).`when`(iDeliveryService).conditions
+
+        // When:
+        val conditions = ephytoKodeverkClient.getCondition()
+
+        // Then:
+        assertNotNull(conditions)
+        assertFalse(conditions.isEmpty())
+    }
+
+    @Test
+    fun `test getCondition returnerer null dersom conditions kaster feil`() {
+        // Given:
+        doThrow(
+            HubWebException_Exception("feil kastet")
+        ).`when`(iDeliveryService).conditions
+
+        // When:
+        val resultat = ephytoKodeverkClient.getCondition()
+
+        // Then:
+        assertTrue(resultat.isEmpty())
+    }
+
+    @Test
+    fun `test getProductDescription returnerer rett`() {
+        // Given:
+        doReturn(
+            listOf(
+                mock<ProductDescription>(),
+                mock<ProductDescription>(),
+                mock<ProductDescription>(),
+            )
+        ).`when`(iDeliveryService).productDescriptions
+
+        // When:
+        val productDescriptions = ephytoKodeverkClient.getProductDescription()
+
+        // Then:
+        assertNotNull(productDescriptions)
+        assertFalse(productDescriptions.isEmpty())
+    }
+
+    @Test
+    fun `test getProductDescription returnerer null dersom productDescriptions kaster feil`() {
+        // Given:
+        doThrow(
+            HubWebException_Exception("feil kastet")
+        ).`when`(iDeliveryService).productDescriptions
+
+        // When:
+        val resultat = ephytoKodeverkClient.getProductDescription()
+
+        // Then:
+        assertTrue(resultat.isEmpty())
+    }
+
+    @Test
+    fun `test getUnitMeasure returnerer rett`() {
+        // Given:
+        doReturn(
+            listOf(
+                mock<UnitMeasure>(),
+                mock<UnitMeasure>(),
+                mock<UnitMeasure>(),
+            )
+        ).`when`(iDeliveryService).unitMeasures
+
+        // When:
+        val unitMeasures = ephytoKodeverkClient.getUnitMeasure()
+
+        // Then:
+        assertNotNull(unitMeasures)
+        assertFalse(unitMeasures.isEmpty())
+    }
+
+    @Test
+    fun `test getUnitMeasure returnerer null dersom unitMeasures kaster feil`() {
+        // Given:
+        doThrow(
+            HubWebException_Exception("feil kastet")
+        ).`when`(iDeliveryService).unitMeasures
+
+        // When:
+        val resultat = ephytoKodeverkClient.getUnitMeasure()
 
         // Then:
         assertTrue(resultat.isEmpty())
