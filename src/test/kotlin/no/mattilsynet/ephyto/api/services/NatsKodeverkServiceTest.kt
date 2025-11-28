@@ -6,11 +6,15 @@ import no.mattilsynet.ephyto.api.imports.meanoftransport.v1.MeanOfTransportDto
 import no.mattilsynet.ephyto.api.imports.nppo.v1.NppoDto
 import no.mattilsynet.ephyto.api.imports.statement.v1.StatementDto
 import no.mattilsynet.ephyto.api.imports.treatmenttype.v1.TreatmentTypeDto
+import no.mattilsynet.ephyto.api.imports.unitmeasure.v1.UnitMeasureDto
+import no.mattilsynet.ephyto.api.mocks.ephyto.ConditionMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.IntendedUseMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.MeanOfTransportMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.NppoMocker
+import no.mattilsynet.ephyto.api.mocks.ephyto.ProductDescriptionMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.StatementMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.TreatmentTypeMocker
+import no.mattilsynet.ephyto.api.mocks.ephyto.UnitMeasureMocker
 import no.mattilsynet.fisk.libs.springtest.SpringVirtualNatsTestStarter
 import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
 import org.junit.jupiter.api.AfterEach
@@ -120,6 +124,76 @@ internal class NatsKodeverkServiceTest {
             assertEquals(beskrivelseEn, "name - en")
             assertEquals(beskrivelseEs, "name - es")
             assertEquals(beskrivelseFr, "name - fr")
+        }
+    }
+
+    @Test
+    fun `putCondition kjoerer uten problemer med riktig bucket`() {
+        // Given:
+        val conditions = listOf(
+            ConditionMocker.createConditionMock(lang = "en"),
+            ConditionMocker.createConditionMock(lang = "es"),
+            ConditionMocker.createConditionMock(lang = "fr"),
+            ConditionMocker.createConditionMock(lang = "ukjent"),
+        )
+
+        // When:
+        natsKodeverkService.putCondition(conditions)
+
+        // Then:
+        with(
+            KodeverkDto.parseFrom(
+                getFraNats(bucket = "ephyto_import_condition_v1", key = "code")
+            )
+        ) {
+            assertEquals(beskrivelseEn, "name - en")
+            assertEquals(beskrivelseEs, "name - es")
+            assertEquals(beskrivelseFr, "name - fr")
+        }
+    }
+
+    @Test
+    fun `putProductDescription kjoerer uten problemer med riktig bucket`() {
+        // Given:
+        val productDescriptions = listOf(
+            ProductDescriptionMocker.createProductDescriptionMock(lang = "en"),
+            ProductDescriptionMocker.createProductDescriptionMock(lang = "es"),
+            ProductDescriptionMocker.createProductDescriptionMock(lang = "fr"),
+            ProductDescriptionMocker.createProductDescriptionMock(lang = "ukjent"),
+        )
+
+        // When:
+        natsKodeverkService.putProductDescription(productDescriptions)
+
+        // Then:
+        with(
+            KodeverkDto.parseFrom(
+                getFraNats(bucket = "ephyto_import_product_description_v1", key = "code")
+            )
+        ) {
+            assertEquals(beskrivelseEn, "name - en")
+            assertEquals(beskrivelseEs, "name - es")
+            assertEquals(beskrivelseFr, "name - fr")
+        }
+    }
+
+    @Test
+    fun `putUnitMeasure kjoerer uten problemer med riktig bucket`() {
+        // Given:
+        val unitMeasures = listOf(
+            UnitMeasureMocker.createUnitMeasureMock(),
+        )
+
+        // When:
+        natsKodeverkService.putUnitMeasure(unitMeasures)
+
+        // Then:
+        with(
+            UnitMeasureDto.parseFrom(
+                getFraNats(bucket = "ephyto_import_unit_measure_v1", key = "code")
+            )
+        ) {
+            assertEquals(beskrivelse, "name")
         }
     }
 

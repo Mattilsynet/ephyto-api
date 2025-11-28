@@ -76,12 +76,12 @@ class EphytoService(
     fun hentIndendedUse(): List<IntendedUse> =
         ephytoKodeverkClient.getIndendedUse()
 
-    fun hentUnitMeasures(): List<UnitMeasure> =
-        ephytoKodeverkClient.getUnitMeasures()
+    fun hentUnitMeasure(): List<UnitMeasure> =
+        ephytoKodeverkClient.getUnitMeasure()
 
-    fun hentConditions(): List<Condition> =
-        ephytoKodeverkClient.getConditions()
+    fun hentCondition(): List<Condition> =
+        ephytoKodeverkClient.getCondition()
 
-    fun hentProductDescriptions(): List<ProductDescription> =
-        ephytoKodeverkClient.getProductDescriptions()
+    fun hentProductDescription(): List<ProductDescription> =
+        ephytoKodeverkClient.getProductDescription()
 }

@@ -39,7 +39,7 @@ class EphytoKodeverkClient {
             emptyList()
         }
 
-    fun getUnitMeasures(): List<UnitMeasure> =
+    fun getUnitMeasure(): List<UnitMeasure> =
         runCatching {
             ephytoDeliveryService.getClientConnection().unitMeasures
         }.getOrElse {
@@ -48,7 +48,7 @@ class EphytoKodeverkClient {
             emptyList()
         }
 
-    fun getConditions(): List<Condition> =
+    fun getCondition(): List<Condition> =
         runCatching {
             ephytoDeliveryService.getClientConnection().conditions
         }.getOrElse {
@@ -57,7 +57,7 @@ class EphytoKodeverkClient {
             emptyList()
         }
 
-    fun getProductDescriptions(): List<ProductDescription> =
+    fun getProductDescription(): List<ProductDescription> =
         runCatching {
             ephytoDeliveryService.getClientConnection().productDescriptions
         }.getOrElse {
