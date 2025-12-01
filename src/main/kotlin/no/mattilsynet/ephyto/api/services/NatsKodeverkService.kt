@@ -1,12 +1,15 @@
 package no.mattilsynet.ephyto.api.services
 
+import _int.ippc.ephyto.Condition
 import _int.ippc.ephyto.IntendedUse
 import _int.ippc.ephyto.MeanOfTransport
+import _int.ippc.ephyto.ProductDescription
 import _int.ippc.ephyto.Statement
 import _int.ippc.ephyto.TreatmentType
+import _int.ippc.ephyto.UnitMeasure
 import _int.ippc.ephyto.hub.Nppo
 import no.mattilsynet.ephyto.api.extensions.toTimestamp
-import no.mattilsynet.ephyto.api.imports.intendeduse.v1.IntendedUseDto
+import no.mattilsynet.ephyto.api.imports.kodeverk.v1.KodeverkDto
 import no.mattilsynet.ephyto.api.imports.meanoftransport.v1.MeanOfTransportDto
 import no.mattilsynet.ephyto.api.imports.nppo.v1.AllowedDocumentDto
 import no.mattilsynet.ephyto.api.imports.nppo.v1.ArrayOfChannelRulesDto
@@ -19,12 +22,13 @@ import no.mattilsynet.ephyto.api.imports.nppo.v1.NppoDto
 import no.mattilsynet.ephyto.api.imports.nppo.v1.SigningCertificateDto
 import no.mattilsynet.ephyto.api.imports.statement.v1.StatementDto
 import no.mattilsynet.ephyto.api.imports.treatmenttype.v1.TreatmentTypeDto
+import no.mattilsynet.ephyto.api.imports.unitmeasure.v1.UnitMeasureDto
 import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
 import org.springframework.stereotype.Service
 import org.threeten.bp.Instant
 
 @Service
-@Suppress("MagicNumber")
+@Suppress("MagicNumber", "TooManyFunctions")
 class NatsKodeverkService(private val nats: VirtualNats) {
 
     private val logger = org.slf4j.LoggerFactory.getLogger(javaClass)
@@ -86,9 +90,11 @@ class NatsKodeverkService(private val nats: VirtualNats) {
                         "ephyto_import_intended_use_v1"
                     ).put(
                         key = intendedUse.key,
-                        value = intendedUseToProto(
-                            intendedUseKode = intendedUse.key,
-                            intendedUseBeskrivelser = intendedUse.value,
+                        value = kodeverkToProto(
+                            kode = intendedUse.key,
+                            beskrivelseEn = intendedUse.value.first { it.lang == "en" }.name,
+                            beskrivelseEs = intendedUse.value.first { it.lang == "es" }.name,
+                            beskrivelseFr = intendedUse.value.first { it.lang == "fr" }.name,
                         ).toByteArray(),
                     )
                 }
@@ -97,14 +103,89 @@ class NatsKodeverkService(private val nats: VirtualNats) {
         }
     }
 
-    private fun intendedUseToProto(intendedUseKode: String, intendedUseBeskrivelser: List<IntendedUse>)
-            : IntendedUseDto =
-        IntendedUseDto.newBuilder()
-            .setBeskrivelseEn(intendedUseBeskrivelser.first { it.lang == "en" }.name)
-            .setBeskrivelseEs(intendedUseBeskrivelser.first { it.lang == "es" }.name)
-            .setBeskrivelseFr(intendedUseBeskrivelser.first { it.lang == "fr" }.name)
+    fun putCondition(condition: List<Condition>) {
+        runCatching {
+            condition
+                .filter { it.lang == "en" || it.lang == "es" || it.lang == "fr" }
+                .groupBy { it.code }
+                .map { condition ->
+                    nats.keyValue(
+                        "ephyto_import_condition_v1"
+                    ).put(
+                        key = condition.key,
+                        value = kodeverkToProto(
+                            kode = condition.key,
+                            beskrivelseEn = condition.value.first { it.lang == "en" }.name,
+                            beskrivelseEs = condition.value.first { it.lang == "es" }.name,
+                            beskrivelseFr = condition.value.first { it.lang == "fr" }.name,
+                        ).toByteArray(),
+                    )
+                }
+        }.onFailure {
+            logger.warn("putCondition feilet med meldingen ${it.message}", it)
+        }
+    }
+
+    fun putProductDescription(productDescription: List<ProductDescription>) {
+        runCatching {
+            productDescription
+                .filter { it.lang == "en" || it.lang == "es" || it.lang == "fr" }
+                .groupBy { it.code }
+                .map { productDescription ->
+                    nats.keyValue(
+                        "ephyto_import_product_description_v1"
+                    ).put(
+                        key = productDescription.key,
+                        value = kodeverkToProto(
+                            kode = productDescription.key,
+                            beskrivelseEn = productDescription.value.first { it.lang == "en" }.name,
+                            beskrivelseEs = productDescription.value.first { it.lang == "es" }.name,
+                            beskrivelseFr = productDescription.value.first { it.lang == "fr" }.name,
+                        ).toByteArray(),
+                    )
+                }
+        }.onFailure {
+            logger.warn("putProductDescription feilet med meldingen ${it.message}", it)
+        }
+    }
+
+    fun putUnitMeasure(unitMeasure: List<UnitMeasure>) {
+        runCatching {
+            unitMeasure
+                .map { unitMeasure ->
+                    nats.keyValue(
+                        "ephyto_import_unit_measure_v1"
+                    ).put(
+                        key = unitMeasure.code,
+                        value = unitMeasureToProto(
+                            unitMeasureKode = unitMeasure.code,
+                            unitMeasureBeskrivelse = unitMeasure.name,
+                        ).toByteArray(),
+                    )
+                }
+        }.onFailure {
+            logger.warn("putUnitMeasure feilet med meldingen ${it.message}", it)
+        }
+    }
+
+
+
+    private fun kodeverkToProto(kode: String, beskrivelseEn: String, beskrivelseEs: String, beskrivelseFr: String)
+            : KodeverkDto =
+        KodeverkDto.newBuilder()
+            .setBeskrivelseEn(beskrivelseEn)
+            .setBeskrivelseEs(beskrivelseEs)
+            .setBeskrivelseFr(beskrivelseFr)
             .setReceivedAt(Instant.now().toTimestamp())
-            .setKode(intendedUseKode)
+            .setKode(kode)
+            .build()
+
+    private fun unitMeasureToProto(unitMeasureKode: String, unitMeasureBeskrivelse: String)
+            : UnitMeasureDto =
+        UnitMeasureDto.newBuilder()
+            .setBeskrivelse(unitMeasureBeskrivelse)
+            .setReceivedAt(Instant.now().toTimestamp())
+            .setKode(unitMeasureKode)
             .build()
 
     fun putMeanOfTransports(meanOfTransports: List<MeanOfTransport>) {

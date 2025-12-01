@@ -1,0 +1,15 @@
+syntax = "proto3";
+
+package no.mattilsynet.ephyto.api.imports.unitmeasure.v1;
+
+option java_multiple_files = true;
+option java_package = "no.mattilsynet.ephyto.api.imports.unitmeasure.v1";
+option java_outer_classname = "UnitMeasureDtoOuterClass";
+
+import "google/protobuf/timestamp.proto";
+
+message UnitMeasureDto {
+  string beskrivelse = 1;
+  google.protobuf.Timestamp receivedAt = 2;
+  string kode = 3;
+}

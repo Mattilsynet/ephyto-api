@@ -48,6 +48,9 @@ internal class EphytoSchedulerTest {
         // Then:
         verify(ephytoKodeverkService, Mockito.times(1)).pushNpposTilNats()
         verify(ephytoKodeverkService, Mockito.times(1)).pushIndendedUseTilNats()
+        verify(ephytoKodeverkService, Mockito.times(1)).pushConditionTilNats()
+        verify(ephytoKodeverkService, Mockito.times(1)).pushProductDescriptionTilNats()
+        verify(ephytoKodeverkService, Mockito.times(1)).pushUnitMeasureTilNats()
         verify(ephytoKodeverkService, Mockito.times(1)).pushMeanOfTransportsTilNats()
         verify(ephytoKodeverkService, Mockito.times(1)).pushStatementsTilNats()
         verify(ephytoKodeverkService, Mockito.times(1)).pushTreatmentsTilNats()

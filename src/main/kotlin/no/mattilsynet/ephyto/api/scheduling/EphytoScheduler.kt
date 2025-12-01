@@ -29,11 +29,14 @@ class EphytoScheduler(
     @Scheduled(cron = "\${ephyto.scheduler.kodeverk.cron.expression}", zone = "\${ephyto.scheduler.zone}")
     fun getKodeverk() {
         logger.info("Henter kodeverk fra ephyto og legger på kø")
-        ephytoKodeverkService.pushNpposTilNats()
+        ephytoKodeverkService.pushConditionTilNats()
         ephytoKodeverkService.pushIndendedUseTilNats()
         ephytoKodeverkService.pushMeanOfTransportsTilNats()
+        ephytoKodeverkService.pushNpposTilNats()
+        ephytoKodeverkService.pushProductDescriptionTilNats()
         ephytoKodeverkService.pushStatementsTilNats()
         ephytoKodeverkService.pushTreatmentsTilNats()
+        ephytoKodeverkService.pushUnitMeasureTilNats()
         logger.info("Ferdig med å hente kodeverk fra ephyto og legge på kø")
     }
 

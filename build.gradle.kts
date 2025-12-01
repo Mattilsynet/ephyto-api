@@ -6,7 +6,7 @@ plugins {
     kotlin("plugin.spring") version "2.2.21"
 
     // Statisk kodeanalyse
-    id("org.sonarqube") version "7.0.1.6134"
+    id("org.sonarqube") version "7.1.0.6387"
     id("jacoco")
     id("io.gitlab.arturbosch.detekt").version("1.23.8")
 
@@ -59,7 +59,7 @@ dependencies {
     implementation("io.nats:jnats")
 
     // protobuf
-    implementation(platform("com.google.protobuf:protobuf-bom:4.33.0"))
+    implementation(platform("com.google.protobuf:protobuf-bom:4.33.1"))
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
@@ -152,6 +152,6 @@ wsdl2java {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.33.0"
+        artifact = "com.google.protobuf:protoc:4.33.1"
     }
 }

@@ -1,9 +1,12 @@
 package no.mattilsynet.ephyto.api.services
 
+import _int.ippc.ephyto.Condition
 import _int.ippc.ephyto.IntendedUse
 import _int.ippc.ephyto.MeanOfTransport
+import _int.ippc.ephyto.ProductDescription
 import _int.ippc.ephyto.Statement
 import _int.ippc.ephyto.TreatmentType
+import _int.ippc.ephyto.UnitMeasure
 import _int.ippc.ephyto.hub.EnvelopeHeader
 import _int.ippc.ephyto.hub.Nppo
 import no.mattilsynet.ephyto.api.clients.EphytoClient
@@ -72,4 +75,13 @@ class EphytoService(
 
     fun hentIndendedUse(): List<IntendedUse> =
         ephytoKodeverkClient.getIndendedUse()
+
+    fun hentUnitMeasure(): List<UnitMeasure> =
+        ephytoKodeverkClient.getUnitMeasure()
+
+    fun hentCondition(): List<Condition> =
+        ephytoKodeverkClient.getCondition()
+
+    fun hentProductDescription(): List<ProductDescription> =
+        ephytoKodeverkClient.getProductDescription()
 }
