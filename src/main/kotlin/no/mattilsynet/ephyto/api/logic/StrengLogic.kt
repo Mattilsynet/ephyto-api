@@ -3,6 +3,7 @@ package no.mattilsynet.ephyto.api.logic
 import _int.ippc.ephyto.MeanOfTransport
 import _int.ippc.ephyto.Statement
 import _int.ippc.ephyto.TreatmentType
+import _int.ippc.ephyto.UnitMeasure
 
 fun String.vask() =
     replace("\n", " ")
@@ -36,4 +37,11 @@ fun List<MeanOfTransport>.vaskMeanOfTransports() =
 fun List<TreatmentType>.vaskTreatmentType() =
     onEach { treatmentType ->
         treatmentType.description = treatmentType.description.vask()
+    }
+
+fun List<UnitMeasure>.vaskUnitMeasure() =
+    onEach { unitMeasure ->
+        unitMeasure.symbol = unitMeasure.symbol
+            .replace("\n", "")
+            .replace("\r", "")
     }

@@ -23,6 +23,7 @@ import no.mattilsynet.ephyto.api.imports.nppo.v1.SigningCertificateDto
 import no.mattilsynet.ephyto.api.imports.statement.v1.StatementDto
 import no.mattilsynet.ephyto.api.imports.treatmenttype.v1.TreatmentTypeDto
 import no.mattilsynet.ephyto.api.imports.unitmeasure.v1.UnitMeasureDto
+import no.mattilsynet.ephyto.api.logic.vaskUnitMeasure
 import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
 import org.springframework.stereotype.Service
 import org.threeten.bp.Instant
@@ -149,9 +150,10 @@ class NatsKodeverkService(private val nats: VirtualNats) {
         }
     }
 
-    fun putUnitMeasure(unitMeasure: List<UnitMeasure>) {
+    fun putUnitMeasure(unitMeasures: List<UnitMeasure>) {
         runCatching {
-            unitMeasure
+            unitMeasures
+                .vaskUnitMeasure()
                 .map { unitMeasure ->
                     nats.keyValue(
                         "ephyto_import_unit_measure_v1"
@@ -159,7 +161,7 @@ class NatsKodeverkService(private val nats: VirtualNats) {
                         key = unitMeasure.code,
                         value = unitMeasureToProto(
                             unitMeasureKode = unitMeasure.code,
-                            unitMeasureBeskrivelse = unitMeasure.name,
+                            unitMeasureBeskrivelse = unitMeasure.symbol,
                         ).toByteArray(),
                     )
                 }
@@ -167,8 +169,6 @@ class NatsKodeverkService(private val nats: VirtualNats) {
             logger.warn("putUnitMeasure feilet med meldingen ${it.message}", it)
         }
     }
-
-
 
     private fun kodeverkToProto(kode: String, beskrivelseEn: String, beskrivelseEs: String, beskrivelseFr: String)
             : KodeverkDto =
