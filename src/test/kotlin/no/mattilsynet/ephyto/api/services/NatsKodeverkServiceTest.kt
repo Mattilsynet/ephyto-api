@@ -58,10 +58,13 @@ internal class NatsKodeverkServiceTest {
     @AfterEach
     fun cleanUp() {
         reactiveNats.keyValue("ephyto_import_active_nppos_v1").purgeAll()
-        reactiveNats.keyValue("ephyto_import_statements_v1").purgeAll()
-        reactiveNats.keyValue("ephyto_import_treatment_types_v1").purgeAll()
-        reactiveNats.keyValue("ephyto_import_transport_methods_v1").purgeAll()
+        reactiveNats.keyValue("ephyto_import_condition_v1").purgeAll()
         reactiveNats.keyValue("ephyto_import_intended_use_v1").purgeAll()
+        reactiveNats.keyValue("ephyto_import_product_description_v1").purgeAll()
+        reactiveNats.keyValue("ephyto_import_statements_v1").purgeAll()
+        reactiveNats.keyValue("ephyto_import_transport_methods_v1").purgeAll()
+        reactiveNats.keyValue("ephyto_import_treatment_types_v1").purgeAll()
+        reactiveNats.keyValue("ephyto_import_unit_measure_v1").purgeAll()
     }
 
     @Test
@@ -76,10 +79,10 @@ internal class NatsKodeverkServiceTest {
 
         // Then:
         assertEquals(
+            "NL",
             NppoDto.parseFrom(
                 getFraNats(bucket = "ephyto_import_active_nppos_v1", key = "NL")
             ).country,
-            "NL",
         )
     }
 
@@ -95,10 +98,10 @@ internal class NatsKodeverkServiceTest {
 
         // Then:
         assertEquals(
+            "text",
             StatementDto.parseFrom(
                 getFraNats(bucket = "ephyto_import_statements_v1", key = "code/DK")
             ).text,
-            "text",
         )
     }
 
@@ -121,9 +124,9 @@ internal class NatsKodeverkServiceTest {
                 getFraNats(bucket = "ephyto_import_intended_use_v1", key = "code")
             )
         ) {
-            assertEquals(beskrivelseEn, "name - en")
-            assertEquals(beskrivelseEs, "name - es")
-            assertEquals(beskrivelseFr, "name - fr")
+            assertEquals("name - en", beskrivelseEn)
+            assertEquals("name - es", beskrivelseEs)
+            assertEquals("name - fr", beskrivelseFr)
         }
     }
 
@@ -146,9 +149,9 @@ internal class NatsKodeverkServiceTest {
                 getFraNats(bucket = "ephyto_import_condition_v1", key = "code")
             )
         ) {
-            assertEquals(beskrivelseEn, "name - en")
-            assertEquals(beskrivelseEs, "name - es")
-            assertEquals(beskrivelseFr, "name - fr")
+            assertEquals("name - en", beskrivelseEn)
+            assertEquals("name - es", beskrivelseEs)
+            assertEquals("name - fr", beskrivelseFr)
         }
     }
 
@@ -171,9 +174,9 @@ internal class NatsKodeverkServiceTest {
                 getFraNats(bucket = "ephyto_import_product_description_v1", key = "code")
             )
         ) {
-            assertEquals(beskrivelseEn, "name - en")
-            assertEquals(beskrivelseEs, "name - es")
-            assertEquals(beskrivelseFr, "name - fr")
+            assertEquals("name - en", beskrivelseEn)
+            assertEquals("name - es", beskrivelseEs)
+            assertEquals("name - fr", beskrivelseFr)
         }
     }
 
@@ -193,7 +196,7 @@ internal class NatsKodeverkServiceTest {
                 getFraNats(bucket = "ephyto_import_unit_measure_v1", key = "code")
             )
         ) {
-            assertEquals(beskrivelse, "name")
+            assertEquals("kg/m", beskrivelse)
         }
     }
 
@@ -209,10 +212,10 @@ internal class NatsKodeverkServiceTest {
 
         // Then:
         assertEquals(
+            "description",
             TreatmentTypeDto.parseFrom(
                 getFraNats(bucket = "ephyto_import_treatment_types_v1", key = "code/lang")
             ).description,
-            "description",
         )
     }
 
@@ -228,10 +231,10 @@ internal class NatsKodeverkServiceTest {
 
         // Then:
         assertEquals(
+            "Vessel",
             MeanOfTransportDto.parseFrom(
                 getFraNats(bucket = "ephyto_import_transport_methods_v1", key = "1/en")
             ).usedTransportMean,
-            "Vessel",
         )
     }
 

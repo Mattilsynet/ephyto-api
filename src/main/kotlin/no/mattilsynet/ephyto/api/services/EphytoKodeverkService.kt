@@ -30,7 +30,7 @@ class EphytoKodeverkService(
 
     fun pushUnitMeasureTilNats() =
         natsKodeverkService.putUnitMeasure(
-            unitMeasure = ephytoService.hentUnitMeasure()
+            unitMeasures = ephytoService.hentUnitMeasure()
         )
 
     fun pushConditionTilNats() =

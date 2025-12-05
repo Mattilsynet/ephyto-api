@@ -1,0 +1,44 @@
+###
+# @name Hent unitmeasure til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/unitmeasure
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent NPPOs til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/nppo
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent statements til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/statements
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent intended use til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/intendeduse
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent condition til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/condition
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent product description til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/productdescription
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent unit measures til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/unitmeasure
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent mean of transports til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/meanoftransports
+Authorization: Bearer {{$auth.token("Googletoken")}}
+
+###
+# @name Hent treatment types til NATS
+POST http://localhost:8085/ephyto/v1/nats/push/treatmenttypes
+Authorization: Bearer {{$auth.token("Googletoken")}}
