@@ -24,7 +24,7 @@ import no.mattilsynet.ephyto.api.imports.statement.v1.StatementDto
 import no.mattilsynet.ephyto.api.imports.treatmenttype.v1.TreatmentTypeDto
 import no.mattilsynet.ephyto.api.imports.unitmeasure.v1.UnitMeasureDto
 import no.mattilsynet.ephyto.api.logic.vaskUnitMeasure
-import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import org.springframework.stereotype.Service
 import org.threeten.bp.Instant
 

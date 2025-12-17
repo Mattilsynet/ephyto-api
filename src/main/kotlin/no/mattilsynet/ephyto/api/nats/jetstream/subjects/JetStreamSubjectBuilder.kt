@@ -1,6 +1,6 @@
 package no.mattilsynet.ephyto.api.nats.jetstream.subjects
 
-import no.mattilsynet.fisk.libs.virtualnats.nats.virtual.JetStreamSubject
+import no.mattilsynet.virtualnats.virtualnatscore.nats.virtual.JetStreamSubject
 
 
 object JetStreamSubjectBuilder {
