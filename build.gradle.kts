@@ -2,11 +2,11 @@ plugins {
     id("org.springframework.boot") version "3.5.8"
     id("io.spring.dependency-management") version "1.1.7"
 
-    kotlin("jvm") version "2.2.21"
+    kotlin("jvm") version "2.3.0"
     kotlin("plugin.spring") version "2.2.21"
 
     // Statisk kodeanalyse
-    id("org.sonarqube") version "7.2.0.6526"
+    id("org.sonarqube") version "7.2.1.6560"
     id("jacoco")
     id("io.gitlab.arturbosch.detekt").version("1.23.8")
 
@@ -14,7 +14,7 @@ plugins {
     id("com.github.bjornvester.wsdl2java") version "2.0.2"
 
     // Protobuf
-    id("com.google.protobuf") version "0.9.5"
+    id("com.google.protobuf") version "0.9.6"
 }
 
 repositories {
@@ -45,9 +45,9 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.fisk.libs:virtual-nats-bom:2025.12.05-10.36-e24f75dca975"))
-    implementation("no.mattilsynet.fisk.libs:spring")
-    implementation("no.mattilsynet.fisk.libs:virtual-nats")
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2025.12.17-15.20-ca0da11503aa"))
+    implementation("no.mattilsynet.virtualnats:virtual-nats-core")
+    implementation("no.mattilsynet.virtualnats:virtual-nats-spring-3")
 
     // spring boot
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -90,7 +90,7 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:6.1.0")
     mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
 
-    testImplementation("no.mattilsynet.fisk.libs:spring-test")
+    testImplementation("no.mattilsynet.virtualnats:virtual-nats-spring-3-test")
 }
 
 sonar {

@@ -3,8 +3,8 @@ package no.mattilsynet.ephyto.api.services
 import com.google.cloud.secretmanager.v1.SecretManagerServiceClient
 import no.mattilsynet.ephyto.api.mocks.dtos.EnvelopeFailedDtoMocker
 import no.mattilsynet.ephyto.api.mocks.dtos.EnvelopeMetadataDtoMocker
-import no.mattilsynet.fisk.libs.virtualnats.VirtualJetStream
-import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualJetStream
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith

@@ -1,7 +1,7 @@
 package no.mattilsynet.ephyto.api
 
-import no.mattilsynet.fisk.libs.spring.virtualnats.SpringVirtualNatsStarter
-import no.mattilsynet.fisk.libs.spring.virtualnats.wrapper.LoggerVirtualNatsWrapper
+import no.mattilsynet.virtualnats.virtualnatsspring3.SpringVirtualNatsStarter
+import no.mattilsynet.virtualnats.virtualnatsspring3.wrapper.LoggerVirtualNatsWrapper
 import org.springframework.boot.autoconfigure.SpringBootApplication
 import org.springframework.boot.context.properties.ConfigurationPropertiesScan
 import org.springframework.boot.context.properties.EnableConfigurationProperties

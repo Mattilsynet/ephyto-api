@@ -3,7 +3,7 @@ package no.mattilsynet.ephyto.api.services
 import no.mattilsynet.ephyto.api.imports.envelope.v1.EnvelopeFailedDto
 import no.mattilsynet.ephyto.api.imports.envelope.v1.EnvelopeMetadataDto
 import no.mattilsynet.ephyto.api.nats.jetstream.subjects.JetStreamSubjectBuilder
-import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
 import org.slf4j.LoggerFactory
 import org.springframework.stereotype.Service
 

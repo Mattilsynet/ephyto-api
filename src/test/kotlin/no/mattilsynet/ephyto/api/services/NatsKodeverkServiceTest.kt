@@ -15,8 +15,8 @@ import no.mattilsynet.ephyto.api.mocks.ephyto.ProductDescriptionMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.StatementMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.TreatmentTypeMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.UnitMeasureMocker
-import no.mattilsynet.fisk.libs.springtest.SpringVirtualNatsTestStarter
-import no.mattilsynet.fisk.libs.virtualnats.VirtualNats
+import no.mattilsynet.virtualnats.virtualnatscore.VirtualNats
+import no.mattilsynet.virtualnats.virtualnatsspring3test.SpringVirtualNatsTestStarter
 import org.junit.jupiter.api.AfterEach
 import org.junit.jupiter.api.Assertions.assertEquals
 import org.junit.jupiter.api.BeforeEach
