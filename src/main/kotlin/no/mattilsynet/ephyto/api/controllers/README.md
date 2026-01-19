@@ -61,7 +61,7 @@ export EPHYTO_KEYSTORE_PASSWORD=<< Ditt passord til keystore >>
 - Trykk på "Configuration" på venstre side
 - Trykk på "Certificates" oppe til høyre
 - Trykk på "Add" oppe til høyre
-- Last opp `nppo.cer` og gi en passende beskrivelse, F.eks. "Ola sitt sertifikat"
+- Last opp `nppo.cer` og gi en passende beskrivelse, F.eks. "Per sitt sertifikat"
 
 ## Generere testdata og sende til hub'en
 
