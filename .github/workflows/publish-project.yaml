@@ -20,7 +20,7 @@ jobs:
       sonar: false
       ephytoenvironment: uat
     secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_CLOUD_ORG_TOKEN }}
       READ_SOURCE_AND_PACKAGES: ${{ secrets.READ_SOURCE_AND_PACKAGES }}
 
   publish:
@@ -53,7 +53,7 @@ jobs:
       sonar: false
       ephytoenvironment: prod
     secrets:
-      SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+      SONAR_TOKEN: ${{ secrets.SONAR_CLOUD_ORG_TOKEN }}
       READ_SOURCE_AND_PACKAGES: ${{ secrets.READ_SOURCE_AND_PACKAGES }}
 
   publishProd:
