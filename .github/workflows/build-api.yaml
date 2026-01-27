@@ -71,7 +71,7 @@ jobs:
         timeout-minutes: 10
         env:
           GITHUB_TOKEN: ${{ secrets.GITHUB_TOKEN }}
-          SONAR_TOKEN: ${{ secrets.SONAR_TOKEN }}
+          SONAR_TOKEN: ${{ secrets.SONAR_FOR_EPHYTO }}
         run: ./gradlew jacocoTestReport sonar --info
 
       - name: Upload failure report
