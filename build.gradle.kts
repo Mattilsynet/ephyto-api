@@ -45,7 +45,7 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2025.12.18-09.24-6215077d57c8"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.01.30-16.52-c1e45550f60f"))
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring-3")
 
@@ -59,7 +59,7 @@ dependencies {
     implementation("io.nats:jnats")
 
     // protobuf
-    implementation(platform("com.google.protobuf:protobuf-bom:4.33.4"))
+    implementation(platform("com.google.protobuf:protobuf-bom:4.33.5"))
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
@@ -87,7 +87,7 @@ dependencies {
 
     // testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:6.1.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.2.3")
     mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
 
     testImplementation("no.mattilsynet.virtualnats:virtual-nats-spring-3-test")
@@ -152,6 +152,6 @@ wsdl2java {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.33.4"
+        artifact = "com.google.protobuf:protoc:4.33.5"
     }
 }
