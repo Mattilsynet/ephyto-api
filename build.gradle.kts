@@ -95,7 +95,7 @@ dependencies {
 
 sonar {
     properties {
-        property("sonar.projectKey", "Mattilsynet_ephyto-api")
+        property("sonar.projectKey", "Mattilsynet_ephyto-api2")
         property("sonar.projectName", "ephyto-api")
         property("sonar.organization", "mattilsynet")
         property("sonar.host.url", "https://sonarcloud.io")
