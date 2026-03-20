@@ -87,7 +87,7 @@ dependencies {
 
     // testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:6.2.3")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.3.0")
     mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
 
     testImplementation("no.mattilsynet.virtualnats:virtual-nats-spring-3-test")
