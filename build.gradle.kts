@@ -45,9 +45,9 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.01.30-16.52-c1e45550f60f"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.03.18-11.44-d54445cace5e"))
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
-    implementation("no.mattilsynet.virtualnats:virtual-nats-spring-3")
+    implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
 
     // spring boot
     implementation("org.springframework.boot:spring-boot-starter-webflux")
@@ -90,7 +90,7 @@ dependencies {
     testImplementation("org.mockito.kotlin:mockito-kotlin:6.3.0")
     mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
 
-    testImplementation("no.mattilsynet.virtualnats:virtual-nats-spring-3-test")
+    testImplementation("no.mattilsynet.virtualnats:virtual-nats-spring-test")
 }
 
 sonar {
