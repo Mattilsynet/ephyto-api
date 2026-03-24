@@ -19,7 +19,7 @@ ephyto:
   scheduler:
     envelopes:
       cron:
-        expression: '0 5 7-17 * * 1-5'
+        expression: '0 0/5 7-18 * * 1-5'
         sleeptime: 0
     kodeverk:
       cron:
