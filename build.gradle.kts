@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "4.0.4"
+    id("org.springframework.boot") version "4.0.5"
     id("io.spring.dependency-management") version "1.1.7"
 
     kotlin("jvm") version "2.3.20"
@@ -45,7 +45,7 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.03.18-11.44-d54445cace5e"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.03.26-12.12-2ef4addd3fb2"))
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
 
