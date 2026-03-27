@@ -54,7 +54,7 @@ jobs:
           project_id: ${{ inputs.project-id }}
 
       - name: Deploy Ephyto API
-        uses: google-github-actions/deploy-cloudrun@v2
+        uses: google-github-actions/deploy-cloudrun@v3
         with:
           project_id: ${{ inputs.project-id }}
           region: ${{ inputs.region }}
