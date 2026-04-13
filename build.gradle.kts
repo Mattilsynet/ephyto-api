@@ -53,7 +53,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
     // swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.2")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.3")
 
     // nats
     implementation("io.nats:jnats")
