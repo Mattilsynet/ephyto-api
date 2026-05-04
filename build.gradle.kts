@@ -2,8 +2,8 @@ plugins {
     id("org.springframework.boot") version "4.0.6"
     id("io.spring.dependency-management") version "1.1.7"
 
-    kotlin("jvm") version "2.3.20"
-    kotlin("plugin.spring") version "2.3.20"
+    kotlin("jvm") version "2.3.21"
+    kotlin("plugin.spring") version "2.3.21"
 
     // Statisk kodeanalyse
     id("org.sonarqube") version "7.3.0.8198"
@@ -45,7 +45,7 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.04.17-14.45-035afbfcc209"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.04.29-18.16-5fc008dac934"))
 
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
