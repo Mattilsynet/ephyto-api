@@ -28,7 +28,8 @@ class EphytoClientAcknowledge : EphytoClient() {
                         )
                     logger.info(
                         "Sender advanced acknowledgment med feilmelding for hubLeveringNummer " +
-                                valideringsresultat.hubLeveringNummer
+                                valideringsresultat.hubLeveringNummer +
+                        " med meldingen ${valideringsresultat.errorMessage}"
                     )
                 }
             }
@@ -47,7 +48,8 @@ class EphytoClientAcknowledge : EphytoClient() {
                     .getClientConnection()
                     .acknowledgeFailedEnvelopeReceipt(valideringsresultat.hubLeveringNummer, errorMessage)
                 logger.error("Sender failed acknowledgment for hubLeveringNummer " +
-                        valideringsresultat.hubLeveringNummer)
+                        valideringsresultat.hubLeveringNummer +
+                " med meldingen ${valideringsresultat.errorMessage}")
 
             }.onFailure {
                 logger.error(
