@@ -45,7 +45,7 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.04.29-18.16-5fc008dac934"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.05.05-12.55-9f180f20e64e"))
 
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
@@ -75,9 +75,9 @@ dependencies {
     implementation("com.sun.xml.ws:rt:4.0.4") {
         exclude(group = "com.sun.xml.bind")
     }
-    implementation("com.sun.xml.bind:jaxb-impl:4.0.7")
-    implementation("org.glassfish.jaxb:jaxb-core:4.0.7")
-    implementation("org.glassfish.jaxb:jaxb-runtime:4.0.7")
+    implementation("com.sun.xml.bind:jaxb-impl:4.0.8")
+    implementation("org.glassfish.jaxb:jaxb-core:4.0.8")
+    implementation("org.glassfish.jaxb:jaxb-runtime:4.0.8")
 
     // jetbrains
     implementation("org.jetbrains.kotlin:kotlin-reflect")
@@ -101,6 +101,10 @@ sonar {
         property("sonar.organization", "mattilsynet")
         property("sonar.host.url", "https://sonarcloud.io")
     }
+}
+
+dependencyLocking {
+    lockAllConfigurations()
 }
 
 tasks {
