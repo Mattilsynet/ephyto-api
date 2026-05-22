@@ -58,10 +58,27 @@ class EphytoEnvelopeValidator(
 
     private fun parseEnvelopeContent(envelope: Envelope): String =
         runCatching {
-            String(Base64.getDecoder().decode(envelope.content))
+            haandtereEnkoding(envelope.content)
         }.getOrElse {
             envelope.content
         }
+
+    private fun haandtereEnkoding(base64String: String): String {
+        val decodedBytes = Base64.getDecoder().decode(base64String)
+
+        // Finn starten på <?xml ved å lete etter 0x00 0x3C (UTF-16 BE '<')
+        var startIndex = -1
+        for (i in 0 until decodedBytes.size - 1) {
+            if (decodedBytes[i] == 0x00.toByte() && decodedBytes[i + 1] == 0x3C.toByte()) {
+                startIndex = i
+                break
+            }
+        }
+        return when {
+            startIndex < 0 -> String(decodedBytes)
+            else -> String(decodedBytes.copyOfRange(startIndex, decodedBytes.size), Charsets.UTF_16BE)
+        }
+    }
 
     private fun getAlvorligeEnvelopeValidationResultsFraEphyto(content: String): String? =
         ephytoClient.validatePhytoXml(content).filter {
