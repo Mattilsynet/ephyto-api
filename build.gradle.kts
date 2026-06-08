@@ -72,7 +72,7 @@ dependencies {
     implementation("org.springframework.ws:spring-xml")
 
     // jax
-    implementation("com.sun.xml.ws:rt:4.0.4") {
+    implementation("com.sun.xml.ws:rt:4.0.5") {
         exclude(group = "com.sun.xml.bind")
     }
     implementation("com.sun.xml.bind:jaxb-impl:4.0.9")
