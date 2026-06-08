@@ -2,11 +2,11 @@ plugins {
     id("org.springframework.boot") version "4.0.6"
     id("io.spring.dependency-management") version "1.1.7"
 
-    kotlin("jvm") version "2.3.21"
-    kotlin("plugin.spring") version "2.3.21"
+    kotlin("jvm") version "2.4.0"
+    kotlin("plugin.spring") version "2.4.0"
 
     // Statisk kodeanalyse
-    id("org.sonarqube") version "7.3.0.8198"
+    id("org.sonarqube") version "7.3.1.8318"
     id("jacoco")
     id("io.gitlab.arturbosch.detekt").version("1.23.8")
 
@@ -64,7 +64,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.0.3"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.0.4"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
     implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
 
@@ -75,7 +75,7 @@ dependencies {
     implementation("com.sun.xml.ws:rt:4.0.4") {
         exclude(group = "com.sun.xml.bind")
     }
-    implementation("com.sun.xml.bind:jaxb-impl:4.0.8")
+    implementation("com.sun.xml.bind:jaxb-impl:4.0.9")
     implementation("org.glassfish.jaxb:jaxb-core:4.0.9")
     implementation("org.glassfish.jaxb:jaxb-runtime:4.0.9")
 
@@ -101,10 +101,6 @@ sonar {
         property("sonar.organization", "mattilsynet")
         property("sonar.host.url", "https://sonarcloud.io")
     }
-}
-
-dependencyLocking {
-    lockAllConfigurations()
 }
 
 tasks {
