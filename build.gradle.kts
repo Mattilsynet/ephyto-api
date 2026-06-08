@@ -103,10 +103,6 @@ sonar {
     }
 }
 
-dependencyLocking {
-    lockAllConfigurations()
-}
-
 tasks {
 
     bootJar {
