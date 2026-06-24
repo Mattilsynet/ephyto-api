@@ -76,8 +76,11 @@ class EphytoEnvelopeValidator(
         }
         return when {
             startIndex < 0 -> String(decodedBytes)
-            else -> String(decodedBytes.copyOfRange(startIndex, decodedBytes.size), Charsets.UTF_16BE)
-                .toByteArray(Charsets.UTF_8).toString(StandardCharsets.UTF_8)
+            else -> {
+                logger.warn("Prøver å konvertere til UTF-8 fra startIndex: $startIndex")
+                String(decodedBytes.copyOfRange(startIndex, decodedBytes.size), Charsets.UTF_16BE)
+                    .toByteArray(Charsets.UTF_8).toString(StandardCharsets.UTF_8)
+            }
         }
     }
 

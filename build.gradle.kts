@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "4.0.6"
+    id("org.springframework.boot") version "4.1.0"
     id("io.spring.dependency-management") version "1.1.7"
 
     kotlin("jvm") version "2.4.0"
@@ -37,7 +37,7 @@ java {
 configurations.matching { it.name == "detekt" }.all {
     resolutionStrategy.eachDependency {
         if (requested.group == "org.jetbrains.kotlin") {
-            useVersion(io.gitlab.arturbosch.detekt.getSupportedKotlinVersion())
+            useVersion("2.0.21")
         }
     }
 }
@@ -45,7 +45,7 @@ configurations.matching { it.name == "detekt" }.all {
 dependencies {
 
     // mattilsynet
-    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.05.26-09.03-379df0aadc48"))
+    implementation(platform("no.mattilsynet.virtualnats:virtual-nats-bom:2026.06.23-12.08-423921d7d5d1"))
 
     implementation("no.mattilsynet.virtualnats:virtual-nats-core")
     implementation("no.mattilsynet.virtualnats:virtual-nats-spring")
@@ -60,7 +60,7 @@ dependencies {
     implementation("io.nats:jnats")
 
     // protobuf
-    implementation(platform("com.google.protobuf:protobuf-bom:4.35.0"))
+    implementation(platform("com.google.protobuf:protobuf-bom:4.35.1"))
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
@@ -101,6 +101,22 @@ sonar {
         property("sonar.organization", "mattilsynet")
         property("sonar.host.url", "https://sonarcloud.io")
     }
+}
+
+// Denne kan fjernes når spring-cloud-gcp-dependencies:8.0.4 oppgraderes med ny protobuf
+configurations.all {
+    resolutionStrategy.eachDependency {
+        if (requested.group == "com.google.protobuf" &&
+            requested.name in listOf("protobuf-java", "protobuf-java-util", "protobuf-kotlin")
+        ) {
+            useVersion("4.35.1")
+            because("Override libraries-bom strict constraint")
+        }
+    }
+}
+
+dependencyLocking {
+    lockAllConfigurations()
 }
 
 tasks {
@@ -153,6 +169,6 @@ wsdl2java {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.35.0"
+        artifact = "com.google.protobuf:protoc:4.35.1"
     }
 }
