@@ -28,13 +28,16 @@ class NatsService(nats: VirtualNats) {
 
     fun publishImportEnvelopeFailed(envelopeFailedDto: EnvelopeFailedDto) {
         jetStream.publish(
-            subject = JetStreamSubjectBuilder.ephytoImportEnvelopesFailedV1(),
+            subject = JetStreamSubjectBuilder
+                .ephytoImportEnvelopesFailedV1(hubDeliveryNumber = envelopeFailedDto.hubDeliveryNumber),
             body = envelopeFailedDto.toByteArray(),
         )
 
         logger.info(
-            "Envelope ${envelopeFailedDto.hubDeliveryNumber} publisert til" +
-                    " ${JetStreamSubjectBuilder.ephytoImportEnvelopesFailedV1()}"
+            "Envelope ${envelopeFailedDto.hubDeliveryNumber} publisert til " +
+                    JetStreamSubjectBuilder
+                        .ephytoImportEnvelopesFailedV1(hubDeliveryNumber = envelopeFailedDto.hubDeliveryNumber)
+                        .stream()
         )
     }
 }
