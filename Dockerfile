@@ -1,4 +1,4 @@
-FROM amd64/eclipse-temurin:21
+FROM amd64/eclipse-temurin:24
 
 ADD /build/libs/app.jar app.jar
 
