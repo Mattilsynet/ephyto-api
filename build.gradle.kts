@@ -1,5 +1,5 @@
 plugins {
-    id("org.springframework.boot") version "4.1.0"
+    id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
 
     kotlin("jvm") version "2.4.10"
@@ -60,11 +60,11 @@ dependencies {
     implementation("io.nats:jnats")
 
     // protobuf
-    implementation(platform("com.google.protobuf:protobuf-bom:4.35.1"))
+    implementation(platform("com.google.protobuf:protobuf-bom:4.36.0"))
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.1.0"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.1.1"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
     implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
 
@@ -169,6 +169,6 @@ wsdl2java {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.35.1"
+        artifact = "com.google.protobuf:protoc:4.36.0"
     }
 }
