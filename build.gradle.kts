@@ -42,6 +42,12 @@ configurations.matching { it.name == "detekt" }.all {
     }
 }
 
+dependencyManagement {
+    imports {
+        mavenBom("org.springdoc:springdoc-openapi-bom:3.1.0")
+    }
+}
+
 dependencies {
 
     // mattilsynet
@@ -54,7 +60,7 @@ dependencies {
     implementation("org.springframework.boot:spring-boot-starter-webflux")
 
     // swagger
-    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui:3.0.3")
+    implementation("org.springdoc:springdoc-openapi-starter-webflux-ui")
 
     // nats
     implementation("io.nats:jnats")
@@ -109,7 +115,7 @@ configurations.all {
         if (requested.group == "com.google.protobuf" &&
             requested.name in listOf("protobuf-java", "protobuf-java-util", "protobuf-kotlin")
         ) {
-            useVersion("4.35.1")
+            useVersion("4.36.0")
             because("Override libraries-bom strict constraint")
         }
     }
