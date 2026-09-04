@@ -66,7 +66,7 @@ dependencies {
     implementation("io.nats:jnats")
 
     // protobuf
-    implementation(platform("com.google.protobuf:protobuf-bom:4.36.0"))
+    implementation(platform("com.google.protobuf:protobuf-bom:4.36.1"))
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
@@ -175,6 +175,6 @@ wsdl2java {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.36.0"
+        artifact = "com.google.protobuf:protoc:4.36.1"
     }
 }
