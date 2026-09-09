@@ -115,7 +115,7 @@ configurations.all {
         if (requested.group == "com.google.protobuf" &&
             requested.name in listOf("protobuf-java", "protobuf-java-util", "protobuf-kotlin")
         ) {
-            useVersion("4.36.0")
+            useVersion("4.36.1")
             because("Override libraries-bom strict constraint")
         }
     }
