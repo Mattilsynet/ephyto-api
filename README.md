@@ -29,6 +29,16 @@ Først og fremst må du ha installert JAVA 21, og sette opp en JAVA_HOME variabe
 Legg til github PAT generert i [Gradle setup](#gradle-setup):  
 ```export READ_SOURCE_AND_PACKAGES="GITHUB_PAT"```
 
+## Oppgradering av biblioteker
+
+digiplant-api bruker dependency locking. Når biblioteker oppgraderes, så må det genereres ny ```gradle.lockfile```. Det gjøres ved å kjøre kommandoen:
+
+```./gradlew dependencies --write-locks```
+
+PR'er fra dependabot oppdaterer ```gradle.lockfile```, men dersom man oppgraderer og lager egen PR, så må man lage ny versjon av ```gradle.lockfile``` og pushe denne til github.
+
+Informasjon om [Locking Versions](https://docs.gradle.org/current/userguide/dependency_locking.html)
+
 ## Generere testdata
 
 Se [testdata](https://github.com/Mattilsynet/ephyto-api/tree/master/src/main/kotlin/no/mattilsynet/ephyto/api/controllers)
