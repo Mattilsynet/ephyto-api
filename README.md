@@ -31,7 +31,7 @@ Legg til github PAT generert i [Gradle setup](#gradle-setup):
 
 ## Oppgradering av biblioteker
 
-digiplant-api bruker dependency locking. Når biblioteker oppgraderes, så må det genereres ny ```gradle.lockfile```. Det gjøres ved å kjøre kommandoen:
+api'et bruker dependency locking. Når biblioteker oppgraderes, så må det genereres ny ```gradle.lockfile```. Det gjøres ved å kjøre kommandoen:
 
 ```./gradlew dependencies --write-locks```
 
