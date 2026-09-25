@@ -66,7 +66,7 @@ dependencies {
     implementation("io.nats:jnats")
 
     // protobuf
-    implementation(platform("com.google.protobuf:protobuf-bom:4.36.1"))
+    implementation(platform("com.google.protobuf:protobuf-bom:4.36.2"))
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
@@ -115,7 +115,7 @@ configurations.all {
         if (requested.group == "com.google.protobuf" &&
             requested.name in listOf("protobuf-java", "protobuf-java-util", "protobuf-kotlin")
         ) {
-            useVersion("4.36.1")
+            useVersion("4.36.2")
             because("Override libraries-bom strict constraint")
         }
     }
@@ -175,6 +175,6 @@ wsdl2java {
 
 protobuf {
     protoc {
-        artifact = "com.google.protobuf:protoc:4.36.1"
+        artifact = "com.google.protobuf:protoc:4.36.2"
     }
 }
