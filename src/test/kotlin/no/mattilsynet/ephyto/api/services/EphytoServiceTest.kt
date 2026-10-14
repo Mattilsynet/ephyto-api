@@ -24,7 +24,6 @@ import org.junit.jupiter.api.BeforeEach
 import org.junit.jupiter.api.Test
 import org.junit.jupiter.api.extension.ExtendWith
 import org.mockito.kotlin.any
-import org.mockito.kotlin.anyOrNull
 import org.mockito.kotlin.doNothing
 import org.mockito.kotlin.doReturn
 import org.mockito.kotlin.doThrow
@@ -45,6 +44,9 @@ internal class EphytoServiceTest {
     lateinit var envelopeService: EnvelopeService
 
     @MockitoBean
+    lateinit var ephytoGetSingleImportEnvelopeService: EphytoGetSingleImportEnvelopeService
+
+    @MockitoBean
     lateinit var ephytoClient: EphytoClient
 
     @MockitoBean
@@ -59,9 +61,12 @@ internal class EphytoServiceTest {
     private val xmlSertifikatContent = object {}.javaClass.classLoader
         .getResource("SPSCertificateContent.xml")!!.readText()
 
+    private val hubDeliveryNumber = "1234567890"
+
     @BeforeEach
     fun setUp() {
         ephytoService = EphytoService(
+            ephytoGetSingleImportEnvelopeService = ephytoGetSingleImportEnvelopeService,
             envelopeService = envelopeService,
             ephytoClient = ephytoClient,
             ephytoKodeverkClient = ephytoKodeverkClient,
@@ -94,37 +99,22 @@ internal class EphytoServiceTest {
         // Given:
         doReturn(listOf(createEnvelopeHeaderMock())).`when`(ephytoClient).getImportEnvelopeHeaders()
         doReturn(createEnvelopeMock(content = ""))
-            .`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
+            .`when`(ephytoGetSingleImportEnvelopeService).getSingleImportEnvelope(any())
 
         // When:
         val antallEnvelopes = ephytoService.hentNyeEnvelopes(0)
 
         // Then:
-        verify(ephytoClient).getSingleImportEnvelopeOrNull(any())
+        verify(ephytoGetSingleImportEnvelopeService).getSingleImportEnvelope(any())
         assertEquals(1, antallEnvelopes)
-    }
-
-    @Test
-    fun `hentOgHaandterNyEnvelope kaller ack med null hvis ephytoclient returnerer null for envelope`() {
-        // Given:
-        doReturn(null).`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
-        val mockValideringsresultat = createValideringsresultatMock(null)
-        doReturn(mockValideringsresultat)
-            .`when`(ephytoValideringService).getValidationResultForEnvelope(anyOrNull(), any())
-
-        // When:
-        ephytoService.hentOgHaandterNyEnvelope(createEnvelopeHeaderMock())
-
-        // Then:
-        verify(ephytoClient)
-            .acknowledgeEnvelope(valideringsresultat = mockValideringsresultat)
     }
 
     @Test
     fun `hentOgHaandterNyEnvelope kaller haandterNyEnvelope dersom ephytoclient returnerer en envelope`() {
         // Given:
         val envelopeMock = createEnvelopeMock(content = xmlSertifikatContent)
-        doReturn(envelopeMock).`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
+        doReturn(envelopeMock).`when`(ephytoGetSingleImportEnvelopeService)
+            .getSingleImportEnvelope(any())
         val valideringsresultatMock = createValideringsresultatMock(envelopeMock)
         doReturn(valideringsresultatMock)
             .`when`(ephytoValideringService).getValidationResultForEnvelope(any(), any())
@@ -133,7 +123,7 @@ internal class EphytoServiceTest {
             .haandterNyEnvelope(envelopeMock, valideringsresultatMock)
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(createEnvelopeHeaderMock())
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber)
 
         // Then:
         verify(envelopeService).haandterNyEnvelope(
@@ -147,8 +137,8 @@ internal class EphytoServiceTest {
     fun `hentOgHaandterNyEnvelope tar med valideringsresultat fra getValidationResultForEnvelope`() {
         // Given:
         val envelopeMock = createEnvelopeMock(content = null)
-        doReturn(envelopeMock).`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
-        val envelopeHeader = createEnvelopeHeaderMock()
+        doReturn(envelopeMock).`when`(ephytoGetSingleImportEnvelopeService)
+            .getSingleImportEnvelope(any())
         val valideringsresultatMock = createValideringsresultatMock(
             envelopeMock = envelopeMock,
             hubTrackingInfo = HUBTrackingInfo.DELIVERED_NOT_READABLE,
@@ -160,7 +150,7 @@ internal class EphytoServiceTest {
             .haandterNyEnvelope(envelopeMock, valideringsresultatMock)
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(envelopeHeader)
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber = hubDeliveryNumber)
 
         // Then:
         verify(envelopeService).haandterNyEnvelope(
@@ -174,10 +164,10 @@ internal class EphytoServiceTest {
     @Test
     fun `hentOgHaandterNyEnvelope kjoerer acknowledge med valideringsresultat naar envelope har valid content`() {
         // Given:
-        val envelopeHeader = createEnvelopeHeaderMock()
         val envelopeMock = createEnvelopeMock(content = xmlSertifikatContent)
 
-        doReturn(envelopeMock).`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
+        doReturn(envelopeMock).`when`(ephytoGetSingleImportEnvelopeService)
+            .getSingleImportEnvelope(any())
         val valideringsresultatMock = createValideringsresultatMock(envelopeMock)
         doReturn(valideringsresultatMock).`when`(ephytoValideringService)
             .getValidationResultForEnvelope(envelopeMock, envelopeMock.hubDeliveryNumber)
@@ -186,7 +176,7 @@ internal class EphytoServiceTest {
             .haandterNyEnvelope(envelopeMock, valideringsresultatMock)
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(envelopeHeader)
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber = hubDeliveryNumber)
 
         // Then:
         verify(envelopeService).haandterNyEnvelope(
@@ -200,10 +190,11 @@ internal class EphytoServiceTest {
     @Test
     fun `test hentOgHaandterNyEnvelope acknowledger ikke dersom hentOgHaandterNyEnvelope kaster feil`() {
         // Given:
-        doThrow(IllegalArgumentException()).`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
+        doThrow(IllegalArgumentException()).`when`(ephytoGetSingleImportEnvelopeService)
+            .getSingleImportEnvelope(any())
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(createEnvelopeHeaderMock())
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber)
 
         // Then:
         verify(envelopeService, never()).haandterNyEnvelope(any(), any())

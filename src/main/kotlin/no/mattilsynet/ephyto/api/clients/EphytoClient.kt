@@ -1,7 +1,6 @@
 package no.mattilsynet.ephyto.api.clients
 
 import _int.ippc.ephyto.ValidationResult
-import _int.ippc.ephyto.hub.Envelope
 import _int.ippc.ephyto.hub.EnvelopeHeader
 import no.mattilsynet.ephyto.api.domain.Valideringsresultat
 import org.slf4j.Logger
@@ -45,14 +44,4 @@ abstract class EphytoClient {
             logger.warn(it.message, it)
             emptyList()
         }
-
-    fun getSingleImportEnvelopeOrNull(hubLeveringNummer: String): Envelope? =
-        runCatching {
-            ephytoDeliveryService.getClientConnection().pullSingleImportEnvelope(hubLeveringNummer)
-
-        }.onFailure {
-            logger.warn("Kunne ikke hente sertifikat med hubLeveringNummer $hubLeveringNummer, " +
-                    "Exception: ${it.message}",
-                it)
-        }.getOrNull()
 }

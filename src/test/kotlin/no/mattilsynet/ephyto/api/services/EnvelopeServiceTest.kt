@@ -43,7 +43,8 @@ internal class EnvelopeServiceTest {
             profile = "test",
         )
 
-        doReturn(mock()).`when`(gcpStorageService).lastOppEn(any(), any(), any(), any())
+        doReturn(mock()).`when`(gcpStorageService)
+            .lastOppEn(any(), any(), any(), any())
     }
 
     @Test
@@ -116,6 +117,7 @@ internal class EnvelopeServiceTest {
         envelopeService.haandterNyEnvelope(
             envelope = envelopeMock,
             valideringsresultat = createValideringsresultatMock(
+                envelopeMock = envelopeMock,
                 hubTrackingInfo = HUBTrackingInfo.FAILED_DELIVERY,
                 validatedOk = false,
                 ),

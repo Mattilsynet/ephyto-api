@@ -7,7 +7,6 @@ import _int.ippc.ephyto.ProductDescription
 import _int.ippc.ephyto.Statement
 import _int.ippc.ephyto.TreatmentType
 import _int.ippc.ephyto.UnitMeasure
-import _int.ippc.ephyto.hub.EnvelopeHeader
 import _int.ippc.ephyto.hub.Nppo
 import no.mattilsynet.ephyto.api.clients.EphytoClient
 import no.mattilsynet.ephyto.api.clients.EphytoKodeverkClient
@@ -20,6 +19,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class EphytoService(
+    private val ephytoGetSingleImportEnvelopeService: EphytoGetSingleImportEnvelopeService,
     private val ephytoValideringService: EphytoValideringService,
     private val ephytoClient: EphytoClient,
     private val ephytoKodeverkClient: EphytoKodeverkClient,
@@ -32,26 +32,25 @@ class EphytoService(
         ephytoClient.getImportEnvelopeHeaders()
             ?.also { Thread.sleep(sleepTime) }
             ?.onEach { envelopeHeader ->
-            hentOgHaandterNyEnvelope(envelopeHeader)
-        }?.size
+                hentOgHaandterNyEnvelope(envelopeHeader.hubDeliveryNumber)
+            }?.size
 
-    fun hentOgHaandterNyEnvelope(envelopeHeader: EnvelopeHeader) {
+    fun hentOgHaandterNyEnvelope(hubDeliveryNumber: String) {
         runCatching {
-            ephytoClient.getSingleImportEnvelopeOrNull(envelopeHeader.hubDeliveryNumber).also { envelope ->
-                var valideringsresultat = ephytoValideringService
-                    .getValidationResultForEnvelope(envelope, envelopeHeader.hubDeliveryNumber)
-                if (envelope != null) {
+            ephytoGetSingleImportEnvelopeService.getSingleImportEnvelope(hubDeliveryNumber)
+                .also { envelope ->
+                    var valideringsresultat = ephytoValideringService
+                        .getValidationResultForEnvelope(envelope, hubDeliveryNumber)
                     valideringsresultat = envelopeService.haandterNyEnvelope(envelope, valideringsresultat)
-                } else {
-                    logger.error("Kunne ikke hente envelope med hubLeveringNummer ${envelopeHeader.hubDeliveryNumber}")
-                }
 
-                ephytoClient.acknowledgeEnvelope(valideringsresultat)
-            }
+                    ephytoClient.acknowledgeEnvelope(valideringsresultat)
+                }
         }.onFailure {
             logger
-                .error("Håndtering av envelope med hubLeveringNummer ${envelopeHeader.hubDeliveryNumber} feilet," +
-                        " ${ it.message }", it)
+                .error(
+                    "Håndtering av envelope med hubLeveringNummer $hubDeliveryNumber feilet," +
+                            " ${it.message}", it
+                )
         }
     }
 

@@ -77,6 +77,10 @@ dependencies {
     // spring xml
     implementation("org.springframework.ws:spring-xml")
 
+    // retry
+    implementation("org.springframework.retry:spring-retry:2.0.13")
+    implementation("org.springframework.boot:spring-boot-starter-aspectj") // kreves for AOP-proxy
+
     // jax
     implementation("com.sun.xml.ws:rt:4.0.5") {
         exclude(group = "com.sun.xml.bind")
