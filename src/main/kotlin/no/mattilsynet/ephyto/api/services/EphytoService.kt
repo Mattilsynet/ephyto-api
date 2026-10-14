@@ -19,6 +19,7 @@ import org.springframework.stereotype.Service
 
 @Service
 class EphytoService(
+    private val ephytoGetSingleImportEnvelopeService: EphytoGetSingleImportEnvelopeService,
     private val ephytoValideringService: EphytoValideringService,
     private val ephytoClient: EphytoClient,
     private val ephytoKodeverkClient: EphytoKodeverkClient,
@@ -36,7 +37,7 @@ class EphytoService(
 
     fun hentOgHaandterNyEnvelope(hubDeliveryNumber: String) {
         runCatching {
-            ephytoClient.getSingleImportEnvelope(hubDeliveryNumber)
+            ephytoGetSingleImportEnvelopeService.getSingleImportEnvelope(hubDeliveryNumber)
                 .also { envelope ->
                     var valideringsresultat = ephytoValideringService
                         .getValidationResultForEnvelope(envelope, hubDeliveryNumber)
