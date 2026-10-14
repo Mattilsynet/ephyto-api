@@ -31,26 +31,25 @@ class EphytoService(
         ephytoClient.getImportEnvelopeHeaders()
             ?.also { Thread.sleep(sleepTime) }
             ?.onEach { envelopeHeader ->
-            hentOgHaandterNyEnvelope(envelopeHeader.hubDeliveryNumber)
-        }?.size
+                hentOgHaandterNyEnvelope(envelopeHeader.hubDeliveryNumber)
+            }?.size
 
     fun hentOgHaandterNyEnvelope(hubDeliveryNumber: String) {
         runCatching {
-            ephytoClient.getSingleImportEnvelopeOrNull(hubDeliveryNumber).also { envelope ->
-                var valideringsresultat = ephytoValideringService
-                    .getValidationResultForEnvelope(envelope, hubDeliveryNumber)
-                if (envelope != null) {
+            ephytoClient.getSingleImportEnvelope(hubDeliveryNumber)
+                .also { envelope ->
+                    var valideringsresultat = ephytoValideringService
+                        .getValidationResultForEnvelope(envelope, hubDeliveryNumber)
                     valideringsresultat = envelopeService.haandterNyEnvelope(envelope, valideringsresultat)
-                } else {
-                    logger.error("Kunne ikke hente envelope med hubLeveringNummer $hubDeliveryNumber")
-                }
 
-                ephytoClient.acknowledgeEnvelope(valideringsresultat)
-            }
+                    ephytoClient.acknowledgeEnvelope(valideringsresultat)
+                }
         }.onFailure {
             logger
-                .error("Håndtering av envelope med hubLeveringNummer $hubDeliveryNumber feilet," +
-                        " ${ it.message }", it)
+                .error(
+                    "Håndtering av envelope med hubLeveringNummer $hubDeliveryNumber feilet," +
+                            " ${it.message}", it
+                )
         }
     }
 

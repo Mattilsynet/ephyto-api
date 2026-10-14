@@ -7,6 +7,8 @@ import no.mattilsynet.ephyto.api.domain.Valideringsresultat
 import org.slf4j.Logger
 import org.slf4j.LoggerFactory
 import org.springframework.beans.factory.annotation.Autowired
+import org.springframework.resilience.annotation.Retryable
+import org.springframework.retry.annotation.Recover
 import org.springframework.stereotype.Component
 
 @Component
@@ -46,13 +48,19 @@ abstract class EphytoClient {
             emptyList()
         }
 
-    fun getSingleImportEnvelopeOrNull(hubLeveringNummer: String): Envelope? =
-        runCatching {
-            ephytoDeliveryService.getClientConnection().pullSingleImportEnvelope(hubLeveringNummer)
+    @Retryable(
+        delay = 500,
+        maxRetries = 3,
+        value = [Exception::class],
+    )
+    fun getSingleImportEnvelope(hubLeveringNummer: String): Envelope =
+        ephytoDeliveryService.getClientConnection().pullSingleImportEnvelope(hubLeveringNummer)
 
-        }.onFailure {
-            logger.warn("Kunne ikke hente sertifikat med hubLeveringNummer $hubLeveringNummer, " +
-                    "Exception: ${it.message}",
-                it)
-        }.getOrNull()
+    @Suppress("Unused")
+    @Recover
+    fun recover(ex: Exception, hubLeveringNummer: String): Envelope {
+        logger.warn("Kunne ikke hente sertifikat med hubLeveringNummer $hubLeveringNummer etter retries, " +
+                "Exception: ${ex.message}", ex)
+        throw ex
+    }
 }

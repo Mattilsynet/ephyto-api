@@ -185,7 +185,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test ephytoClient returnerer null dersom det blir kastet en exception`() {
+    fun `test ephytoClient kaster exception naar getClientConnection feiler`() {
         // Given:
         given(ephytoDeliveryService.getClientConnection()).willAnswer {
             throw HubWebException_Exception("feil")
@@ -194,8 +194,10 @@ internal class EphytoClientAcknowledgeTest {
         // When & Then:
         assertThrows<HubWebException_Exception> {
             ephytoDeliveryService.getClientConnection()
-        }
-        assertNull(ephytoClient.getSingleImportEnvelopeOrNull(anyString()))
+        }.message
+            .let { message ->
+                assertEquals("feil", message)
+            }
     }
 
     @Test
@@ -205,11 +207,11 @@ internal class EphytoClientAcknowledgeTest {
             .`when`(iDeliveryService).pullSingleImportEnvelope(anyString())
 
         // When:
-        val envelope = ephytoClient.getSingleImportEnvelopeOrNull("sertifikatId")
+        val envelope = ephytoClient.getSingleImportEnvelope("sertifikatId")
 
         // Then:
         assertNotNull(envelope)
-        with(envelope!!) {
+        with(envelope) {
             assertEquals("DK", from)
             assertEquals("NO", to)
             assertEquals("1234567890", hubDeliveryNumber)
@@ -218,21 +220,23 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getSingleImportEnvelope returnerer null dersom pullSingleImportEnvelope kaster feil`() {
+    fun `getSingleImportEnvelope kaster feil dersom pullSingleImportEnvelope feiler`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
         ).`when`(iDeliveryService).pullSingleImportEnvelope(any())
 
         // When:
-        val resultat = ephytoClient.getSingleImportEnvelopeOrNull("sertifikatId")
-
-        // Then:
-        assertNull(resultat)
+        assertThrows<HubWebException_Exception> {
+            ephytoClient.getSingleImportEnvelope("sertifikatId")
+        }.message
+            .let { message ->
+                assertEquals("feil kastet", message)
+            }
     }
 
     @Test
-    fun `test getImportEnvelopeHeaders returnerer envelopeHeaders paa riktig format`() {
+    fun `getImportEnvelopeHeaders returnerer envelopeHeaders paa riktig format`() {
         // Given:
         doReturn(ArrayOfEnvelopeHeader()
             .also { arrayOfEnvelopeHeader ->
@@ -255,7 +259,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test  returnerer meansOfTransport paa riktig format`() {
+    fun `meansOfTransport paa riktig format`() {
         // Given:
         doReturn(
             listOf(
@@ -280,7 +284,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getImportEnvelopeHeaders returnerer null dersom getImportEnvelopeHeaders kaster feil`() {
+    fun `getImportEnvelopeHeaders returnerer null dersom getImportEnvelopeHeaders kaster feil`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
@@ -294,7 +298,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getMeanOfTransports returnerer tom liste dersom meanOfTransports kaster feil`() {
+    fun `getMeanOfTransports returnerer tom liste dersom meanOfTransports kaster feil`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
@@ -308,7 +312,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getStatements returnerer rett`() {
+    fun `getStatements returnerer rett`() {
         // Given:
         doReturn(
             listOf(
@@ -327,7 +331,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getStatements returnerer null dersom statements kaster feil`() {
+    fun `getStatements returnerer null dersom statements kaster feil`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
@@ -341,7 +345,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getTreatmentTypes returnerer rett`() {
+    fun `getTreatmentTypes returnerer rett`() {
         // Given:
         doReturn(
             listOf(
@@ -360,7 +364,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getTreatmentTypes returnerer null dersom treatmentTypes kaster feil`() {
+    fun `getTreatmentTypes returnerer null dersom treatmentTypes kaster feil`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
@@ -374,7 +378,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getIndendedUse returnerer rett`() {
+    fun `getIndendedUse returnerer rett`() {
         // Given:
         doReturn(
             listOf(
@@ -393,7 +397,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getIndendedUse returnerer null dersom intendedUses kaster feil`() {
+    fun `getIndendedUse returnerer null dersom intendedUses kaster feil`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
@@ -407,7 +411,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getCondition returnerer rett`() {
+    fun `getCondition returnerer rett`() {
         // Given:
         doReturn(
             listOf(
@@ -426,7 +430,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getCondition returnerer null dersom conditions kaster feil`() {
+    fun `getCondition returnerer null dersom conditions kaster feil`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
@@ -440,7 +444,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getProductDescription returnerer rett`() {
+    fun `getProductDescription returnerer rett`() {
         // Given:
         doReturn(
             listOf(
@@ -459,7 +463,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getProductDescription returnerer null dersom productDescriptions kaster feil`() {
+    fun `getProductDescription returnerer null dersom productDescriptions kaster feil`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
@@ -473,7 +477,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getUnitMeasure returnerer rett`() {
+    fun `getUnitMeasure returnerer rett`() {
         // Given:
         doReturn(
             listOf(
@@ -492,7 +496,7 @@ internal class EphytoClientAcknowledgeTest {
     }
 
     @Test
-    fun `test getUnitMeasure returnerer null dersom unitMeasures kaster feil`() {
+    fun `getUnitMeasure returnerer null dersom unitMeasures kaster feil`() {
         // Given:
         doThrow(
             HubWebException_Exception("feil kastet")
