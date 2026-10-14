@@ -14,7 +14,6 @@ import _int.ippc.ephyto.hub.ArrayOfNppo
 import _int.ippc.ephyto.hub.Nppo
 import no.mattilsynet.ephyto.api.mocks.domain.ValideringsresultatMocker.createValideringsresultatMock
 import no.mattilsynet.ephyto.api.mocks.ephyto.EnvelopeHeaderMocker
-import no.mattilsynet.ephyto.api.mocks.ephyto.EnvelopeMocker.createEnvelopeMock
 import no.mattilsynet.ephyto.api.mocks.ephyto.NppoMocker
 import no.mattilsynet.ephyto.api.mocks.ephyto.ValidationResultMocker.createValidationResultMock
 import org.junit.jupiter.api.Assertions.assertEquals
@@ -197,41 +196,6 @@ internal class EphytoClientAcknowledgeTest {
         }.message
             .let { message ->
                 assertEquals("feil", message)
-            }
-    }
-
-    @Test
-    fun `test getSingleImportEnvelope returnerer envelope paa riktig format`() {
-        // Given:
-        doReturn(createEnvelopeMock(content = "<XML content>"))
-            .`when`(iDeliveryService).pullSingleImportEnvelope(anyString())
-
-        // When:
-        val envelope = ephytoClient.getSingleImportEnvelope("sertifikatId")
-
-        // Then:
-        assertNotNull(envelope)
-        with(envelope) {
-            assertEquals("DK", from)
-            assertEquals("NO", to)
-            assertEquals("1234567890", hubDeliveryNumber)
-            assertNotNull(content)
-        }
-    }
-
-    @Test
-    fun `getSingleImportEnvelope kaster feil dersom pullSingleImportEnvelope feiler`() {
-        // Given:
-        doThrow(
-            HubWebException_Exception("feil kastet")
-        ).`when`(iDeliveryService).pullSingleImportEnvelope(any())
-
-        // When:
-        assertThrows<HubWebException_Exception> {
-            ephytoClient.getSingleImportEnvelope("sertifikatId")
-        }.message
-            .let { message ->
-                assertEquals("feil kastet", message)
             }
     }
 
