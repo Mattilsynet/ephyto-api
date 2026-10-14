@@ -7,6 +7,7 @@ import no.mattilsynet.ephyto.api.services.NatsKodeverkService
 import org.slf4j.LoggerFactory
 import org.springframework.context.annotation.Profile
 import org.springframework.http.ResponseEntity
+import org.springframework.web.bind.annotation.PathVariable
 import org.springframework.web.bind.annotation.PostMapping
 import org.springframework.web.bind.annotation.RequestMapping
 import org.springframework.web.bind.annotation.RequestParam
@@ -15,11 +16,12 @@ import org.springframework.web.bind.annotation.RestController
 @RestController
 @Profile("test", "local", "dev")
 @RequestMapping("ephyto/v1")
+@Suppress("TooManyFunctions")
 class EphytoController(
     private val createEphytoMockdataService: CreateEphytoMockdataService,
     private val ephytoService: EphytoService,
     private val natsKodeverkService: NatsKodeverkService,
-    ) {
+) {
 
     private val logger = LoggerFactory.getLogger(javaClass)
 
@@ -35,6 +37,19 @@ class EphytoController(
         }.onFailure {
             throw it
         }.getOrDefault(ResponseEntity.noContent().build())
+
+    // Henter sertifikater i uat-miljøet. Skal bare kalles i test eller local
+    // Hvis denne skal kalles mot prod, så må @Profile oppdateres
+    @Profile("test", "local")
+    @PostMapping("/sertifikater/{hubDeliveryNumber}")
+    fun ephyto(@PathVariable hubDeliveryNumber: String): ResponseEntity<Unit> =
+        runCatching {
+            ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber = hubDeliveryNumber)
+                .let {
+                    logger.info("Har hentet sertifikat med hubDeliveryNumber $hubDeliveryNumber fra hub'en")
+                    return ResponseEntity.noContent().build()
+                }
+        }.getOrThrow()
 
     // Oppretter sertifikater i uat-miljøet. Skal bare kalles i test eller local
     @Profile("test", "local")

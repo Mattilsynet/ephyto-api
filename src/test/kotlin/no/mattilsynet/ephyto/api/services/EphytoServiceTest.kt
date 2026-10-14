@@ -59,6 +59,8 @@ internal class EphytoServiceTest {
     private val xmlSertifikatContent = object {}.javaClass.classLoader
         .getResource("SPSCertificateContent.xml")!!.readText()
 
+    private val hubDeliveryNumber = "1234567890"
+
     @BeforeEach
     fun setUp() {
         ephytoService = EphytoService(
@@ -113,7 +115,7 @@ internal class EphytoServiceTest {
             .`when`(ephytoValideringService).getValidationResultForEnvelope(anyOrNull(), any())
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(createEnvelopeHeaderMock())
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber = hubDeliveryNumber)
 
         // Then:
         verify(ephytoClient)
@@ -133,7 +135,7 @@ internal class EphytoServiceTest {
             .haandterNyEnvelope(envelopeMock, valideringsresultatMock)
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(createEnvelopeHeaderMock())
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber)
 
         // Then:
         verify(envelopeService).haandterNyEnvelope(
@@ -148,7 +150,6 @@ internal class EphytoServiceTest {
         // Given:
         val envelopeMock = createEnvelopeMock(content = null)
         doReturn(envelopeMock).`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
-        val envelopeHeader = createEnvelopeHeaderMock()
         val valideringsresultatMock = createValideringsresultatMock(
             envelopeMock = envelopeMock,
             hubTrackingInfo = HUBTrackingInfo.DELIVERED_NOT_READABLE,
@@ -160,7 +161,7 @@ internal class EphytoServiceTest {
             .haandterNyEnvelope(envelopeMock, valideringsresultatMock)
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(envelopeHeader)
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber = hubDeliveryNumber)
 
         // Then:
         verify(envelopeService).haandterNyEnvelope(
@@ -174,7 +175,6 @@ internal class EphytoServiceTest {
     @Test
     fun `hentOgHaandterNyEnvelope kjoerer acknowledge med valideringsresultat naar envelope har valid content`() {
         // Given:
-        val envelopeHeader = createEnvelopeHeaderMock()
         val envelopeMock = createEnvelopeMock(content = xmlSertifikatContent)
 
         doReturn(envelopeMock).`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
@@ -186,7 +186,7 @@ internal class EphytoServiceTest {
             .haandterNyEnvelope(envelopeMock, valideringsresultatMock)
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(envelopeHeader)
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber = hubDeliveryNumber)
 
         // Then:
         verify(envelopeService).haandterNyEnvelope(
@@ -203,7 +203,7 @@ internal class EphytoServiceTest {
         doThrow(IllegalArgumentException()).`when`(ephytoClient).getSingleImportEnvelopeOrNull(any())
 
         // When:
-        ephytoService.hentOgHaandterNyEnvelope(createEnvelopeHeaderMock())
+        ephytoService.hentOgHaandterNyEnvelope(hubDeliveryNumber)
 
         // Then:
         verify(envelopeService, never()).haandterNyEnvelope(any(), any())
