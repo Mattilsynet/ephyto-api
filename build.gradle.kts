@@ -2,8 +2,8 @@ plugins {
     id("org.springframework.boot") version "4.1.1"
     id("io.spring.dependency-management") version "1.1.7"
 
-    kotlin("jvm") version "2.4.20"
-    kotlin("plugin.spring") version "2.4.20"
+    kotlin("jvm") version "2.4.21"
+    kotlin("plugin.spring") version "2.4.21"
 
     // Statisk kodeanalyse
     id("org.sonarqube") version "7.5.0.8588"
@@ -11,7 +11,7 @@ plugins {
     id("io.gitlab.arturbosch.detekt").version("1.23.8")
 
     // Soap
-    id("com.github.bjornvester.wsdl2java") version "2.0.2"
+    id("com.github.bjornvester.wsdl2java") version "2.0.4"
 
     // Protobuf
     id("com.google.protobuf") version "0.10.0"
@@ -70,7 +70,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.2.1"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.2.4"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
     implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
 
@@ -85,7 +85,6 @@ dependencies {
     implementation("com.sun.xml.ws:rt:4.0.5") {
         exclude(group = "com.sun.xml.bind")
     }
-    implementation("com.sun.xml.bind:jaxb-impl:4.0.9")
     implementation("org.glassfish.jaxb:jaxb-core:4.0.9")
     implementation("org.glassfish.jaxb:jaxb-runtime:4.0.9")
 
@@ -98,7 +97,7 @@ dependencies {
 
     // testing
     testImplementation("org.springframework.boot:spring-boot-starter-test")
-    testImplementation("org.mockito.kotlin:mockito-kotlin:6.3.0")
+    testImplementation("org.mockito.kotlin:mockito-kotlin:6.4.0")
     mockitoAgent("org.mockito:mockito-core") { isTransitive = false }
 
     testImplementation("no.mattilsynet.virtualnats:virtual-nats-spring-test")
