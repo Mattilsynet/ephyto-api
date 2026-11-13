@@ -15,7 +15,7 @@ class EphytoDeliveryService {
         runCatching {
             DeliveryService().iDeliveryServiceImplPort
         }.getOrElse {
-            logger.warn("Kunne ikke hente klient for EphytoDeliveryService, Exception: ${it.message}", it)
+            logger.error("Kunne ikke hente klient for EphytoDeliveryService, Exception: ${it.message}", it)
             throw it
         }
 

@@ -30,7 +30,7 @@ class EphytoGetSingleImportEnvelopeService(
     @Suppress("Unused")
     @Recover
     fun recover(ex: Exception, hubLeveringNummer: String): Envelope {
-        logger.warn("Kunne ikke hente sertifikat med hubLeveringNummer $hubLeveringNummer etter retries, " +
+        logger.error("Kunne ikke hente sertifikat med hubLeveringNummer $hubLeveringNummer etter retries, " +
                 "Exception: ${ex.message}", ex)
         throw ex
     }

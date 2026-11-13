@@ -33,7 +33,7 @@ abstract class EphytoClient {
             ephytoDeliveryService.getClientConnection()
                 .getImportEnvelopeHeaders("")?.envelopeHeader
         }.onFailure {
-            logger.warn("Kunne ikke hente nye sertifikat headere fra ephyto. Exception: ${it.message}",
+            logger.error("Kunne ikke hente nye sertifikat headere fra ephyto. Exception: ${it.message}",
                 it)
         }.getOrNull()
 
