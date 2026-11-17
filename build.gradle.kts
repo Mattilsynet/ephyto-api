@@ -6,7 +6,7 @@ plugins {
     kotlin("plugin.spring") version "2.4.21"
 
     // Statisk kodeanalyse
-    id("org.sonarqube") version "7.5.0.8588"
+    id("org.sonarqube") version "7.6.0.18749"
     id("jacoco")
     id("io.gitlab.arturbosch.detekt").version("1.23.8")
 
@@ -14,13 +14,13 @@ plugins {
     id("com.github.bjornvester.wsdl2java") version "2.0.4"
 
     // Protobuf
-    id("com.google.protobuf") version "0.10.0"
+    id("com.google.protobuf") version "0.10.1"
 }
 
 repositories {
     mavenCentral()
     maven {
-        url = uri("https://maven.pkg.github.com/Mattilsynet/fisk/")
+        url = uri("https://maven.pkg.github.com/Mattilsynet/virtual-nats/")
         credentials {
             username = "token"
             password = System.getenv("READ_SOURCE_AND_PACKAGES")
@@ -44,7 +44,7 @@ configurations.matching { it.name == "detekt" }.all {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springdoc:springdoc-openapi-bom:3.1.1")
+        mavenBom("org.springdoc:springdoc-openapi-bom:3.2.0")
     }
 }
 
@@ -70,7 +70,7 @@ dependencies {
     implementation("com.google.protobuf:protobuf-java")
 
     // gcp
-    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.2.4"))
+    implementation(platform("com.google.cloud:spring-cloud-gcp-dependencies:8.3.1"))
     implementation("com.google.cloud:spring-cloud-gcp-starter-secretmanager")
     implementation("com.google.cloud:spring-cloud-gcp-starter-storage")
 
@@ -158,9 +158,7 @@ tasks {
 
     kotlin {
         compilerOptions.jvmTarget = org.jetbrains.kotlin.gradle.dsl.JvmTarget.JVM_21
-        // -Xannotation-default-target=param-property fjerner advarsel om annoteringer. Kan muligens fjernes fra Kotlin
-        // versjon 2.3
-        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict", "-Xannotation-default-target=param-property")
+        compilerOptions.freeCompilerArgs = listOf("-Xjsr305=strict")
     }
 }
 
