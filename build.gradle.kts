@@ -44,7 +44,7 @@ configurations.matching { it.name == "detekt" }.all {
 
 dependencyManagement {
     imports {
-        mavenBom("org.springdoc:springdoc-openapi-bom:3.2.0")
+        mavenBom("org.springdoc:springdoc-openapi-bom:3.2.1")
     }
 }
 
